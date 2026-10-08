@@ -1,0 +1,2 @@
+# SANJOG Master Requirements Entrypoint
+-r requirements/development.txt

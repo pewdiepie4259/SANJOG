@@ -1,0 +1,22 @@
+<header class="bg-primary-900 text-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <a href="/" class="flex items-center gap-2">
+                <span class="text-2xl font-black tracking-wider text-green-400">SANJOG</span>
+                <span class="hidden sm:inline-block text-xs bg-green-800 text-green-200 px-2 py-0.5 rounded font-mono">Food Rescue OS</span>
+            </a>
+        </div>
+        
+        <nav class="flex items-center gap-6 text-sm font-medium">
+            <a href="/" class="hover:text-green-300 transition-colors">Home</a>
+            <a href="/api/v1/health/" class="hover:text-green-300 transition-colors">System Health</a>
+            
+            {% if user.is_authenticated %}
+                <span class="text-green-300 font-mono text-xs">{{ user.username }} ({{ user.get_role_display }})</span>
+                <a href="/accounts/logout/" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded transition-colors text-xs">Logout</a>
+            {% else %}
+                <a href="/admin/login/" class="bg-primary-700 hover:bg-primary-500 text-white px-4 py-2 rounded-lg transition-colors text-xs font-semibold">Sign In</a>
+            {% endif %}
+        </nav>
+    </div>
+</header>

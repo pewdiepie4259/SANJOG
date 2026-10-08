@@ -1,0 +1,38 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SANJOG — Food Rescue OS{% endblock %}</title>
+    
+    <!-- Tailwind CSS (CDN for Development Foundation) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            900: '#14532D',
+                            700: '#15803D',
+                            500: '#22C55E',
+                        },
+                        secondary: {
+                            700: '#B45309',
+                            500: '#F59E0B',
+                        },
+                        urgent: {
+                            600: '#DC2626',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- HTMX 1.9+ Library -->
+    <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt9ApKC1BHgZEapYawvhYlFoajjVqJKXUew+OrQ6VRjIE3fpbwgGU0RjFzpLk" crossorigin="anonymous"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/input.css">
+    
+    {% block extra_head %}{% endblock %}
+</head>
