@@ -69,9 +69,9 @@ class RoleBasedAccessControlTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_volunteer_blocked_from_admin_dashboard(self):
-        """Test VOLUNTEER role is blocked from /admin/dashboard/ with 403."""
+        """Test VOLUNTEER role is blocked from /platform-admin/dashboard/ with 403."""
         self.client.force_login(self.volunteer)
-        response = self.client.get('/admin/dashboard/')
+        response = self.client.get('/platform-admin/dashboard/')
         self.assertEqual(response.status_code, 403)
 
     def test_anonymous_user_redirected_to_login(self):
@@ -81,7 +81,7 @@ class RoleBasedAccessControlTestCase(TestCase):
         self.assertIn('/login/', response.url)
 
     def test_admin_accesses_admin_dashboard(self):
-        """Test ADMIN role can access /admin/dashboard/."""
+        """Test ADMIN role can access /platform-admin/dashboard/."""
         self.client.force_login(self.admin)
-        response = self.client.get('/admin/dashboard/')
+        response = self.client.get('/platform-admin/dashboard/')
         self.assertEqual(response.status_code, 200)

@@ -49,7 +49,7 @@ class RegisterView(View):
         elif user.is_volunteer:
             return '/volunteer/dashboard/'
         elif user.is_admin_user:
-            return '/admin/dashboard/'
+            return '/platform-admin/dashboard/'
         return '/'
 
 

@@ -13,7 +13,7 @@ urlpatterns = [
     path('donor/dashboard/', views.donor_dashboard_view, name='donor_dashboard'),
     path('receiver/dashboard/', views.receiver_dashboard_view, name='receiver_dashboard'),
     path('volunteer/dashboard/', views.volunteer_dashboard_view, name='volunteer_dashboard'),
-    path('admin/dashboard/', views.admin_dashboard_view, name='admin_dashboard'),
+    path('platform-admin/dashboard/', views.admin_dashboard_view, name='admin_dashboard'),
 
     # Built-in Password Reset Views
     path('password-reset/', auth_views.PasswordResetView.as_view(
