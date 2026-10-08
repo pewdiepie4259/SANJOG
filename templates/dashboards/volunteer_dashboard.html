@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Volunteer Operating Portal — SANJOG{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-black text-slate-900">Volunteer Operating Dashboard</h1>
+            <p class="text-xs text-slate-500 mt-1">Logged in as: <span class="font-bold text-primary-700">{{ user.username }}</span> (Rescue Volunteer)</p>
+        </div>
+        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-bold border border-blue-300">
+            ROLE: VOLUNTEER
+        </span>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-white p-6 rounded-xl border border-slate-200 text-center space-y-2">
+            <span class="text-xs text-slate-500 font-semibold uppercase">Open Rescue Missions</span>
+            <p class="text-3xl font-black text-primary-700">0</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl border border-slate-200 text-center space-y-2">
+            <span class="text-xs text-slate-500 font-semibold uppercase">Assigned Deliveries</span>
+            <p class="text-3xl font-black text-amber-600">0</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl border border-slate-200 text-center space-y-2">
+            <span class="text-xs text-slate-500 font-semibold uppercase">Completed Rescue Missions</span>
+            <p class="text-3xl font-black text-slate-900">0</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

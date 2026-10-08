@@ -16,10 +16,12 @@ def health_check(request):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('health/', health_check, name='health_check'),
+    path('', include('apps.accounts.urls')),
     
-    # API Version 1 Namespace Placeholder
+    # API Version 1 Namespace
     path('api/v1/', include([
         path('health/', health_check, name='api_v1_health'),
+        path('', include('apps.accounts.urls')),
     ])),
 ]
 
