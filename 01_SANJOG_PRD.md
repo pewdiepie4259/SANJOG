@@ -1,12 +1,13 @@
 # SANJOG — Product Requirements Document (PRD)
-## Surplus Food Redistribution & Community Connection Platform
+## Intelligent Food Rescue Operating System (Food Rescue OS)
 
 ---
 
 ### 1. COVER PAGE
 - **Project Name:** SANJOG (Surplus Food Redistribution & Community Connection Platform)
+- **Product Vision:** Intelligent Food Rescue Operating System (Food Rescue OS)
 - **Document Title:** Product Requirements Document (PRD)
-- **Version:** 1.0.0
+- **Version:** 2.0.0 (Evolved Architecture)
 - **Status:** Approved / Architecture Phase
 - **Author:** Senior Technical Architecture & Product Team
 - **Date:** October 2026
@@ -17,272 +18,166 @@
 ### 2. DOCUMENT CONTROL
 | Version | Date | Author | Summary of Changes | Status |
 | :--- | :--- | :--- | :--- | :--- |
-| **v0.1.0** | 2026-10-01 | Product Team | Initial draft & requirements outline | Draft |
-| **v0.5.0** | 2026-10-05 | Technical Architect | Added user stories, state transitions, security constraints | Review |
-| **v1.0.0** | 2026-10-08 | Lead Architect | Finalized blueprint for SANJOG complete suite | Approved |
+| **v1.0.0** | 2026-10-08 | Lead Architect | Initial surplus donation marketplace blueprint | Superceded |
+| **v2.0.0** | 2026-10-08 | Technical Architect | Evolved to Intelligent Food Rescue OS (6 Strategic Pillars, Need-First Matching, Multi-Recipient Allocations, Food Passport, Safety SOP Engine, SLA Tiers, ML Forecasting) | Approved |
 
 ---
 
 ### 3. EXECUTIVE SUMMARY
-**SANJOG** is an end-to-end, real-time, geo-intelligent surplus food redistribution platform engineered to bridge the gap between commercial food establishments with edible surplus and non-profit organizations catering to food-insecure communities. Utilizing a robust three-sided ecosystem—**Donors**, **Receivers**, and **Volunteers** under centralized **Admin** governance—SANJOG optimizes food rescue operations using real-time countdown timers, PostGIS geospatial proximity matching, OTP-verified multi-stage handoffs, and automated impact/CSR tracking.
+**SANJOG** is an end-to-end **Intelligent Food Rescue Operating System (Food Rescue OS)** engineered to transform surplus food management from an ad-hoc donation marketplace into an automated, data-driven food rescue network. Built on Python 3.11+, Django 5.x, DRF, PostGIS, Celery, Redis, HTMX, Tailwind CSS, and Leaflet.js, SANJOG connects commercial **Donors** (restaurants, hotels, messes, caterers) with **Receivers** (NGOs, shelters, orphanages) and **Volunteers** under centralized **Admin** governance.
+
+Key capabilities of the Food Rescue OS include:
+- **Need-First Receiver Demand Requests:** Receivers proactively register live meal needs.
+- **Deterministic Need-First Matching Engine:** Weighted scoring matching surplus to active hunger demand.
+- **Multi-Recipient Rescue Allocation Engine:** Automatically splits large surplus donations (e.g., 500 meals) across multiple receivers.
+- **Food Passport Chain-of-Custody:** Immutable digital lifecycle ledger with SHA-256 state hashing.
+- **Structured Food Safety SOP Engine:** Compliance classification (`ELIGIBLE`, `REVIEW_REQUIRED`, `NOT_ELIGIBLE`).
+- **Rescue Urgency SLA Tiers:** Dynamic SLA monitoring (`NORMAL` <2h, `URGENT` <60m, `CRITICAL` <30m).
+- **AI/ML Demand & Surplus Forecasting:** Machine learning regression predicting upcoming surplus and receiver demand patterns.
 
 ---
 
-### 4. PROBLEM STATEMENT
-Food waste and food insecurity represent a critical paradox in modern society:
-1. **Massive Commercial Food Surplus:** Restaurants, banquet halls, hostel messes, caterers, and corporate canteens daily dispose of tons of untouched, high-quality edible food due to over-preparation or unfulfilled bookings.
-2. **Severe Resource Scarcity for Beneficiaries:** Nearby NGOs, orphanages, shelter homes, and community kitchens constantly struggle with budget constraints and unpredictable food supplies.
-3. **Lack of Technological Bridge:** Traditional redistribution relies on ad-hoc phone calls or informal networking, which fails due to short food shelf-lives, transport logistics bottlenecks, and lack of real-time visibility.
-4. **Accountability & Trust Deficit:** Donors fear liability or misallocation, while receivers lack assurances regarding food hygiene and safe handling standards.
+### 4. STRATEGIC PILLARS (THE 6 PILLARS OF FOOD RESCUE OS)
+1. **PREDICT:** AI/ML forecasting predicting upcoming donor surplus and receiver meal demand before food is even cooked.
+2. **RESCUE:** Structured food safety SOP assessment ensuring 100% edible compliance before listing publication.
+3. **MATCH:** Deterministic weighted scoring algorithm matching surplus listings to active receiver demand based on distance, dietary compatibility, and capacity.
+4. **ROUTE:** Multi-recipient allocation engine and volunteer route dispatch ensuring rapid, optimized transport.
+5. **VERIFY:** Dual 4-digit cryptographic OTP handoff (Donor → Volunteer → Receiver) preventing unauthorized pickers or lost deliveries.
+6. **PROVE:** Immutable Food Passport lifecycle ledger, transactional Impact Ledger, and downloadable WeasyPrint PDF CSR certificates.
 
 ---
 
-### 5. BACKGROUND
-Global food waste statistics indicate that over one-third of all food produced is lost or wasted. In urban centers, thousands of meals are discarded daily within a few kilometers of underfunded care facilities. Existing tech solutions either target bulk logistics (unsuitable for quick urban surplus) or lack secure verification protocols. SANJOG addresses these structural failures by introducing hyper-local discovery, automated spoilage alerts, and verified chain-of-custody delivery.
+### 5. PROBLEM STATEMENT
+Global food waste statistics indicate that over one-third of all food produced is lost or wasted. In urban centers, tons of untouched, high-quality edible food are discarded daily by commercial establishments. Simultaneously, local charitable care facilities face chronic food budget shortages.
+
+Traditional redistribution frameworks fail because:
+1. **Passive Marketplace Lag:** Receivers must manually browse maps, delaying rescue past food shelf-lives.
+2. **Single-Recipient Bottleneck:** Large donations (e.g., 500 meals) cannot be absorbed by a single small shelter.
+3. **Lack of Chain-of-Custody Auditability:** Donors fear legal/hygiene liabilities, while receivers lack assurances regarding safe handling.
+4. **Uncoordinated Transport:** Volunteer dispatch is unorganized without urgent SLA escalation mechanisms.
 
 ---
 
-### 6. VISION
-To create a zero-food-waste urban ecosystem where no edible surplus food is discarded, and every vulnerable community member has access to nutritious meals through seamlessly coordinated technology.
+### 6. PROPOSED SOLUTION: SANJOG FOOD RESCUE OS
+SANJOG solves these systemic failures by introducing an operating system model:
+- **Need-First Matching:** Flips the paradigm so surplus is routed immediately to active receiver requirements (`DemandRequest`).
+- **Multi-Recipient Splitting:** Atomically divides large food listings across multiple receiver allocations (`RescueAllocation`).
+- **Digital Food Passport:** Generates an auditable JSON/SHA-256 lifecycle log tracking preparation, safety SOPs, transport handoffs, and final consumption.
+- **SLA Escalation Engine:** Background Celery workers monitoring food time-to-expiry and triggering urgent volunteer broadcasts as SLA windows compress.
 
 ---
 
-### 7. MISSION
-To empower food businesses, charitable institutions, and socially conscious citizens with an intuitive, reliable, and transparent digital platform that automates surplus food discovery, claim verification, safe transport, and measurable social impact.
+### 7. USER ROLES & CAPABILITIES
+
+#### 1. DONOR (Restaurants, Hotels, Messes, Caterers, Canteens, Event Organizers)
+- Register & upload FSSAI license / business registration documents.
+- Post surplus food listings with quantity, preparation time, storage conditions, and safety SOP checklist.
+- View real-time rescue status, assigned receivers, and active volunteer ETA.
+- Validate 4-digit Pickup OTP upon volunteer arrival.
+- Access digital Food Passport and download official WeasyPrint PDF CSR certificates.
+
+#### 2. RECEIVER (NGOs, Shelters, Orphanages, Community Kitchens, Charities)
+- Register & upload 80G / NGO accreditation documents.
+- Log active meal requirements (`DemandRequest`) specifying servings needed, dietary preference, and required-by time.
+- Discover nearby surplus food via interactive PostGIS Leaflet.js maps.
+- Confirm multi-recipient rescue allocations.
+- Validate 4-digit Delivery OTP upon food arrival.
+- View received history and nutritional impact statistics.
+
+#### 3. VOLUNTEER (Individual Transport Partners, CSR Volunteers)
+- Register with government ID proof & vehicle type details.
+- Toggle real-time availability status (`AVAILABLE` / `UNAVAILABLE`).
+- View open rescue tasks sorted by SLA urgency (`NORMAL`, `URGENT`, `CRITICAL`).
+- Accept rescue missions and access turn-by-turn map directions.
+- Perform dual OTP handoffs (Input Donor Pickup OTP & Receiver Delivery OTP).
+
+#### 4. ADMIN (Platform Governance & Dispatch Controllers)
+- Review organization registration documents & approve/reject profiles.
+- Monitor Central Command Center (Live operations map, active allocations, SLA breach alerts).
+- Override stuck claims or reassign canceled volunteer routes.
+- Inspect system Audit Logs and authoritative transactional Impact Ledger.
 
 ---
 
-### 8. GOALS
-- **Diverting Surplus:** Divert 100% of edible surplus food posted on the platform to verified receivers before expiry.
-- **Minimizing Response Time:** Reduce the average time between surplus creation and claim confirmation to under 15 minutes.
-- **Ensuring Food Safety:** Maintain zero incidents of spoiled food delivery by implementing mandatory hygiene declarations and strict automated time-to-spoilage enforcement.
-- **Verifiable Transparency:** Provide 100% auditable pickup-to-delivery handoffs via cryptographically backed OTP verification.
-
----
-
-### 9. OBJECTIVES
-1. Achieve an average pickup turnaround time of under 45 minutes for urgent food listings.
-2. Maintain a 95%+ successful delivery rate across all claimed donations.
-3. Onboard and verify 50+ donors, 30+ receiver organizations, and 100+ active volunteers within the target operational zone.
-4. Automate CSR certificate generation to incentivize corporate donor participation.
-
----
-
-### 10. TARGET USERS
-1. **Food Donors:** Restaurant owners, hotel banquet managers, hostel mess wardens, catering managers, corporate canteen heads, event managers.
-2. **Food Receivers:** NGO directors, shelter home administrators, orphanage caretakers, community kitchen supervisors, charitable trust coordinators.
-3. **Volunteers:** College students, youth activists, independent delivery partners, corporate CSR volunteers.
-4. **Platform Administrators:** Platform managers, compliance officers, verification agents, community coordinators.
-
----
-
-### 11. USER PERSONAS
+### 8. USER PERSONAS
 
 #### Persona A: Donor — Chef Rajesh Sharma (Executive Chef, Grand Palace Hotel)
-- **Background:** Manages banquet dining producing 50–200 extra portions after evening events.
-- **Needs:** Fast 2-minute food posting workflow, reliable pickup coordination, official CSR/donation receipts for management.
-- **Pain Points:** Discarding good food causes guilt; cannot manage phone calls during late hours; needs legal/hygiene disclaimers.
+- **Needs:** 2-minute food posting workflow, automated multi-shelter distribution, official CSR certificates for management.
+- **Pain Points:** 300 extra banquet portions cannot be taken by one small NGO; needs legal safety disclaimers.
 
 #### Persona B: Receiver — Sister Maria (Director, Hope Children's Shelter)
-- **Background:** Operates a shelter housing 80 children with limited daily food budget.
-- **Needs:** Real-time notifications of nearby food, distance transparency, volunteer transport assistance.
-- **Pain Points:** Unpredictable supply; no dedicated transport vehicles; cannot afford spoiled or unsafe food.
+- **Needs:** Proactive notification when food matching her shelter's exact 80-meal requirement becomes available.
+- **Pain Points:** Lack of transport vehicles; cannot monitor donation websites constantly while managing children.
 
 #### Persona C: Volunteer — Aniket Verma (College Student & Social Worker)
-- **Background:** Owns a two-wheeler, has 2–3 free hours in the evening, wants to serve the community.
-- **Needs:** Easy-to-use mobile web view, clear map navigation, hassle-free OTP verification.
+- **Needs:** Mobile-optimized task feed, clear map navigation, hassle-free OTP validation.
 - **Pain Points:** Wasting time waiting at donor locations; unclear drop-off directions.
 
 ---
 
-### 12. USER PAIN POINTS & SOLUTIONS MATRIX
-| User Pain Point | Existing Reality | SANJOG Solution |
-| :--- | :--- | :--- |
-| **Short Food Shelf Life** | Food spoils before receiver is notified | Real-time PostGIS proximity alerts + Spoilage Countdown |
-| **Transport Failure** | Receivers lack vehicles for pickup | On-demand Volunteer Dispatch Network |
-| **Verification & Trust** | Unverified claims / fake pickers | Dual 4/6-Digit OTP Handoff (Donor ↔ Volunteer ↔ Receiver) |
-| **Legal/Hygiene Liability** | Donors worry about liability | Mandatory Food Safety Checklist + Automated Platform Disclaimer |
-| **Lack of Recognition** | Donors receive no formal record | Automated CSR & Impact Certificate PDF Generator |
+### 9. PRODUCT SCOPE MATRIX (P0 / P1 / P2)
+
+#### P0 — MUST HAVE (Core Operating System MVP)
+- User Authentication & Role-Based Access Control (CustomUser).
+- Organization Document Verification Queue.
+- Surplus Food Listing Creation + Food Safety SOP Assessment (`ELIGIBLE`, `REVIEW_REQUIRED`, `NOT_ELIGIBLE`).
+- Receiver Need-First Demand Requests (`DemandRequest`).
+- Deterministic Rule-Based Need-First Matching Engine.
+- Multi-Recipient Rescue Allocation Engine (`RescueAllocation`) with atomic transaction locks.
+- Food Passport Chain-of-Custody Ledger with SHA-256 state hashing.
+- Volunteer Logistics & Dual 4-Digit OTP Handoff Verification.
+- Dynamic Spoilage & Urgency Status Engine (`SAFE`, `WARNING`, `URGENT`, `EXPIRED`).
+- Authoritative Impact Ledger & WeasyPrint PDF CSR Certificate Generator.
+- Admin Operations Command Center Dashboard.
+
+#### P1 — IMPORTANT (Advanced Rescue Intelligence)
+- AI/ML Surplus & Demand Forecasting (Scikit-Learn/LightGBM).
+- Rescue Urgency SLA Tier Escalation Engine (`NORMAL`, `URGENT`, `CRITICAL`).
+- Volunteer Route Batching & Waypoint Optimization (OSRM integration).
+- Spatial Community Demand Heatmap Layer (Leaflet.js).
+- Automated Async Notification System (Celery email dispatch).
+
+#### P2 — FUTURE ENHANCEMENTS
+- POS System API Connectors.
+- WhatsApp Business API Bot.
+- Multilingual Interface (Hindi, Regional Languages).
 
 ---
 
-### 13. PROPOSED SOLUTION
-SANJOG is a unified Django/DRF web application powered by PostGIS, Leaflet.js, HTMX, Tailwind CSS, Redis, and Celery. It provides:
-1. **Multi-Role RBAC:** Role-restricted dashboards for Donors, Receivers, Volunteers, and Admins.
-2. **Geo-Discovery:** Spatial querying allowing Receivers to discover food within 2km, 5km, 10km, or 15km radii.
-3. **State Machine Workflow:** Strict transitions (`AVAILABLE` → `CLAIMED` → `PICKUP_ASSIGNED` → `PICKED_UP` → `DELIVERED` / `EXPIRED` / `CANCELLED`).
-4. **Secure OTP Handoffs:** Time-limited OTP validation at both pickup and delivery checkpoints.
-5. **Real-Time Spoilage Engine:** Background Celery tasks enforcing dynamic state updates based on expiry timestamps.
+### 10. END-TO-END FOOD RESCUE WORKFLOW
 
----
-
-### 14. PRODUCT SCOPE
-- Complete organization registration and document verification workflow.
-- Surplus food listing creation with image upload, dietary tags, quantity, shelf life, and safety checklist.
-- Geospatial mapping with interactive Leaflet.js markers for food discovery.
-- Claim management and lock mechanisms to prevent duplicate claims.
-- Volunteer dispatch, request acceptance, and dual-stage OTP verification.
-- Automated Celery workers for food expiry monitoring and notification emails.
-- Impact analytics dashboard and PDF CSR certificate generator via WeasyPrint/ReportLab.
-- Comprehensive Django Admin and custom platform admin panel for audit logging.
-
----
-
-### 15. OUT OF SCOPE (FOR INITIAL RELEASE)
-- Paid commercial food transactions or monetization features (100% free community platform).
-- Direct integration with third-party commercial courier APIs (e.g., Dunzo/Swiggy API).
-- Native iOS/Android apps (Responsive PWA/HTMX mobile web view is used).
-- Automated AI food spoilage detection via computer vision (relies on donor declaration and timer).
-
----
-
-### 16. USER ROLES & PERMISSION SUMMARY
-| Role | Registration Type | Document Verification Required | Key Responsibilities |
-| :--- | :--- | :--- | :--- |
-| **DONOR** | Organization / Business | Yes (FSSAI/Business License) | Post surplus, validate pickup OTP, download CSR certificates |
-| **RECEIVER** | NGO / Shelter / Charity | Yes (80G/12A/NGO Darpan/Registration) | Discover food, claim listings, validate delivery OTP |
-| **VOLUNTEER** | Individual | Yes (Govt ID Proof) | Accept delivery requests, execute pickup/drop, verify OTPs |
-| **ADMIN** | System Superuser | Manual Admin Grant | Verify documents, monitor state machine, review analytics |
-
----
-
-### 17. USER STORIES
-
-#### Category: Authentication & Verification
-- **US-AUTH-01:** As a new Donor/Receiver, I want to upload my organization's legal registration documents so that the Admin can verify my legitimacy.
-- **US-AUTH-02:** As an Admin, I want to review submitted documents and approve or reject organization profiles so that unverified entities cannot access food listings.
-
-#### Category: Surplus Food Listing & Discovery
-- **US-FOOD-01:** As a Donor, I want to create a surplus food listing with estimated servings, cooked time, expiry time, and safety declaration so that nearby receivers are informed.
-- **US-FOOD-02:** As a Receiver, I want to view active food listings on an interactive map filtered by distance (2km to 15km) so that I can find food close to my facility.
-
-#### Category: Claiming & Lock System
-- **US-CLAIM-01:** As a Receiver, I want to claim an available food listing so that it is locked immediately and cannot be claimed by another NGO.
-
-#### Category: Volunteer Logistics & OTP Handoff
-- **US-VOL-01:** As a Volunteer, I want to view pending pickup requests near me and accept a delivery task.
-- **US-VOL-02:** As a Volunteer, I want the Donor to enter a 4-digit pickup OTP on my device so that the system confirms I have received the food.
-- **US-VOL-03:** As a Volunteer, I want the Receiver to enter a 4-digit delivery OTP on my device so that the system marks the food as delivered.
-
----
-
-### 18. FUNCTIONAL REQUIREMENTS OVERVIEW
-1. **Multi-Tenant User Management:** Custom user model supporting role flags (`is_donor`, `is_receiver`, `is_volunteer`, `is_admin_user`).
-2. **Organization Verification Pipeline:** Multi-step upload with document status tracking (`PENDING`, `VERIFIED`, `REJECTED`).
-3. **Geo-Location Engine:** PostGIS point field support for precise latitude/longitude calculation and spatial radius querying.
-4. **Spoilage Countdown Component:** HTMX/JS live countdown clock updating statuses (`SAFE`, `WARNING`, `URGENT`, `EXPIRED`).
-5. **OTP Verification System:** Cryptographically random 4 or 6-digit OTP generation with rate-limiting (max 3 wrong attempts).
-6. **PDF Certificate Engine:** Server-side PDF rendering of donation impact receipts.
-
----
-
-### 19. NON-FUNCTIONAL REQUIREMENTS OVERVIEW
-- **Performance:** Page load under 1.5 seconds; API response time under 200ms; spatial query execution under 50ms.
-- **Security:** OWASP Top 10 compliance, Django CSRF protection, RBAC permissions, encrypted media file storage paths, zero plain-text OTP storage.
-- **Availability:** 99.5% uptime target for web and background worker processes.
-- **Scalability:** Stateless DRF backend supporting horizontal scaling; PostgreSQL connections managed via connection pooling.
-
----
-
-### 20. FEATURE SPECIFICATION (KEY HIGHLIGHTS)
-
-#### Feature 1: Spoilage Countdown Engine
-- **Logic:**
-  - `Remaining Time > 2 Hours` → Status: **SAFE** (Green badge `#16A34A`)
-  - `1 Hour < Remaining Time <= 2 Hours` → Status: **WARNING** (Yellow/Amber badge `#D97706`)
-  - `0 Hours < Remaining Time <= 1 Hour` → Status: **URGENT** (Red badge `#DC2626`)
-  - `Remaining Time <= 0` → Status: **EXPIRED** (Gray badge `#4B5563`, listing auto-disabled)
-
-#### Feature 2: PostGIS Geo-Based Discovery
-- Spatial lookup: `ST_DWithin(donor_location, receiver_location, radius_in_meters)`
-- Interactive Leaflet.js map with custom pin icons (Green = Safe, Amber = Warning, Red = Urgent).
-
-#### Feature 3: Food Safety Checklist & Disclaimer
-- 5-point mandatory checkbox array required before listing submission.
-- Standard platform disclaimer displayed on all listings and receipts.
-
-#### Feature 4: Dual-Stage OTP Handoff
-- Stage 1: Donor → Volunteer (Generates `pickup_otp`, expires in 30 mins).
-- Stage 2: Volunteer → Receiver (Generates `delivery_otp`, expires in 60 mins).
-
-#### Feature 5: Impact Analytics Dashboard
-- Aggregates total meals saved, total weight (kg), completed deliveries, and carbon footprint reduction equivalent.
-
-#### Feature 6: Downloadable CSR Certificate
-- Generates official PDF receipt containing unique Certificate Hash ID, Organization details, and total impact metrics.
-
----
-
-### 21. CORE USER JOURNEYS
 ```
-[DONOR] Create Listing + Safety Checklist
-   │
-   ▼
-[SYSTEM] Status: AVAILABLE (Spoilage Clock Started)
-   │
-   ▼
-[RECEIVER] Discovers via Map (Filter 5km) ──► Claims Listing
-   │
-   ▼
-[SYSTEM] Status: CLAIMED (Lock Enforced, Pickup Request Created)
-   │
-   ▼
-[VOLUNTEER] Accepts Pickup Task ──► Status: PICKUP_ASSIGNED
-   │
-   ▼
-[DONOR & VOLUNTEER] Arrive at Pickup ──► Donor Enters Pickup OTP ──► Status: PICKED_UP
-   │
-   ▼
-[VOLUNTEER & RECEIVER] Arrive at Dropoff ──► Receiver Enters Delivery OTP ──► Status: DELIVERED
-   │
-   ▼
-[SYSTEM] Update Impact Metrics + Trigger Donor CSR Certificate
+SURPLUS DETECTED (Donor posts surplus details)
+        ↓
+FOOD SAFETY ASSESSMENT (SOP Rules Engine → ELIGIBLE / REVIEW / NOT_ELIGIBLE)
+        ↓
+SURPLUS LISTING CREATED (Food Passport Initiated, Spoilage Clock Started)
+        ↓
+URGENCY CALCULATION (SLA Tier Assigned: NORMAL / URGENT / CRITICAL)
+        ↓
+DEMAND ANALYSIS & NEED-FIRST MATCHING (Algorithm matches nearby DemandRequests)
+        ↓
+MULTI-RECIPIENT RESCUE ALLOCATION (System splits quantity across Receivers A, B, C)
+        ↓
+ATOMIC RESERVATION LOCK (Select_for_update reserves allocated quantities)
+        ↓
+RESCUE PLAN GENERATED (Pickup requests & Volunteer routes created)
+        ↓
+VOLUNTEER ASSIGNMENT (Volunteer accepts mission / Batch route assigned)
+        ↓
+PICKUP & OTP HANDOFF (Donor validates 4-digit Pickup OTP → Status: PICKED_UP)
+        ↓
+DELIVERY & OTP HANDOFF (Receiver validates 4-digit Delivery OTP → Status: DELIVERED)
+        ↓
+FOOD PASSPORT FINALIZED (Immutable SHA-256 hash appended)
+        ↓
+IMPACT LEDGER UPDATED (Real-time stats & PDF CSR Certificate generated)
 ```
 
 ---
 
-### 22. SUCCESS METRICS
-- **Redistribution Efficiency:** Ratio of total food listed vs. total food successfully delivered (> 90%).
-- **Time-to-Claim:** Average time taken for a posted listing to be claimed by an NGO (< 15 mins).
-- **Volunteer Engagement:** Active volunteer response rate within 10 minutes of claim creation (> 80%).
-- **Verification Precision:** Zero false approvals of unverified donor or receiver organizations.
-
----
-
-### 23. KEY PERFORMANCE INDICATORS (KPIS)
-- Monthly Meals Saved (Target: 10,000+ meals/month)
-- Total Active Donors & Verified Receivers
-- Average Delivery Duration (Pickup to Delivery < 45 mins)
-- Expiry Rate (Unclaimed expired food < 5% of total listings)
-
----
-
-### 24. RISKS & MITIGATION STRATEGIES
-| Identified Risk | Risk Severity | Mitigation Strategy |
-| :--- | :--- | :--- |
-| **Spoiled Food Delivery** | Critical | Mandatory Safety Checklist + Strict Expiry Enforcement + Immediate reporting flag |
-| **No Volunteer Available** | High | Fallback mechanism allowing Receiver direct self-pickup option |
-| **Fake Organization Profiles** | High | Mandatory multi-document admin verification prior to active platform access |
-| **Unresponsive Receivers / No-Show** | Medium | Claim expiration timer (30 mins to confirm pickup arrangements or claim auto-cancels) |
-
----
-
-### 25. ASSUMPTIONS
-1. Donors possess basic internet access via smartphone/desktop to create listings.
-2. Receivers have smartphone access to inspect map listings and verify delivery OTPs.
-3. Donors provide accurate, honest declarations regarding food preparation time and estimated shelf life.
-
----
-
-### 26. CONSTRAINTS
-- **Technology Stack:** Must strictly utilize Python 3.11+, Django 5.x, DRF, PostgreSQL/PostGIS, Leaflet.js, HTMX, Tailwind CSS, Celery, and Redis.
-- **Budget & Hosting:** Designed for economical deployment on cloud VPS / Railway / Render.
-- **Legal:** SANJOG functions strictly as a facilitator platform and does not hold food inventory or operate central warehouses.
-
----
-
-### 27. FUTURE ENHANCEMENTS
-- **Smart Volunteer Route Optimization:** Multi-stop pickup bundling for volunteers.
-- **Machine Learning Demand Forecasting:** Predictive analytics forecasting surplus food availability by weekday/season.
-- **Mobile Native PWA Push Notifications:** WebPush API for instant browser/mobile alerts.
-- **Multilingual Support:** Local language options (Hindi, Marathi, Regional dialects) for ground staff.
+### 11. KEY PERFORMANCE INDICATORS (KPIS)
+- **Median Rescue Duration:** Time from surplus posted to final delivery (< 45 minutes target).
+- **Rescue Success Rate:** Ratio of total surplus weight rescued vs. total weight posted (> 92% target).
+- **Multi-Recipient Fulfillment Rate:** Percentage of large donations (>200 meals) successfully split and delivered across 2+ receivers (> 95%).
+- **Safety Compliance Rate:** Zero incidents of spoiled food delivery.

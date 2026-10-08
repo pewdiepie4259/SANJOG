@@ -1,231 +1,120 @@
 # SANJOG — Development Pipeline & Implementation Roadmap
-## Phase-by-Phase Execution Plan, Git Workflow & Milestone Pipeline
+## Phase-by-Phase Execution Plan, Git Workflow & Milestone Pipeline (Food Rescue OS)
 
 ---
 
-### 1. DEVELOPMENT PIPELINE OVERVIEW
-This document provides an exhaustive, step-by-step implementation blueprint for building **SANJOG**. It breaks down the system into 20 distinct execution phases (Phase 0 to Phase 19), detailing exact Django apps, models, APIs, frontend screens, dependencies, and Definition of Done (DoD) for each stage.
+### 1. REVISED DEVELOPMENT PHASES (PHASE 0 — PHASE 19)
 
----
-
-### 2. EXECUTABLE DEVELOPMENT PHASES (PHASE 0 — PHASE 19)
-
-#### PHASE 0 — Planning & Specification
-- **Objective:** Finalize all requirements, database schemas, UI blueprints, and API contracts.
-- **Tasks:** Review PRD, SRS, System Architecture, UI/UX specs, and Database Design documents.
-- **Django Apps Involved:** N/A (Documentation phase).
-- **Expected Output:** Complete set of 6 architectural documents + README + Pipeline.
-- **Definition of Done (DoD):** All 6 documents approved and committed to git repo.
+#### PHASE 0 — Architecture Finalization (COMPLETE)
+- **Objective:** Finalize all requirements, database schemas, UI specs, API contracts, and Food Rescue OS positioning.
+- **Deliverables:** Approved PRD, SRS, System Architecture, UI/UX, DB Design, Test Plan, README, Master Index.
 
 #### PHASE 1 — Project Infrastructure Setup
-- **Objective:** Initialize Django 5.x project, Virtual Environment, PostgreSQL/PostGIS database, Celery, and Redis integration.
-- **Tasks:** Set up `config/` app, install `requirements.txt`, configure PostGIS spatial backend, configure Tailwind CSS & HTMX static assets.
-- **Django Apps Involved:** `config`, static assets setup.
-- **Dependencies:** Python 3.11, PostgreSQL, PostGIS, Redis.
-- **Expected Output:** Running Django app connecting to PostGIS and Redis without errors.
-- **DoD:** `python manage.py migrate` executes cleanly; basic home template loads.
+- **Objective:** Initialize Django 5.x project, Virtual Environment, PostgreSQL/PostGIS, Redis, and Celery task broker.
+- **Deliverables:** Working `config` package, database spatial extension enabled, basic home template rendered.
 
 #### PHASE 2 — Authentication & RBAC Core
-- **Objective:** Build custom user model, registration, login, logout, and role permission wrappers.
-- **Tasks:** Create `accounts` app, extend `AbstractUser`, implement JWT & session login endpoints, build RBAC permission decorators.
-- **Django Apps Involved:** `accounts`.
-- **Models Involved:** `CustomUser`.
-- **APIs Involved:** `/api/v1/auth/register/`, `/api/v1/auth/login/`, `/api/v1/users/me/`.
-- **Frontend Screens:** Login Page (Page 5), Registration Page (Page 6).
-- **DoD:** Users can register as Donor/Receiver/Volunteer/Admin and authenticate securely.
+- **Objective:** Custom user model, registration, login, logout, and role permission wrappers (`DONOR`, `RECEIVER`, `VOLUNTEER`, `ADMIN`).
+- **Deliverables:** `accounts` app, JWT & session auth endpoints, working login/registration templates.
 
-#### PHASE 3 — Organization Management & Document Verification
-- **Objective:** Build organization profile registration and legal document upload workflow.
-- **Tasks:** Create `organizations` app, implement document file upload sanitization, build Admin verification queue.
-- **Django Apps Involved:** `organizations`.
-- **Models Involved:** `OrganizationProfile`, `OrganizationDocument`.
-- **APIs Involved:** `POST /api/v1/organizations/`, `PATCH /api/v1/organizations/<id>/verify/`.
-- **Frontend Screens:** Org Profile Settings (Page 15, 24), Admin Verification Queue (Page 35).
-- **DoD:** Donors/Receivers cannot post/claim food until profile status equals `VERIFIED`.
+#### PHASE 3 — Organization Verification Pipeline
+- **Objective:** Organization profiles, FSSAI / 80G document upload, and Admin verification queue.
+- **Deliverables:** `organizations` app, document upload sanitization, admin approval workflow.
 
-#### PHASE 4 — Donor Module & Surplus Food Posting
-- **Objective:** Enable verified Donors to post surplus food entries with safety checklists.
-- **Tasks:** Create `food` app, build `FoodListing` model, implement mandatory safety check validation.
-- **Django Apps Involved:** `food`, `organizations`.
-- **Models Involved:** `FoodListing`.
-- **APIs Involved:** `POST /api/v1/food/`, `GET /api/v1/food/`.
-- **Frontend Screens:** Donor Dashboard (Page 7), Create Food Listing (Page 8), My Donations (Page 9).
-- **DoD:** Donors can post food listings with mandatory safety checklist validation.
+#### PHASE 4 — Donor Surplus & Food Safety SOP Module
+- **Objective:** Surplus food posting with preparation timestamp, storage conditions, and safety SOP rule evaluation.
+- **Deliverables:** `food` app, `FoodListing` and `FoodSafetyAssessment` models, SOP classification engine (`ELIGIBLE`, `REVIEW_REQUIRED`, `NOT_ELIGIBLE`).
 
-#### PHASE 5 — Receiver Module & Discovery Engine
-- **Objective:** Enable verified Receivers to view available food listings near their facility.
-- **Tasks:** Create `claims` app, build receiver discovery dashboard and detail view.
-- **Django Apps Involved:** `food`, `claims`, `organizations`.
-- **Models Involved:** `FoodListing`, `Claim`.
-- **Frontend Screens:** Receiver Dashboard (Page 16), Nearby Donations (Page 17), Food Details View (Page 19).
-- **DoD:** Receivers can search and inspect food details.
+#### PHASE 5 — Receiver Need-First Demand Module
+- **Objective:** Enable Receivers to log active meal requirements (`DemandRequest`).
+- **Deliverables:** `demand` app, `DemandRequest` model, meal demand creation forms.
 
-#### PHASE 6 — Volunteer Module & Task Management
-- **Objective:** Onboard individual volunteers and enable delivery availability toggles.
-- **Tasks:** Create `pickups` app, build `VolunteerProfile` model, implement task feed.
-- **Django Apps Involved:** `organizations`, `pickups`.
-- **Models Involved:** `VolunteerProfile`, `PickupRequest`.
-- **APIs Involved:** `GET /api/v1/volunteers/available/`, `POST /api/v1/volunteers/<id>/accept/`.
-- **Frontend Screens:** Volunteer Dashboard (Page 25), Available Deliveries Feed (Page 26).
-- **DoD:** Volunteers can view and accept delivery tasks.
+#### PHASE 6 — Food Discovery & PostGIS Geolocation
+- **Objective:** Spatial radius filtering (2km to 15km) and interactive Leaflet.js map markers.
+- **Deliverables:** PostGIS `ST_DWithin` spatial query implementation, HTMX dynamic pin updates.
 
-#### PHASE 7 — Food Discovery & PostGIS Geolocation
-- **Objective:** Implement spatial radius filtering and interactive Leaflet.js maps.
-- **Tasks:** Configure PostGIS `ST_DWithin` spatial queries, render Leaflet markers with urgency colors.
-- **Django Apps Involved:** `food`, `organizations`.
-- **APIs Involved:** `GET /api/v1/food/nearby/`.
-- **Frontend Screens:** Interactive Map Discovery View (Page 18).
-- **DoD:** Receivers can filter listings by 2km, 5km, 10km, 15km radii with working map pins.
+#### PHASE 7 — Deterministic Need-First Matching Engine
+- **Objective:** Weighted scoring algorithm matching surplus listings to active demand requests.
+- **Deliverables:** `rescue` app, matching ranking service (`score = distance + urgency + quantity + diet`).
 
-#### PHASE 8 — Claim & Atomic Locking System
-- **Objective:** Implement atomic claim execution preventing race conditions.
-- **Tasks:** Use PostgreSQL `select_for_update()` transaction locks when creating claims.
-- **Django Apps Involved:** `claims`, `food`.
-- **Models Involved:** `Claim`, `PickupRequest`.
-- **APIs Involved:** `POST /api/v1/claims/`.
-- **Frontend Screens:** Claim Confirmation Modal (Page 20), Receiver Active Claims (Page 21).
-- **DoD:** Concurrent claims on the same listing return `409 Conflict` for the second attempt.
+#### PHASE 8 — Multi-Recipient Rescue Allocation Engine
+- **Objective:** Split single surplus listings across multiple receivers with atomic reservation locks.
+- **Deliverables:** `RescueAllocation` model, PostgreSQL `select_for_update()` transaction locking logic.
 
-#### PHASE 9 — Pickup & Dual OTP Verification Engine
-- **Objective:** Implement cryptographic 4-digit OTP handoff between Donor and Volunteer.
-- **Tasks:** Build OTP generation service with Redis TTL cache and max 3-attempt limit.
-- **Django Apps Involved:** `pickups`.
-- **Models Involved:** `OTPVerification`, `PickupRequest`.
-- **APIs Involved:** `POST /api/v1/pickups/<id>/verify-pickup/`.
-- **Frontend Screens:** Pickup Tracking (Page 12), Pickup Verification Screen (Page 28).
-- **DoD:** Valid Donor OTP transitions listing status to `PICKED_UP`.
+#### PHASE 9 — Volunteer Logistics & Task Feed
+- **Objective:** Volunteer availability toggles, task discovery feed sorted by SLA urgency.
+- **Deliverables:** `pickups` app, `VolunteerProfile` model, available rescues feed.
 
-#### PHASE 10 — Delivery Handoff Execution
-- **Objective:** Implement 4-digit OTP handoff between Volunteer and Receiver.
-- **Tasks:** Build delivery verification endpoint, record distance traveled, set status to `DELIVERED`.
-- **Django Apps Involved:** `pickups`.
-- **Models Involved:** `Delivery`, `PickupRequest`.
-- **APIs Involved:** `POST /api/v1/pickups/<id>/verify-delivery/`.
-- **Frontend Screens:** Delivery Tracking (Page 22), Delivery Verification Screen (Page 29).
-- **DoD:** Valid Receiver OTP transitions status to `DELIVERED`.
+#### PHASE 10 — Dual OTP Verification Engine
+- **Objective:** Cryptographic 4-digit Donor Pickup OTP and Receiver Delivery OTP validation.
+- **Deliverables:** `OTPVerification` and `Delivery` models, Redis TTL cache, max 3-attempt lockouts.
 
-#### PHASE 11 — Notification System (Email & In-App)
-- **Objective:** Automated notifications for food availability, claims, and delivery completions.
-- **Tasks:** Create `notifications` app, configure Celery email tasks.
-- **Django Apps Involved:** `notifications`.
-- **Models Involved:** `Notification`.
-- **DoD:** Email and in-app alerts sent cleanly on state machine events.
+#### PHASE 11 — Food Passport Chain-of-Custody Execution
+- **Objective:** Immutable digital lifecycle logging and SHA-256 state hashing.
+- **Deliverables:** `FoodPassport` model, auto-logging signals on lifecycle events.
 
-#### PHASE 12 — Spoilage Countdown & Celery Auto-Expiry
-- **Objective:** Real-time spoilage clock display and automated background listing expiration.
-- **Tasks:** Celery Beat task scanning expired listings every 60 seconds.
-- **Django Apps Involved:** `food`.
-- **DoD:** Listings reaching expiry auto-update to `EXPIRED` within 60 seconds.
+#### PHASE 12 — Rescue SLA & Celery Auto-Expiry Worker
+- **Objective:** Dynamic SLA tier monitoring (`NORMAL`, `URGENT`, `CRITICAL`) and auto-expiry task execution.
+- **Deliverables:** Celery Beat periodic worker running every 60 seconds, automated SLA alert broadcasts.
 
-#### PHASE 13 — Impact Analytics Engine
-- **Objective:** Aggregate platform metrics (meals saved, weight diverted, CO2 offset).
-- **Tasks:** Create `analytics` app, build aggregation services.
-- **Django Apps Involved:** `analytics`.
-- **Models Involved:** `ImpactRecord`.
-- **APIs Involved:** `GET /api/v1/analytics/impact/`.
-- **Frontend Screens:** Donor Impact (Page 13), Admin Analytics (Page 39).
-- **DoD:** Metrics accurately update after each delivered transaction.
+#### PHASE 13 — Authoritative Impact Ledger & Analytics
+- **Objective:** Transactional impact ledger recording delivered servings, weight (kg), and CO2 offset.
+- **Deliverables:** `analytics` app, `ImpactLedger` model, public metrics API.
 
-#### PHASE 14 — CSR PDF Certificate System
+#### PHASE 14 — AI/ML Demand & Surplus Forecasting (P1)
+- **Objective:** Scikit-Learn regression models predicting upcoming surplus volume and receiver demand.
+- **Deliverables:** `ml_engine` app, prediction models with moving average fallback.
+
+#### PHASE 15 — WeasyPrint PDF CSR Certificates
 - **Objective:** Server-side PDF generation for corporate donor impact receipts.
-- **Tasks:** Create `certificates` app, integrate WeasyPrint PDF renderer with SHA256 hashes.
-- **Django Apps Involved:** `certificates`.
-- **Models Involved:** `DonationCertificate`.
-- **APIs Involved:** `GET /api/v1/certificates/<id>/download/`.
-- **Frontend Screens:** Certificates Page (Page 14).
-- **DoD:** Donors can download official PDF receipts for delivered donations.
+- **Deliverables:** `certificates` app, `DonationCertificate` model, PDF download endpoint.
 
-#### PHASE 15 — Admin Governance Panel
-- **Objective:** Central platform administration, user management, and audit log inspection.
-- **Tasks:** Build custom admin views, user toggle handlers, and audit log table.
-- **Django Apps Involved:** `audit`, `accounts`, `organizations`.
-- **Models Involved:** `AuditLog`.
-- **Frontend Screens:** Central Admin Dashboard (Pages 33–42).
-- **DoD:** Admins can manage users, override states, and inspect audit logs.
+#### PHASE 16 — Admin Command Center Dashboard
+- **Objective:** Real-time operational command center map, SLA breach monitor, audit logs.
+- **Deliverables:** Admin command center screens, audit log viewer.
 
-#### PHASE 16 — Comprehensive Testing Suite Execution
-- **Objective:** Run complete automated PyTest suite covering all 56 specified test cases.
-- **Tasks:** Write unit, integration, API, and geospatial test scripts.
-- **DoD:** 100% pass rate across all 56 test cases with >85% code coverage.
+#### PHASE 17 — Automated Testing Suite Execution
+- **Objective:** Run complete PyTest suite covering all 62 specified test cases.
+- **Deliverables:** 100% test pass rate across all modules.
 
-#### PHASE 17 — Security Hardening
-- **Objective:** Enforce production security policies.
-- **Tasks:** Force HTTPS, configure HSTS, sanitize file uploads, test rate limits.
-- **DoD:** Security audit passes zero high or critical vulnerabilities.
+#### PHASE 18 — Security Hardening
+- **Objective:** Production security enforcement (HTTPS, HSTS, upload sanitization, OWASP).
+- **Deliverables:** Security audit clearance.
 
-#### PHASE 18 — Cloud Deployment Blueprint
-- **Objective:** Prepare production build for Render/Railway/VPS deployment.
-- **Tasks:** Configure Gunicorn WSGI, Nginx reverse proxy, static file collection (`collectstatic`).
-- **DoD:** App successfully running in production-like container/environment.
-
-#### PHASE 19 — Final Documentation & Presentation
-- **Objective:** Finalize project repository documentation and viva presentation slides.
-- **Tasks:** Generate master index, verify all file cross-references.
-- **DoD:** Complete repository ready for presentation.
+#### PHASE 19 — Cloud Deployment & Final Presentation
+- **Objective:** Production build deployment and final viva presentation setup.
+- **Deliverables:** Deployed application, master index verified.
 
 ---
 
-### 3. GIT WORKFLOW & BRANCHING STRATEGY
+### 2. TEAM PARALLELIZATION TRACKS (POST PHASE 3)
 
-#### Branch Hierarchy
-- `main` — Production-ready stable release branch.
-- `develop` — Integration branch for completed features.
-- `feature/*` — Feature development branches (e.g., `feature/donor-food-listing`).
-- `bugfix/*` — Bug resolution branches (e.g., `bugfix/otp-expiry-fix`).
-- `hotfix/*` — Urgent production patches.
-
-#### Recommended Commit Format
 ```
-feat(food): add PostGIS spatial point index and safety checklist validation
-fix(otp): prevent brute force attempts by adding 15m lock out
-docs(readme): add Windows virtualenv setup and Celery execution guide
+                  ┌──► TRACK A: Food, Safety & Passport (App: food) ───────────────┐
+                  │                                                                │
+PHASE 1 to 3 ─────┼──► TRACK B: Demand & Matching Engine (Apps: demand, rescue) ───┼──► PHASE 8 (Integration)
+(Base Auth & Org) │                                                                │
+                  └──► TRACK C: Volunteer & OTP Logistics (App: pickups) ──────────┘
 ```
 
 ---
 
-### 4. PROJECT MILESTONES (M1 — M15)
+### 3. PROJECT MILESTONES (M1 — M15)
 
-| Milestone | Target Output | Phase Scope |
+| Milestone | Target Output | Scope |
 | :--- | :--- | :--- |
-| **M1** | Documentation & Architecture Complete | Phase 0 |
+| **M1** | Documentation & Architecture Complete (Food Rescue OS) | Phase 0 |
 | **M2** | Project Infrastructure & DB Ready | Phase 1 |
 | **M3** | Authentication & RBAC Complete | Phase 2 |
 | **M4** | Organization Document Verification Complete | Phase 3 |
-| **M5** | Surplus Food Listing & Safety Module Complete | Phase 4 |
-| **M6** | Receiver Discovery Dashboard Complete | Phase 5 |
-| **M7** | PostGIS Geo-Matching & Leaflet Map Complete | Phase 7 |
-| **M8** | Atomic Claim System & Locking Complete | Phase 8 |
-| **M9** | Volunteer Dispatch & Task Accept Complete | Phase 6 |
-| **M10** | Dual OTP Verification Engine Complete | Phase 9 & 10 |
-| **M11** | Celery Spoilage Engine & Auto-Expiry Complete | Phase 12 |
-| **M12** | Impact Analytics & CSR PDF Engine Complete | Phase 13 & 14 |
-| **M13** | Admin Dashboard & Audit Logs Complete | Phase 15 |
-| **M14** | Automated Testing & Security Hardening Complete | Phase 16 & 17 |
+| **M5** | Surplus Food Listing & Safety SOP Engine Complete | Phase 4 |
+| **M6** | Receiver Demand Requests & Need-First Feed Complete | Phase 5 |
+| **M7** | PostGIS Geo-Matching & Leaflet Map Complete | Phase 6 |
+| **M8** | Deterministic Matching & Multi-Recipient Allocations Complete | Phase 7 & 8 |
+| **M9** | Volunteer Dispatch & Task Feed Complete | Phase 9 |
+| **M10** | Dual OTP Verification & Food Passport Complete | Phase 10 & 11 |
+| **M11** | Celery SLA Engine & Auto-Expiry Complete | Phase 12 |
+| **M12** | Impact Ledger & WeasyPrint CSR PDF Engine Complete | Phase 13 & 15 |
+| **M13** | AI Demand/Surplus Forecasting Engine Complete | Phase 14 |
+| **M14** | Admin Command Center & Testing Complete | Phase 16 & 17 |
 | **M15** | Production Deployment & Final Submission | Phase 18 & 19 |
-
----
-
-### 5. FEATURE DEVELOPMENT PRIORITY MATRIX
-
-#### P0 — MUST HAVE (CRITICAL PATH)
-- Authentication & RBAC User Models
-- Organization Document Upload & Admin Verification
-- Surplus Food Listing Creation & Safety Checklist
-- PostGIS Nearby Food Spatial Search
-- Atomic Claim Locking (`select_for_update`)
-- Pickup OTP & Delivery OTP Verification Engine
-- Celery Auto-Expiry Task
-- Basic Admin Dashboard
-
-#### P1 — IMPORTANT (HIGH VALUE)
-- Leaflet.js Interactive Urgency-Coded Map Markers
-- WeasyPrint PDF CSR Certificate Generation
-- Email & In-App Notification Engine
-- Real-time Spoilage Countdown Component (HTMX)
-- System Audit Log Recording
-
-#### P2 — FUTURE ENHANCEMENT (NICE TO HAVE)
-- WhatsApp Business API Notification Integration
-- Machine Learning Food Surplus Demand Prediction
-- Multi-Stop Volunteer Route Optimization Engine
-- Progressive Web App (PWA) Offline Caching

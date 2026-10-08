@@ -1,251 +1,116 @@
 # SANJOG — Database Design & Data Dictionary Document
-## Relational Schema & PostGIS Spatial Blueprint
+## Relational PostGIS Schema & Food Rescue OS Data Dictionary
 
 ---
 
 ### 1. DATABASE OVERVIEW
-**SANJOG** utilizes PostgreSQL 16 with the PostGIS 3.4 spatial database extension. The database design strictly adheres to 3rd Normal Form (3NF), enforcing data integrity via relational foreign keys, check constraints, unique constraints, and spatial indexes.
+**SANJOG** utilizes PostgreSQL 16 with the PostGIS 3.4 spatial database extension. The relational schema adheres to 3rd Normal Form (3NF), utilizing PostGIS spatial points (`GEOGRAPHY(POINT,4326)`), GiST spatial indexing, and atomic reservation transaction locks (`select_for_update()`) to support multi-recipient allocations, digital food passports, and authoritative impact ledgers.
 
 ---
 
-### 2. ER DIAGRAM (MERMAID)
+### 2. REVISED ER DIAGRAM (MERMAID)
 
 ```mermaid
 erDiagram
     CustomUser ||--o| OrganizationProfile : "manages"
     CustomUser ||--o| VolunteerProfile : "has"
-    CustomUser ||--o{ Notification : "receives"
-    CustomUser ||--o{ AuditLog : "triggers"
     
-    OrganizationProfile ||--o{ OrganizationDocument : "submits"
-    OrganizationProfile ||--o{ FoodListing : "creates (Donor)"
-    OrganizationProfile ||--o{ Claim : "makes (Receiver)"
+    OrganizationProfile ||--o{ FoodListing : "posts (Donor)"
+    OrganizationProfile ||--o{ DemandRequest : "posts (Receiver)"
     OrganizationProfile ||--o{ DonationCertificate : "receives"
-    
-    FoodListing ||--o| Claim : "has"
-    FoodListing ||--o| DonationCertificate : "generates"
-    
-    Claim ||--o| PickupRequest : "creates"
+
+    FoodListing ||--o| FoodSafetyAssessment : "evaluated by"
+    FoodListing ||--o| FoodPassport : "has"
+    FoodListing ||--o{ RescueAllocation : "divided into"
+
+    DemandRequest ||--o{ RescueAllocation : "fulfilled by"
+
+    RescueAllocation ||--o| PickupRequest : "generates"
     
     PickupRequest ||--o| Delivery : "results in"
-    PickupRequest ||--o{ OTPVerification : "verifies with"
+    PickupRequest ||--o{ OTPVerification : "verified by"
     
-    VolunteerProfile ||--o{ PickupRequest : "delivers"
+    VolunteerProfile ||--o{ PickupRequest : "executes"
+    
+    Delivery ||--o| ImpactLedger : "records to"
 ```
 
 ---
 
-### 3. RELATIONAL SCHEMA & ENTITY LIST
-
-#### Summary of Primary Entities:
-1. `accounts_customuser` — Primary extended user model.
-2. `organizations_organizationprofile` — Business/NGO legal entity profiles.
-3. `organizations_organizationdocument` — Legal accreditation upload files.
-4. `organizations_volunteerprofile` — Individual volunteer profiles.
-5. `food_foodlisting` — Surplus food listings with PostGIS spatial coordinates.
-6. `claims_claim` — Food claim transactions linking listing to receiver.
-7. `pickups_pickuprequest` — Transport & pickup coordination records.
-8. `pickups_otpverification` — Cryptographic handoff verification logs.
-9. `pickups_delivery` — Completed delivery verification records.
-10. `notifications_notification` — In-app notification log table.
-11. `certificates_donationcertificate` — CSR PDF metadata and SHA256 hashes.
-12. `analytics_impactrecord` — Daily & monthly aggregated platform metrics.
-13. `audit_auditlog` — System-wide security & operational audit logs.
-
----
-
-### 4. COMPREHENSIVE DATA DICTIONARY (TABLE SPECIFICATIONS)
+### 3. COMPREHENSIVE DATA DICTIONARY (16 CORE ENTITIES)
 
 #### Table 1: `accounts_customuser`
-- **Purpose:** Stores core user authentication credentials and role flags.
-
-| Field Name | Data Type | Nullable | Default | PK | FK | Unique | Index | Description |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `id` | `UUID` | No | `uuid_generate_v4()` | Yes | No | Yes | Yes | Primary Key |
-| `username` | `VARCHAR(150)` | No | None | No | No | Yes | Yes | Unique login username |
-| `email` | `VARCHAR(254)` | No | None | No | No | Yes | Yes | Unique contact email |
-| `password` | `VARCHAR(128)` | No | None | No | No | No | No | PBKDF2/Argon2 password hash |
-| `role` | `VARCHAR(20)` | No | `'DONOR'` | No | No | No | Yes | Enum: `DONOR`, `RECEIVER`, `VOLUNTEER`, `ADMIN` |
-| `phone_number` | `VARCHAR(15)` | No | None | No | No | Yes | Yes | Contact phone number |
-| `is_email_verified`| `BOOLEAN` | No | `False` | No | No | No | No | Email verification status |
-| `is_active` | `BOOLEAN` | No | `True` | No | No | No | No | Account status flag |
-| `is_staff` | `BOOLEAN` | No | `False` | No | No | No | No | Admin panel permission |
-| `date_joined` | `TIMESTAMPTZ` | No | `NOW()` | No | No | No | No | Registration timestamp |
-
----
+- **Purpose:** Core user account and role storage.
+- **Fields:** `id` (UUID, PK), `username` (VARCHAR 150, Unique), `email` (VARCHAR 254, Unique), `password` (VARCHAR 128), `role` (Enum: `DONOR`, `RECEIVER`, `VOLUNTEER`, `ADMIN`), `phone_number` (VARCHAR 15), `is_active` (BOOL), `is_staff` (BOOL), `date_joined` (TIMESTAMPTZ).
 
 #### Table 2: `organizations_organizationprofile`
-- **Purpose:** Represents legal entities (Donors or Receivers) registered on the platform.
-
-| Field Name | Data Type | Nullable | Default | PK | FK | Unique | Index | Description |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `id` | `UUID` | No | `uuid_generate_v4()` | Yes | No | Yes | Yes | Primary Key |
-| `user_id` | `UUID` | No | None | No | Yes | Yes | Yes | FK to `accounts_customuser.id` |
-| `org_type` | `VARCHAR(20)` | No | None | No | No | No | Yes | Enum: `RESTAURANT`, `HOTEL`, `MESS`, `NGO`, `SHELTER`, `OTHER` |
-| `name` | `VARCHAR(255)` | No | None | No | No | No | Yes | Legal organization name |
-| `registration_number` | `VARCHAR(100)` | No | None | No | No | Yes | Yes | Tax / FSSAI / NGO Reg Number |
-| `address_line1` | `VARCHAR(255)` | No | None | No | No | No | No | Street address |
-| `city` | `VARCHAR(100)` | No | None | No | No | No | Yes | City name |
-| `postal_code` | `VARCHAR(20)` | No | None | No | No | No | No | Postal PIN code |
-| `location` | `GEOGRAPHY(POINT,4326)` | No | None | No | No | No | Yes (GiST) | PostGIS spatial coordinates |
-| `verification_status` | `VARCHAR(20)` | No | `'PENDING'` | No | No | No | Yes | Enum: `PENDING`, `VERIFIED`, `REJECTED` |
-| `rejection_reason` | `TEXT` | Yes | `NULL` | No | No | No | No | Admin notes if rejected |
-| `created_at` | `TIMESTAMPTZ` | No | `NOW()` | No | No | No | No | Creation timestamp |
-
----
+- **Purpose:** Legal profile for Donors and Receivers.
+- **Fields:** `id` (UUID, PK), `user_id` (FK `CustomUser`), `org_type` (Enum: `RESTAURANT`, `HOTEL`, `MESS`, `NGO`, `SHELTER`, etc.), `name` (VARCHAR 255), `registration_number` (VARCHAR 100, Unique), `address_line1` (TEXT), `city` (VARCHAR 100), `location` (GEOGRAPHY POINT 4326, GiST Index), `verification_status` (Enum: `PENDING`, `VERIFIED`, `REJECTED`), `rejection_reason` (TEXT), `created_at` (TIMESTAMPTZ).
 
 #### Table 3: `organizations_organizationdocument`
-- **Purpose:** Stores paths and verification statuses of uploaded legal documents.
-
-| Field Name | Data Type | Nullable | Default | PK | FK | Unique | Index | Description |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `id` | `UUID` | No | `uuid_generate_v4()` | Yes | No | Yes | Yes | Primary Key |
-| `organization_id` | `UUID` | No | None | No | Yes | No | Yes | FK to `organizations_organizationprofile.id` |
-| `document_type` | `VARCHAR(50)` | No | None | No | No | No | No | Enum: `FSSAI_LICENSE`, `NGO_REGISTRATION`, `80G_CERTIFICATE`, `ID_PROOF` |
-| `file_path` | `VARCHAR(500)` | No | None | No | No | No | No | Path to media file storage |
-| `uploaded_at` | `TIMESTAMPTZ` | No | `NOW()` | No | No | No | No | Upload timestamp |
-| `is_approved` | `BOOLEAN` | No | `False` | No | No | No | No | Approval status |
-
----
+- **Purpose:** Uploaded FSSAI and 80G legal accreditation files.
+- **Fields:** `id` (UUID, PK), `organization_id` (FK `OrganizationProfile`), `document_type` (VARCHAR 50), `file_path` (VARCHAR 500), `uploaded_at` (TIMESTAMPTZ), `is_approved` (BOOL).
 
 #### Table 4: `organizations_volunteerprofile`
-- **Purpose:** Stores individual volunteer profiles and real-time availability.
-
-| Field Name | Data Type | Nullable | Default | PK | FK | Unique | Index | Description |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `id` | `UUID` | No | `uuid_generate_v4()` | Yes | No | Yes | Yes | Primary Key |
-| `user_id` | `UUID` | No | None | No | Yes | Yes | Yes | FK to `accounts_customuser.id` |
-| `vehicle_type` | `VARCHAR(30)` | No | `'WALKING'` | No | No | No | No | Enum: `WALKING`, `BICYCLE`, `TWO_WHEELER`, `CAR`, `VAN` |
-| `is_available` | `BOOLEAN` | No | `True` | No | No | No | Yes | Real-time availability flag |
-| `current_location`| `GEOGRAPHY(POINT,4326)` | Yes | `NULL` | No | No | No | Yes (GiST) | PostGIS spatial location |
-| `total_deliveries`| `INTEGER` | No | `0` | No | No | No | No | Completed delivery counter |
-
----
+- **Purpose:** Individual volunteer availability and vehicle details.
+- **Fields:** `id` (UUID, PK), `user_id` (FK `CustomUser`), `vehicle_type` (Enum: `WALKING`, `BICYCLE`, `TWO_WHEELER`, `CAR`, `VAN`), `is_available` (BOOL, Index), `current_location` (GEOGRAPHY POINT 4326), `total_deliveries` (INT).
 
 #### Table 5: `food_foodlisting`
-- **Purpose:** Core table representing surplus food entries created by Donors.
+- **Purpose:** Core surplus food entry. (*Updated: removed direct 1-to-1 `claimed_by` coupling*).
+- **Fields:** `id` (UUID, PK), `donor_org_id` (FK `OrganizationProfile`), `title` (VARCHAR 200), `food_category` (Enum: `COOKED_MEAL`, `BAKERY`, `PACKAGED`, `RAW`), `food_type` (Enum: `VEG`, `NON_VEG`, `JAIN`, `VEGAN`), `total_servings` (INT), `remaining_servings` (INT, Index), `total_weight_kg` (NUMERIC 8,2), `cooked_at` (TIMESTAMPTZ), `expires_at` (TIMESTAMPTZ, Index), `location` (GEOGRAPHY POINT 4326, GiST Index), `status` (Enum: `AVAILABLE`, `PARTIALLY_ALLOCATED`, `FULLY_ALLOCATED`, `EXPIRED`, `CANCELLED`), `sla_tier` (Enum: `NORMAL`, `URGENT`, `CRITICAL`), `created_at` (TIMESTAMPTZ).
 
-| Field Name | Data Type | Nullable | Default | PK | FK | Unique | Index | Description |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `id` | `UUID` | No | `uuid_generate_v4()` | Yes | No | Yes | Yes | Primary Key |
-| `donor_org_id` | `UUID` | No | None | No | Yes | No | Yes | FK to `organizations_organizationprofile.id` |
-| `title` | `VARCHAR(200)` | No | None | No | No | No | No | Descriptive food title |
-| `food_category` | `VARCHAR(30)` | No | None | No | No | No | Yes | Enum: `COOKED_MEAL`, `BAKERY`, `PACKAGED`, `RAW_INGREDIENT` |
-| `food_type` | `VARCHAR(20)` | No | `'VEG'` | No | No | No | Yes | Enum: `VEG`, `NON_VEG`, `JAIN`, `VEGAN` |
-| `quantity_kg` | `NUMERIC(8,2)` | No | None | No | No | No | No | Weight in kilograms |
-| `estimated_servings`| `INTEGER` | No | None | No | No | No | No | Estimated number of people fed |
-| `cooked_at` | `TIMESTAMPTZ` | No | None | No | No | No | No | Preparation timestamp |
-| `expires_at` | `TIMESTAMPTZ` | No | None | No | No | No | Yes | Expiry cutoff timestamp |
-| `pickup_address` | `TEXT` | No | None | No | No | No | No | Detailed pickup address |
-| `location` | `GEOGRAPHY(POINT,4326)` | No | None | No | No | No | Yes (GiST) | PostGIS spatial point |
-| `status` | `VARCHAR(20)` | No | `'AVAILABLE'` | No | No | No | Yes | Enum: `AVAILABLE`, `CLAIMED`, `PICKUP_ASSIGNED`, `PICKED_UP`, `DELIVERED`, `EXPIRED`, `CANCELLED` |
-| `safety_checked` | `BOOLEAN` | No | `False` | No | No | No | No | Mandatory hygiene declaration flag |
-| `image_path` | `VARCHAR(500)` | Yes | `NULL` | No | No | No | No | Path to uploaded food image |
-| `created_at` | `TIMESTAMPTZ` | No | `NOW()` | No | No | No | Yes | Creation timestamp |
+#### Table 6: `food_foodsafetyassessment` (NEW)
+- **Purpose:** Structured food safety SOP rule evaluation.
+- **Fields:** `id` (UUID, PK), `food_listing_id` (FK `FoodListing`, Unique), `storage_temperature` (VARCHAR 50), `packaging_type` (VARCHAR 50), `has_allergens` (BOOL), `hygiene_checklist_passed` (BOOL), `safety_status` (Enum: `ELIGIBLE`, `REVIEW_REQUIRED`, `NOT_ELIGIBLE`), `assessed_at` (TIMESTAMPTZ).
 
----
+#### Table 7: `food_foodpassport` (NEW)
+- **Purpose:** Immutable digital lifecycle chain-of-custody ledger.
+- **Fields:** `id` (UUID, PK), `food_listing_id` (FK `FoodListing`, Unique), `passport_id` (VARCHAR 50, Unique), `custody_events_json` (JSONB), `current_hash` (VARCHAR 64), `is_finalized` (BOOL), `created_at` (TIMESTAMPTZ).
 
-#### Table 6: `claims_claim`
-- **Purpose:** Manages claim allocations by Receiver organizations.
+#### Table 8: `demand_demandrequest` (NEW)
+- **Purpose:** Need-First meal requirements logged by Receivers.
+- **Fields:** `id` (UUID, PK), `receiver_org_id` (FK `OrganizationProfile`), `servings_needed` (INT), `servings_fulfilled` (INT), `food_type_preference` (VARCHAR 20), `required_by` (TIMESTAMPTZ, Index), `delivery_location` (GEOGRAPHY POINT 4326, GiST Index), `status` (Enum: `ACTIVE`, `PARTIALLY_MATCHED`, `FULFILLED`, `EXPIRED`), `created_at` (TIMESTAMPTZ).
 
-| Field Name | Data Type | Nullable | Default | PK | FK | Unique | Index | Description |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `id` | `UUID` | No | `uuid_generate_v4()` | Yes | No | Yes | Yes | Primary Key |
-| `food_listing_id` | `UUID` | No | None | No | Yes | Yes | Yes | FK to `food_foodlisting.id` (1-to-1 active) |
-| `receiver_org_id` | `UUID` | No | None | No | Yes | No | Yes | FK to `organizations_organizationprofile.id` |
-| `claimed_at` | `TIMESTAMPTZ` | No | `NOW()` | No | No | No | No | Claim creation timestamp |
-| `is_self_pickup` | `BOOLEAN` | No | `False` | No | No | No | No | Direct NGO pickup flag |
-| `status` | `VARCHAR(20)` | No | `'ACTIVE'` | No | No | No | Yes | Enum: `ACTIVE`, `COMPLETED`, `CANCELLED` |
+#### Table 9: `rescue_rescueallocation` (NEW - Multi-Recipient Split Junction)
+- **Purpose:** Links one `FoodListing` to one `DemandRequest` for specific quantities.
+- **Fields:** `id` (UUID, PK), `food_listing_id` (FK `FoodListing`), `demand_request_id` (FK `DemandRequest`), `allocated_servings` (INT), `allocated_weight_kg` (NUMERIC 8,2), `status` (Enum: `RESERVED`, `CONFIRMED`, `PICKUP_ASSIGNED`, `PICKED_UP`, `DELIVERED`, `CANCELLED`), `allocated_at` (TIMESTAMPTZ).
 
----
+#### Table 10: `pickups_pickuprequest`
+- **Purpose:** Volunteer transport tasks generated per `RescueAllocation`.
+- **Fields:** `id` (UUID, PK), `allocation_id` (FK `RescueAllocation`, Unique), `volunteer_id` (FK `VolunteerProfile`, Nullable), `status` (Enum: `UNASSIGNED`, `ASSIGNED`, `PICKED_UP`, `DELIVERED`, `FAILED`), `assigned_at` (TIMESTAMPTZ), `picked_up_at` (TIMESTAMPTZ).
 
-#### Table 7: `pickups_pickuprequest`
-- **Purpose:** Tracks volunteer pickup dispatch and transport state.
+#### Table 11: `pickups_otpverification`
+- **Purpose:** Cryptographic 4-digit OTP logs.
+- **Fields:** `id` (UUID, PK), `pickup_request_id` (FK `PickupRequest`), `otp_type` (Enum: `PICKUP`, `DELIVERY`), `otp_hash` (VARCHAR 255), `attempts_count` (INT, Default 0), `is_verified` (BOOL), `expires_at` (TIMESTAMPTZ).
 
-| Field Name | Data Type | Nullable | Default | PK | FK | Unique | Index | Description |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `id` | `UUID` | No | `uuid_generate_v4()` | Yes | No | Yes | Yes | Primary Key |
-| `claim_id` | `UUID` | No | None | No | Yes | Yes | Yes | FK to `claims_claim.id` |
-| `volunteer_id` | `UUID` | Yes | `NULL` | No | Yes | No | Yes | FK to `organizations_volunteerprofile.id` |
-| `pickup_status` | `VARCHAR(20)` | No | `'UNASSIGNED'`| No | No | No | Yes | Enum: `UNASSIGNED`, `ASSIGNED`, `IN_TRANSIT`, `DELIVERED`, `FAILED` |
-| `assigned_at` | `TIMESTAMPTZ` | Yes | `NULL` | No | No | No | No | Assignment timestamp |
-| `picked_up_at` | `TIMESTAMPTZ` | Yes | `NULL` | No | No | No | No | Pickup completion timestamp |
+#### Table 12: `pickups_delivery`
+- **Purpose:** Final delivery completion proof.
+- **Fields:** `id` (UUID, PK), `pickup_request_id` (FK `PickupRequest`, Unique), `delivered_at` (TIMESTAMPTZ), `distance_km` (NUMERIC 6,2), `delivery_notes` (TEXT).
 
----
+#### Table 13: `analytics_impactledger` (ENHANCED)
+- **Purpose:** Authoritative financial & social impact transaction ledger.
+- **Fields:** `id` (BIGSERIAL, PK), `delivery_id` (FK `Delivery`, Unique), `donor_org_id` (FK `OrganizationProfile`), `receiver_org_id` (FK `OrganizationProfile`), `servings_delivered` (INT), `weight_kg` (NUMERIC 8,2), `co2_offset_kg` (NUMERIC 8,2), `recorded_at` (TIMESTAMPTZ, Index).
 
-#### Table 8: `pickups_otpverification`
-- **Purpose:** Cryptographic verification logs for pickup and delivery handoffs.
+#### Table 14: `certificates_donationcertificate`
+- **Purpose:** Generated PDF metadata for corporate CSR validation.
+- **Fields:** `id` (UUID, PK), `donor_org_id` (FK `OrganizationProfile`), `food_listing_id` (FK `FoodListing`), `certificate_hash` (VARCHAR 64, Unique), `pdf_file_path` (VARCHAR 500), `generated_at` (TIMESTAMPTZ).
 
-| Field Name | Data Type | Nullable | Default | PK | FK | Unique | Index | Description |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `id` | `UUID` | No | `uuid_generate_v4()` | Yes | No | Yes | Yes | Primary Key |
-| `pickup_request_id`| `UUID` | No | None | No | Yes | No | Yes | FK to `pickups_pickuprequest.id` |
-| `otp_type` | `VARCHAR(20)` | No | None | No | No | No | Yes | Enum: `PICKUP`, `DELIVERY` |
-| `otp_hash` | `VARCHAR(255)` | No | None | No | No | No | No | Salted SHA-256 OTP hash |
-| `attempts_count` | `INTEGER` | No | `0` | No | No | No | No | Failed validation count |
-| `is_verified` | `BOOLEAN` | No | `False` | No | No | No | Yes | Verification status |
-| `expires_at` | `TIMESTAMPTZ` | No | None | No | No | No | No | OTP expiration timestamp |
-
----
-
-#### Table 9: `pickups_delivery`
-- **Purpose:** Final delivery completion record.
-
-| Field Name | Data Type | Nullable | Default | PK | FK | Unique | Index | Description |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `id` | `UUID` | No | `uuid_generate_v4()` | Yes | No | Yes | Yes | Primary Key |
-| `pickup_request_id`| `UUID` | No | None | No | Yes | Yes | Yes | FK to `pickups_pickuprequest.id` |
-| `delivered_at` | `TIMESTAMPTZ` | No | `NOW()` | No | No | No | No | Delivery timestamp |
-| `distance_km` | `NUMERIC(6,2)` | No | `0.00` | No | No | No | No | Calculated travel distance |
-| `delivery_notes` | `TEXT` | Yes | `NULL` | No | No | No | No | Recipient comments |
-
----
-
-#### Table 10: `certificates_donationcertificate`
-- **Purpose:** Stores generated PDF metadata for corporate CSR validation.
-
-| Field Name | Data Type | Nullable | Default | PK | FK | Unique | Index | Description |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `id` | `UUID` | No | `uuid_generate_v4()` | Yes | No | Yes | Yes | Primary Key |
-| `donor_org_id` | `UUID` | No | None | No | Yes | No | Yes | FK to `organizations_organizationprofile.id` |
-| `food_listing_id` | `UUID` | No | None | No | Yes | Yes | Yes | FK to `food_foodlisting.id` |
-| `certificate_hash` | `VARCHAR(64)` | No | None | No | No | Yes | Yes | SHA256 verification hash |
-| `pdf_file_path` | `VARCHAR(500)` | No | None | No | No | No | No | PDF storage path |
-| `generated_at` | `TIMESTAMPTZ` | No | `NOW()` | No | No | No | No | Generation timestamp |
-
----
-
-#### Table 11: `audit_auditlog`
+#### Table 15: `audit_auditlog`
 - **Purpose:** System-wide security and event auditing.
+- **Fields:** `id` (BIGSERIAL, PK), `user_id` (FK `CustomUser`), `action` (VARCHAR 100), `target_model` (VARCHAR 100), `target_id` (VARCHAR 100), `ip_address` (INET), `timestamp` (TIMESTAMPTZ).
 
-| Field Name | Data Type | Nullable | Default | PK | FK | Unique | Index | Description |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `id` | `BIGSERIAL` | No | Nextval() | Yes | No | Yes | Yes | Primary Key |
-| `user_id` | `UUID` | Yes | `NULL` | No | Yes | No | Yes | Actor user ID |
-| `action` | `VARCHAR(100)` | No | None | No | No | No | Yes | Action string (e.g. `CLAIM_CREATED`) |
-| `target_model` | `VARCHAR(100)` | No | None | No | No | No | No | Affected entity name |
-| `target_id` | `VARCHAR(100)` | No | None | No | No | No | No | Affected entity UUID |
-| `ip_address` | `INET` | Yes | `NULL` | No | No | No | No | Client IP address |
-| `timestamp` | `TIMESTAMPTZ` | No | `NOW()` | No | No | No | Yes | Event timestamp |
+#### Table 16: `ml_engine_demandforecast` (P1)
+- **Purpose:** Scikit-Learn ML demand forecasting baselines.
+- **Fields:** `id` (UUID, PK), `receiver_org_id` (FK `OrganizationProfile`), `forecast_date` (DATE), `predicted_servings` (INT), `confidence_score` (NUMERIC 4,3), `generated_at` (TIMESTAMPTZ).
 
 ---
 
-### 5. STATE TRANSITION RULES & DATABASE CONSTRAINTS
-
-#### FoodListing State Transitions:
-```
-AVAILABLE ──► CLAIMED ──► PICKUP_ASSIGNED ──► PICKED_UP ──► DELIVERED
-   │             │
-   ▼             ▼
-EXPIRED      CANCELLED
-```
-
-#### SQL Check Constraints:
+### 4. SQL CHECK CONSTRAINTS & CONCURRENCY
 ```sql
--- Enforce non-negative food quantities
-ALTER TABLE food_foodlisting ADD CONSTRAINT chk_food_quantity CHECK (quantity_kg > 0);
-ALTER TABLE food_foodlisting ADD CONSTRAINT chk_food_servings CHECK (estimated_servings > 0);
+-- Enforce positive servings and weight
+ALTER TABLE food_foodlisting ADD CONSTRAINT chk_food_servings CHECK (total_servings > 0 AND remaining_servings >= 0);
+ALTER TABLE rescue_rescueallocation ADD CONSTRAINT chk_alloc_servings CHECK (allocated_servings > 0);
 
--- Enforce valid OTP failure count limit
+-- Enforce max 3 OTP attempts
 ALTER TABLE pickups_otpverification ADD CONSTRAINT chk_otp_attempts CHECK (attempts_count <= 3);
 ```
