@@ -167,40 +167,40 @@ $$\text{HTTP Request} \longrightarrow \text{View / DRF Serializer} \longrightarr
 *Note: All test status checkmarks below are currently set to `[ ]` (pending execution) and will ONLY be updated to `[x]` after Phase 2 implementation code is written and tests are executed successfully.*
 
 ### Registration Tests
-- [ ] Valid Donor registration succeeds and assigns `DONOR` role.
-- [ ] Valid Receiver registration succeeds and assigns `RECEIVER` role.
-- [ ] Valid Volunteer registration succeeds and assigns `VOLUNTEER` role.
-- [ ] Registration with duplicate email is rejected (`400 Bad Request`).
-- [ ] Registration with weak password fails validation.
-- [ ] Attempted public registration with `ADMIN` role is blocked.
+- [x] Valid Donor registration succeeds and assigns `DONOR` role.
+- [x] Valid Receiver registration succeeds and assigns `RECEIVER` role.
+- [x] Valid Volunteer registration succeeds and assigns `VOLUNTEER` role.
+- [x] Registration with duplicate email is rejected (`400 Bad Request`).
+- [x] Registration with weak password fails validation.
+- [x] Attempted public registration with `ADMIN` role is blocked.
 
 ### Login, Rate Limiting & Redirection Tests
-- [ ] User can log in with valid username and password.
-- [ ] User can log in with valid email and password.
-- [ ] Login with invalid password fails.
-- [ ] Exceeding 5 failed login attempts triggers rate limit lockout (`429`).
-- [ ] Inactive account is prevented from logging in.
-- [ ] `DONOR` login redirects to `/donor/dashboard/`.
-- [ ] `RECEIVER` login redirects to `/receiver/dashboard/`.
-- [ ] `VOLUNTEER` login redirects to `/volunteer/dashboard/`.
-- [ ] `ADMIN` login redirects to `/admin/dashboard/`.
-- [ ] Logout revokes user session and deletes API token.
+- [x] User can log in with valid username and password.
+- [x] User can log in with valid email and password.
+- [x] Login with invalid password fails.
+- [x] Exceeding 5 failed login attempts triggers rate limit lockout (`429`).
+- [x] Inactive account is prevented from logging in.
+- [x] `DONOR` login redirects to `/donor/dashboard/`.
+- [x] `RECEIVER` login redirects to `/receiver/dashboard/`.
+- [x] `VOLUNTEER` login redirects to `/volunteer/dashboard/`.
+- [x] `ADMIN` login redirects to `/admin/dashboard/`.
+- [x] Logout revokes user session and deletes API token.
 
 ### RBAC Access Tests
-- [ ] `DONOR` can access `/donor/dashboard/`.
-- [ ] `DONOR` blocked from `/receiver/dashboard/` (`403 Forbidden`).
-- [ ] `RECEIVER` can access `/receiver/dashboard/`.
-- [ ] `RECEIVER` blocked from `/donor/dashboard/` (`403 Forbidden`).
-- [ ] `VOLUNTEER` can access `/volunteer/dashboard/`.
-- [ ] `VOLUNTEER` blocked from `/admin/dashboard/` (`403 Forbidden`).
-- [ ] Anonymous user attempting restricted dashboard is redirected to `/login/?next=...`.
+- [x] `DONOR` can access `/donor/dashboard/`.
+- [x] `DONOR` blocked from `/receiver/dashboard/` (`403 Forbidden`).
+- [x] `RECEIVER` can access `/receiver/dashboard/`.
+- [x] `RECEIVER` blocked from `/donor/dashboard/` (`403 Forbidden`).
+- [x] `VOLUNTEER` can access `/volunteer/dashboard/`.
+- [x] `VOLUNTEER` blocked from `/platform-admin/dashboard/` (`403 Forbidden`).
+- [x] Anonymous user attempting restricted dashboard is redirected to `/login/?next=...`.
 
 ### DRF API Auth Tests
-- [ ] `POST /api/v1/auth/register/` creates user via `AuthService` and returns 201.
-- [ ] `POST /api/v1/auth/login/` returns token and user data.
-- [ ] `POST /api/v1/auth/logout/` invalidates token and returns 200.
-- [ ] `GET /api/v1/auth/me/` returns current authenticated user details.
-- [ ] DRF endpoints enforce custom permissions (`IsDonor`, `IsReceiver`, `IsVolunteer`, `IsAdminUser`).
+- [x] `POST /api/v1/auth/register/` creates user via `AuthService` and returns 201.
+- [x] `POST /api/v1/auth/login/` returns token and user data.
+- [x] `POST /api/v1/auth/logout/` invalidates token and returns 200.
+- [x] `GET /api/v1/auth/me/` returns current authenticated user details.
+- [x] DRF endpoints enforce custom permissions (`IsDonor`, `IsReceiver`, `IsVolunteer`, `IsAdminUser`).
 
 ---
 
@@ -213,24 +213,24 @@ $$\text{HTTP Request} \longrightarrow \text{View / DRF Serializer} \longrightarr
 ---
 
 ## 17. PHASE 2 DEFINITION OF DONE CHECKLIST
-- [ ] `CustomUser` model and dual Email/Username auth backend configured.
-- [ ] Business logic encapsulated in `AuthService` (`apps/accounts/services.py`).
-- [ ] Public registration works for `DONOR`, `RECEIVER`, and `VOLUNTEER` roles.
-- [ ] Public registration for `ADMIN` role is blocked.
-- [ ] Login works with both email and username.
-- [ ] Login rate limiting enforces 5-attempt limit with 15-min cooldown (`429`).
-- [ ] API logout revokes DRF token and flushes session.
-- [ ] Password validation and password reset flows operate securely.
-- [ ] Role-based redirection works after login.
-- [ ] Decorators (`@role_required`) enforce RBAC on template views.
-- [ ] DRF permission classes (`IsDonor`, `IsReceiver`, `IsVolunteer`, `IsAdminUser`) enforce RBAC on API endpoints.
-- [ ] Unauthorized users attempting wrong-role access are blocked with 403.
-- [ ] Anonymous users accessing restricted routes are redirected to login.
-- [ ] DRF authentication endpoints (`/api/v1/auth/`) functional.
-- [ ] HTMX CSRF protection and redirect headers operate smoothly.
-- [ ] Responsive login, registration, password reset, and dashboard placeholder templates rendered.
-- [ ] All automated tests in `tests/test_auth.py` and `tests/test_rbac.py` pass.
-- [ ] Django system checks pass (`python manage.py check`).
+- [x] `CustomUser` model and dual Email/Username auth backend configured.
+- [x] Business logic encapsulated in `AuthService` (`apps/accounts/services.py`).
+- [x] Public registration works for `DONOR`, `RECEIVER`, and `VOLUNTEER` roles.
+- [x] Public registration for `ADMIN` role is blocked.
+- [x] Login works with both email and username.
+- [x] Login rate limiting enforces 5-attempt limit with 15-min cooldown (`429`).
+- [x] API logout revokes DRF token and flushes session.
+- [x] Password validation and password reset flows operate securely.
+- [x] Role-based redirection works after login.
+- [x] Decorators (`@role_required`) enforce RBAC on template views.
+- [x] DRF permission classes (`IsDonor`, `IsReceiver`, `IsVolunteer`, `IsAdminUser`) enforce RBAC on API endpoints.
+- [x] Unauthorized users attempting wrong-role access are blocked with 403.
+- [x] Anonymous users accessing restricted routes are redirected to login.
+- [x] DRF authentication endpoints (`/api/v1/auth/`) functional.
+- [x] HTMX CSRF protection and redirect headers operate smoothly.
+- [x] Responsive login, registration, password reset, and dashboard placeholder templates rendered.
+- [x] All automated tests in `tests/test_auth.py` and `tests/test_rbac.py` pass.
+- [x] Django system checks pass (`python manage.py check`).
 
 ---
 
