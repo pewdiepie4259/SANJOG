@@ -17,6 +17,8 @@ venv.bak/
 # Django Media & Static Outputs
 media/
 !media/.gitkeep
+private_media/
+!private_media/.gitkeep
 staticfiles/
 static/css/output.css
 

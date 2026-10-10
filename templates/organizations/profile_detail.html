@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block title %}{{ organization.name }} — Organization Profile — SANJOG{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto space-y-6">
+    <!-- Top Card: Name, Category, Verification Status Badge -->
+    <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div class="space-y-2">
+            <div class="flex items-center gap-3 flex-wrap">
+                <h1 class="text-2xl sm:text-3xl font-black text-slate-900">{{ organization.name }}</h1>
+                {% include "organizations/partials/status_badge.html" with status=organization.verification_status %}
+            </div>
+            <p class="text-xs text-slate-500">
+                <span class="font-bold text-slate-700">{{ organization.get_org_type_display }}</span> &bull;
+                Registered {{ organization.created_at|date:"M d, Y" }} &bull;
+                Managed by <span class="font-medium text-primary-700">{{ organization.user.username }}</span>
+            </p>
+        </div>
+
+        <div class="flex items-center gap-2 flex-wrap">
+            {% if organization.verification_status != 'PENDING' %}
+                <a href="{% url 'organization_profile_edit' %}" class="px-4 py-2 rounded-xl border border-slate-300 text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors shadow-sm">
+                    Edit Profile
+                </a>
+                <a href="{% url 'organization_documents' %}" class="px-4 py-2 rounded-xl bg-primary-700 hover:bg-primary-900 text-white text-xs font-bold transition-all shadow-sm">
+                    Manage Documents
+                </a>
+            {% else %}
+                <span class="px-3 py-1.5 rounded-xl bg-amber-50 text-amber-800 border border-amber-200 text-xs font-medium">
+                    Profile Locked During Review
+                </span>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Status Alert Banners -->
+    {% if organization.verification_status == 'REJECTED' %}
+        <div class="bg-rose-50 border border-rose-200 rounded-2xl p-6 space-y-3">
+            <div class="flex items-center gap-2 text-rose-800 font-bold text-sm">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                Verification Rejected by Administrator
+            </div>
+            <p class="text-xs text-rose-700 bg-white/70 p-3 rounded-lg border border-rose-100 font-mono">
+                Reason: {{ organization.rejection_reason }}
+            </p>
+            <p class="text-xs text-slate-600">
+                Please upload updated or replacement documents resolving the reviewer feedback, then resubmit your profile below.
+            </p>
+        </div>
+    {% elif organization.verification_status == 'PENDING' %}
+        <div class="bg-amber-50 border border-amber-200 rounded-2xl p-6 flex items-start gap-3">
+            <svg class="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <div class="space-y-1">
+                <h4 class="text-sm font-bold text-amber-900">Application Under Compliance Review</h4>
+                <p class="text-xs text-amber-700">
+                    Your profile and accreditation documents are currently being inspected by the platform compliance desk. You will be notified once a determination is recorded.
+                </p>
+            </div>
+        </div>
+    {% elif organization.verification_status == 'APPROVED' %}
+        <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-6 flex items-start gap-3">
+            <svg class="w-5 h-5 text-emerald-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <div class="space-y-1">
+                <h4 class="text-sm font-bold text-emerald-900">Fully Verified Organization</h4>
+                <p class="text-xs text-emerald-700">
+                    Your organization is verified and accredited. Surplus food donation and meal claim operations are fully unlocked across SANJOG.
+                </p>
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- 2-Column Grid: Details & Document Checklist -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Column 1: Organization Details -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+            <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500 pb-2 border-b border-slate-100">
+                Entity Details & Contact
+            </h2>
+            <dl class="space-y-3 text-xs">
+                <div>
+                    <dt class="font-bold text-slate-500">Registration / FSSAI / 80G:</dt>
+                    <dd class="text-slate-800 font-mono mt-0.5">{{ organization.registration_number|default:"Not Provided" }}</dd>
+                </div>
+                <div>
+                    <dt class="font-bold text-slate-500">Contact Representative:</dt>
+                    <dd class="text-slate-800 mt-0.5">{{ organization.contact_person }}</dd>
+                </div>
+                <div>
+                    <dt class="font-bold text-slate-500">Operational Email:</dt>
+                    <dd class="text-slate-800 font-mono mt-0.5">{{ organization.contact_email }}</dd>
+                </div>
+                <div>
+                    <dt class="font-bold text-slate-500">Operational Phone:</dt>
+                    <dd class="text-slate-800 font-mono mt-0.5">{{ organization.contact_phone }}</dd>
+                </div>
+                <div>
+                    <dt class="font-bold text-slate-500">Physical Address:</dt>
+                    <dd class="text-slate-800 mt-0.5">
+                        {{ organization.address_line1 }}{% if organization.address_line2 %}, {{ organization.address_line2 }}{% endif %}<br>
+                        {{ organization.city }}, {{ organization.state }} {{ organization.postal_code }} &bull; {{ organization.country }}
+                    </dd>
+                </div>
+                <div>
+                    <dt class="font-bold text-slate-500">GPS Coordinates:</dt>
+                    <dd class="text-slate-800 font-mono mt-0.5">
+                        {% if organization.latitude and organization.longitude %}
+                            {{ organization.latitude }}, {{ organization.longitude }}
+                        {% else %}
+                            <span class="text-slate-400">Not configured</span>
+                        {% endif %}
+                    </dd>
+                </div>
+            </dl>
+        </div>
+
+        <!-- Column 2: Document Compliance Checklist -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4 flex flex-col justify-between">
+            <div class="space-y-4">
+                <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+                    <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500">
+                        Mandatory Accreditation Checklist
+                    </h2>
+                    <a href="{% url 'organization_documents' %}" class="text-xs text-primary-700 hover:underline font-bold">
+                        Upload Files &rarr;
+                    </a>
+                </div>
+
+                <div class="space-y-2">
+                    {% for item in checklist %}
+                        <div class="p-3 rounded-xl border border-slate-100 bg-slate-50 flex items-center justify-between text-xs">
+                            <span class="font-semibold text-slate-800">{{ item.label }}</span>
+                            {% if item.status == 'APPROVED' %}
+                                <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold">Approved</span>
+                            {% elif item.status == 'PENDING' %}
+                                <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[11px] font-bold">Pending Review</span>
+                            {% elif item.status == 'REJECTED' %}
+                                <span class="px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 text-[11px] font-bold">Rejected</span>
+                            {% else %}
+                                <span class="px-2 py-0.5 rounded-full bg-slate-200 text-slate-700 text-[11px] font-bold">Missing</span>
+                            {% endif %}
+                        </div>
+                    {% empty %}
+                        <p class="text-xs text-slate-500 italic">No mandatory documents defined for this organization category.</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Submission Action Section -->
+            {% if organization.verification_status != 'APPROVED' and organization.verification_status != 'PENDING' %}
+                <div class="pt-4 border-t border-slate-100 space-y-2">
+                    <form method="post" action="{% url 'organization_submit' %}">
+                        {% csrf_token %}
+                        <button type="submit" id="btn-submit-verification" class="w-full py-2.5 rounded-xl bg-primary-700 hover:bg-primary-900 text-white font-bold text-xs shadow transition-all flex items-center justify-center gap-2">
+                            <span>Submit for Admin Verification &rarr;</span>
+                        </button>
+                    </form>
+                    <p class="text-[11px] text-slate-400 text-center">
+                        All mandatory accreditations must have an active upload before submission.
+                    </p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Verification Audit Events Timeline -->
+    {% if events %}
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+            <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500 pb-2 border-b border-slate-100">
+                Verification History Timeline (Audit Log)
+            </h2>
+            <div class="space-y-3">
+                {% for event in events %}
+                    <div class="flex items-start gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100 text-xs">
+                        <span class="w-2 h-2 mt-1.5 rounded-full {% if event.event_type == 'APPROVED' %}bg-emerald-500{% elif event.event_type == 'REJECTED' %}bg-rose-500{% else %}bg-primary-500{% endif %}"></span>
+                        <div class="flex-grow space-y-1">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-slate-800">{{ event.get_event_type_display }}</span>
+                                <span class="text-slate-400 font-mono text-[11px]">{{ event.created_at|date:"M d, Y H:i" }}</span>
+                            </div>
+                            <p class="text-slate-600">
+                                Transition: <span class="font-mono text-slate-800">{{ event.previous_status }} &rarr; {{ event.new_status }}</span>
+                                {% if event.actor %} &bull; Actor: {{ event.actor.username }}{% endif %}
+                            </p>
+                            {% if event.notes %}
+                                <p class="text-slate-700 bg-white p-2 rounded border border-slate-200 font-mono text-[11px] mt-1">{{ event.notes }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

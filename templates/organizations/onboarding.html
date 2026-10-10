@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Organization Onboarding — SANJOG Food Rescue OS{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto space-y-8">
+    <!-- Header Hero Banner -->
+    <div class="bg-gradient-to-r from-slate-900 to-primary-900 text-white rounded-3xl p-8 sm:p-10 shadow-lg relative overflow-hidden">
+        <div class="relative z-10 space-y-3">
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-500/20 text-green-300 border border-green-500/30">
+                Phase 3 Organization Verification
+            </span>
+            <h1 class="text-3xl sm:text-4xl font-black tracking-tight">
+                Welcome to SANJOG Organization Onboarding
+            </h1>
+            <p class="text-slate-300 max-w-2xl text-sm sm:text-base">
+                To guarantee food safety, regulatory compliance, and community trust across the food rescue ecosystem, all registered <span class="text-green-400 font-bold">{{ role_display }}</span> accounts must complete organization profile registration and verification.
+            </p>
+        </div>
+    </div>
+
+    <!-- 3-Step Verification Pipeline Breakdown -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div class="space-y-3">
+                <div class="w-10 h-10 rounded-xl bg-primary-50 text-primary-700 flex items-center justify-center font-bold text-lg border border-primary-200">
+                    1
+                </div>
+                <h3 class="text-lg font-bold text-slate-900">Entity Profile</h3>
+                <p class="text-slate-600 text-xs leading-relaxed">
+                    Provide your official organization name, accredited establishment category, address, GPS coordinates, and authorized point-of-contact.
+                </p>
+            </div>
+            <span class="text-xs text-primary-600 font-medium mt-4">Estimated time: 3 mins</span>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div class="space-y-3">
+                <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center font-bold text-lg border border-amber-200">
+                    2
+                </div>
+                <h3 class="text-lg font-bold text-slate-900">Document Upload</h3>
+                <p class="text-slate-600 text-xs leading-relaxed">
+                    Upload official accreditations (e.g. FSSAI food license for Donors, 80G tax exemption / trust deeds for Receivers). Stored in private, zero-exposure storage.
+                </p>
+            </div>
+            <span class="text-xs text-amber-600 font-medium mt-4">Required formats: PDF, PNG, JPG</span>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div class="space-y-3">
+                <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold text-lg border border-emerald-200">
+                    3
+                </div>
+                <h3 class="text-lg font-bold text-slate-900">Admin Approval</h3>
+                <p class="text-slate-600 text-xs leading-relaxed">
+                    Our platform compliance team reviews your uploaded credentials. Once approved, live surplus posting and meal dispatch are automatically unlocked.
+                </p>
+            </div>
+            <span class="text-xs text-emerald-600 font-medium mt-4">Turnaround: 12-24 hours</span>
+        </div>
+    </div>
+
+    <!-- Action Prompt Card -->
+    <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div>
+            <h2 class="text-xl font-bold text-slate-900">Ready to register your organization?</h2>
+            <p class="text-slate-500 text-xs sm:text-sm mt-1">
+                You can save a draft at any stage and return to complete document uploads later.
+            </p>
+        </div>
+        <a href="{% url 'organization_create' %}" id="btn-start-onboarding" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-primary-700 hover:bg-primary-900 text-white font-bold text-sm shadow transition-all whitespace-nowrap">
+            Begin Setup &rarr;
+        </a>
+    </div>
+</div>
+{% endblock %}

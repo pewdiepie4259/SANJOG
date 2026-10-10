@@ -12,6 +12,11 @@
             <a href="/api/v1/health/" class="hover:text-green-300 transition-colors">System Health</a>
             
             {% if user.is_authenticated %}
+                {% if user.is_admin_user %}
+                    <a href="{% url 'admin_verification_queue' %}" class="text-amber-300 hover:text-amber-100 transition-colors">Verification Queue</a>
+                {% elif user.is_donor or user.is_receiver %}
+                    <a href="{% url 'organization_profile' %}" class="hover:text-green-300 transition-colors">Organization Profile</a>
+                {% endif %}
                 <span class="text-green-300 font-mono text-xs">{{ user.username }} ({{ user.get_role_display }})</span>
                 <a href="/accounts/logout/" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded transition-colors text-xs">Logout</a>
             {% else %}

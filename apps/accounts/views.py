@@ -110,6 +110,10 @@ class LogoutView(View):
         return self.get(request)
 
 
+def home_view(request):
+    """Home / Landing page view."""
+    return render(request, 'base.html')
+
 # Dashboard Placeholders with Role Decorator Protections
 @role_required(['DONOR'])
 def donor_dashboard_view(request):

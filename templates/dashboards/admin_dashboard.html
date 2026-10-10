@@ -19,10 +19,10 @@
             <span class="text-xs text-slate-500 font-semibold uppercase">Registered Users</span>
             <p class="text-3xl font-black text-primary-700">1</p>
         </div>
-        <div class="bg-white p-6 rounded-xl border border-slate-200 text-center space-y-2">
-            <span class="text-xs text-slate-500 font-semibold uppercase">Pending Verification</span>
-            <p class="text-3xl font-black text-amber-600">0</p>
-        </div>
+        <a href="{% url 'admin_verification_queue' %}" class="bg-white p-6 rounded-xl border border-amber-200 hover:border-amber-400 hover:shadow-md text-center space-y-2 transition-all block group">
+            <span class="text-xs text-amber-700 font-semibold uppercase group-hover:underline">Pending Verification &rarr;</span>
+            <p class="text-3xl font-black text-amber-600">Review Queue</p>
+        </a>
         <div class="bg-white p-6 rounded-xl border border-slate-200 text-center space-y-2">
             <span class="text-xs text-slate-500 font-semibold uppercase">Active Rescues</span>
             <p class="text-3xl font-black text-blue-600">0</p>

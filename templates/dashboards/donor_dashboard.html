@@ -14,6 +14,42 @@
         </span>
     </div>
 
+    <!-- Organization Verification Status Banner -->
+    {% if user.organization_profile %}
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="space-y-1">
+                <div class="flex items-center gap-2">
+                    <span class="text-sm font-bold text-slate-800">{{ user.organization_profile.name }}</span>
+                    {% include "organizations/partials/status_badge.html" with status=user.organization_profile.verification_status %}
+                </div>
+                <p class="text-xs text-slate-500">
+                    Category: <span class="font-medium text-slate-700">{{ user.organization_profile.get_org_type_display }}</span> &bull;
+                    Location: {{ user.organization_profile.city }}, {{ user.organization_profile.state }}
+                </p>
+                {% if not user.organization_profile.is_verified %}
+                    <p class="text-xs text-amber-600 font-semibold mt-1">
+                        &bull; Note: Surplus listing is unlocked upon admin verification of your FSSAI/business credentials.
+                    </p>
+                {% endif %}
+            </div>
+            <a href="{% url 'organization_profile' %}" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold transition-all shadow-sm whitespace-nowrap self-start sm:self-auto">
+                View Organization &rarr;
+            </a>
+        </div>
+    {% else %}
+        <div class="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 p-6 rounded-2xl shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="space-y-1">
+                <h3 class="text-sm font-bold text-amber-900">Complete Organization Onboarding</h3>
+                <p class="text-xs text-amber-700 max-w-xl">
+                    Register your restaurant, hotel, mess, or catering establishment and upload your FSSAI license to begin posting surplus food.
+                </p>
+            </div>
+            <a href="{% url 'organization_onboarding' %}" class="px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold transition-all shadow-sm whitespace-nowrap self-start sm:self-auto">
+                Start Onboarding &rarr;
+            </a>
+        </div>
+    {% endif %}
+
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div class="bg-white p-6 rounded-xl border border-slate-200 text-center space-y-2">
             <span class="text-xs text-slate-500 font-semibold uppercase">Total Surplus Posted</span>
