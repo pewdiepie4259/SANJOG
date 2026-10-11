@@ -45,26 +45,35 @@
 
 ---
 
-### 5. PROJECT ARCHITECTURE & STRUCTURE
+### 5. REPOSITORY ARCHITECTURE & DUAL-STREAM STRUCTURE
+
+The repository is organized into distinct, isolated operational streams:
+
 ```
 sanjog/
-├── config/             # Django project settings, URLs, WSGI, Celery
-├── accounts/           # Custom User Model & RBAC Authentication
-├── organizations/      # Profiles (Donor, Receiver, Volunteer) & Verification Queue
-├── food/               # FoodListing, Safety SOP Assessment & Food Passport Ledger
-├── demand/             # Receiver Need-First Demand Requests
-├── rescue/             # Matching Engine & Multi-Recipient Allocations
-├── pickups/            # Logistics, Transport Tasks & Dual OTP Verification
-├── notifications/      # Async Email & In-App Alerts
-├── analytics/          # Impact Ledger & Aggregated Metrics
-├── certificates/       # WeasyPrint PDF CSR Certificate Generator
-├── ml_engine/          # ML Surplus & Demand Forecasting (P1)
-├── templates/          # Django HTML Templates (HTMX integration)
-├── static/             # CSS (Tailwind), JS (Leaflet), Images
-├── media/              # Uploaded Organization Documents & Food Images
-├── tests/              # Automated PyTest / Django Test Suite
-├── manage.py           # Django CLI tool
-└── requirements.txt    # Project dependencies
+├── frontend/             # FRONTEND STREAM (Django Templates, Tailwind CSS, HTMX, static assets)
+│   ├── templates/        # Server-rendered layouts, role dashboards, and HTMX partials
+│   ├── static/           # Tailwind CSS (input.css), HTMX JavaScript, images, fonts
+│   └── README.md         # Frontend developer styling & component guide
+├── backend/              # BACKEND STREAM (Django 5.x, DRF, Models, DB, Services, Tests)
+│   ├── manage.py         # Canonical Django CLI entrypoint
+│   ├── db.sqlite3        # Local development database (SQLite fallback)
+│   ├── private_media/    # Confidential document storage (outside public root)
+│   ├── config/           # Django settings (base, dev, prod), URLs, ASGI, WSGI, Celery
+│   ├── apps/             # Application modules (accounts, organizations, future apps)
+│   ├── tests/            # Automated Pytest test suites
+│   ├── requirements/     # Dependency specifications (base, development, production)
+│   └── README.md         # Backend architecture & service guide
+├── docs/                 # ARCHITECTURE & SPECIFICATIONS
+│   ├── ARCHITECTURE.md   # System architecture specification
+│   ├── API_CONTRACT.md   # Frontend/Backend API & HTMX integration contract
+│   ├── BRANCH_WORKFLOW.md# Git branching & synchronization protocol
+│   └── RESTRUCTURING_PLAN.md # Master repository restructuring plan
+├── manage.py             # Root convenience proxy forwarding to backend/manage.py
+├── pytest.ini            # Root test runner configuration (auto-targets backend/tests)
+├── requirements.txt      # Master requirements entrypoint
+├── .env.example          # Sanitized environment template
+└── .gitignore            # Global exclusion rules
 ```
 
 ---

@@ -19,8 +19,13 @@ media/
 !media/.gitkeep
 private_media/
 !private_media/.gitkeep
+backend/private_media/
+!backend/private_media/.gitkeep
 staticfiles/
 static/css/output.css
+
+# Backups
+backups/
 
 # Database & Cache
 *.sqlite3

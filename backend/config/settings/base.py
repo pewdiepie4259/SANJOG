@@ -3,11 +3,13 @@ import sys
 from pathlib import Path
 import environ
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Build paths inside the project: BASE_DIR resolves to 'backend', REPO_DIR resolves to repository root.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
+REPO_DIR = BASE_DIR.parent
 
-# Add apps directory to Python path
-sys.path.insert(0, str(BASE_DIR / 'apps'))
+# Add backend directory to Python path (apps is an internal package of backend)
+if str(BASE_DIR) not in sys.path:
+    sys.path.insert(0, str(BASE_DIR))
 
 # Initialize environment variables handler
 env = environ.Env(
@@ -15,8 +17,8 @@ env = environ.Env(
     ALLOWED_HOSTS=(list, ['127.0.0.1', 'localhost']),
 )
 
-# Read .env file if present
-env_file = BASE_DIR / '.env'
+# Read .env file from repository root if present
+env_file = REPO_DIR / '.env'
 if env_file.is_file():
     environ.Env.read_env(str(env_file))
 
@@ -77,7 +79,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [REPO_DIR / 'frontend' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -109,12 +111,12 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [REPO_DIR / 'frontend' / 'static']
+STATIC_ROOT = REPO_DIR / 'staticfiles'
 
 # Media files (Uploaded User & Public Media)
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = REPO_DIR / 'media'
 
 # Private Media files (Confidential Verification Documents - Zero Public Route Exposure)
 PRIVATE_MEDIA_ROOT = BASE_DIR / 'private_media'

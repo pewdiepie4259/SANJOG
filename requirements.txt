@@ -1,2 +1,2 @@
 # SANJOG Master Requirements Entrypoint
--r requirements/development.txt
+-r backend/requirements/development.txt

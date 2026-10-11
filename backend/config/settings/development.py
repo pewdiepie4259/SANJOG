@@ -7,11 +7,16 @@ ALLOWED_HOSTS = ['*']
 # Development Database Configuration (PostgreSQL + PostGIS with SQLite dev fallback)
 USE_SQLITE = env.bool('USE_SQLITE', default=False)
 
+# Target database path: backend/db.sqlite3; transitional fallback: repo root db.sqlite3
+SQLITE_PATH = BASE_DIR / 'db.sqlite3'
+if not SQLITE_PATH.exists() and (REPO_DIR / 'db.sqlite3').exists():
+    SQLITE_PATH = REPO_DIR / 'db.sqlite3'
+
 if USE_SQLITE:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+            'NAME': SQLITE_PATH,
         }
     }
 else:
@@ -23,7 +28,7 @@ else:
         DATABASES = {
             'default': {
                 'ENGINE': 'django.db.backends.sqlite3',
-                'NAME': BASE_DIR / 'db.sqlite3',
+                'NAME': SQLITE_PATH,
             }
         }
 
