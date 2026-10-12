@@ -4,12 +4,37 @@
 
 {% block content %}
 <div class="max-w-md mx-auto my-8 bg-white p-8 rounded-2xl shadow-md border border-slate-200">
-    <div class="text-center mb-8">
+    <div class="text-center mb-6">
         <h2 class="text-2xl font-black text-slate-900">Sign In to SANJOG</h2>
         <p class="text-xs text-slate-500 mt-1">Intelligent Food Rescue Operating System</p>
     </div>
 
-    <form method="post" action="{% url 'login' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}" class="space-y-5" hx-post="{% url 'login' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}" hx-target="this" hx-swap="outerHTML">
+    <!-- FAST 1-CLICK TESTING LOGIN -->
+    <div class="mb-6 p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2.5">
+        <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500 block text-center">Fast 1-Click Login (Dev Testing)</span>
+        <div class="grid grid-cols-2 gap-2">
+            <a href="{% url 'quick_switch' 'admin' %}" class="px-3 py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 font-bold rounded-lg text-xs text-center border border-amber-300 transition-colors shadow-sm">
+                👑 Admin
+            </a>
+            <a href="{% url 'quick_switch' 'testdonor' %}" class="px-3 py-2 bg-emerald-100 hover:bg-emerald-200 text-emerald-900 font-bold rounded-lg text-xs text-center border border-emerald-300 transition-colors shadow-sm">
+                🍲 Donor
+            </a>
+            <a href="{% url 'quick_switch' 'testreceiver' %}" class="px-3 py-2 bg-blue-100 hover:bg-blue-200 text-blue-900 font-bold rounded-lg text-xs text-center border border-blue-300 transition-colors shadow-sm">
+                🤝 Receiver
+            </a>
+            <a href="{% url 'quick_switch' 'testvolunteer' %}" class="px-3 py-2 bg-indigo-100 hover:bg-indigo-200 text-indigo-900 font-bold rounded-lg text-xs text-center border border-indigo-300 transition-colors shadow-sm">
+                🚴 Volunteer
+            </a>
+        </div>
+    </div>
+
+    <div class="relative flex py-2 items-center mb-4">
+        <div class="flex-grow border-t border-slate-200"></div>
+        <span class="flex-shrink mx-4 text-slate-400 text-xs font-semibold uppercase">Or Sign In with Credentials</span>
+        <div class="flex-grow border-t border-slate-200"></div>
+    </div>
+
+    <form method="post" action="/login/{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}" class="space-y-5">
         {% csrf_token %}
         
         {% if form.non_field_errors %}

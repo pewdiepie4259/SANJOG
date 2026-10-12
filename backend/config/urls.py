@@ -19,11 +19,8 @@ urlpatterns = [
     path('health/', health_check, name='health_check'),
     path('', include('apps.accounts.urls')),
     
-    # API Version 1 Namespace
-    path('api/v1/', include([
-        path('health/', health_check, name='api_v1_health'),
-        path('', include('apps.accounts.urls')),
-    ])),
+    # API Version 1 Health Endpoint
+    path('api/v1/health/', health_check, name='api_v1_health'),
 ]
 
 if settings.DEBUG:

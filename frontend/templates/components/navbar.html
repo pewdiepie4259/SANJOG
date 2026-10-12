@@ -18,9 +18,9 @@
                     <a href="{% url 'organization_profile' %}" class="hover:text-green-300 transition-colors">Organization Profile</a>
                 {% endif %}
                 <span class="text-green-300 font-mono text-xs">{{ user.username }} ({{ user.get_role_display }})</span>
-                <a href="/accounts/logout/" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded transition-colors text-xs">Logout</a>
+                <a href="/logout/" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded transition-colors text-xs">Logout</a>
             {% else %}
-                <a href="/admin/login/" class="bg-primary-700 hover:bg-primary-500 text-white px-4 py-2 rounded-lg transition-colors text-xs font-semibold">Sign In</a>
+                <a href="/login/" class="bg-primary-700 hover:bg-primary-500 text-white px-4 py-2 rounded-lg transition-colors text-xs font-semibold">Sign In</a>
             {% endif %}
         </nav>
     </div>

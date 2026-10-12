@@ -1,0 +1,85 @@
+<!-- FAST ROLE SWITCHER COMPONENT -->
+<div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3 mb-6">
+    <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Fast Role Switcher (One-Click Testing)</span>
+            <span class="text-[11px] text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">Switches role &amp; navigates to dedicated dashboard</span>
+        </div>
+        <div class="flex items-center gap-3">
+            <a href="/" class="text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">
+                &larr; Operations Hub
+            </a>
+            {% if user.is_authenticated %}
+                <a href="/logout/" class="text-xs font-semibold text-slate-500 hover:text-rose-600 transition-colors">
+                    Switch to Anonymous Guest &rarr;
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <!-- Admin -->
+        <a href="{% url 'quick_switch' 'admin' %}" 
+           class="p-3.5 rounded-xl border text-left transition-all duration-200 flex flex-col justify-between gap-2 group
+           {% if user.username == 'admin' %}bg-amber-50 border-amber-400 ring-2 ring-amber-400/30 shadow-sm{% else %}bg-slate-50 hover:bg-amber-50/50 border-slate-200 hover:border-amber-300{% endif %}">
+            <div class="flex items-center justify-between">
+                <span class="text-lg">👑</span>
+                <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded {% if user.username == 'admin' %}bg-amber-500 text-white{% else %}bg-slate-200 text-slate-700 group-hover:bg-amber-200 group-hover:text-amber-900{% endif %}">
+                    ADMIN
+                </span>
+            </div>
+            <div>
+                <div class="text-xs font-bold text-slate-900">Platform Admin</div>
+                <div class="text-[11px] text-slate-500 font-mono">admin</div>
+            </div>
+        </a>
+
+        <!-- Donor -->
+        <a href="{% url 'quick_switch' 'testdonor' %}" 
+           class="p-3.5 rounded-xl border text-left transition-all duration-200 flex flex-col justify-between gap-2 group
+           {% if user.username == 'testdonor' %}bg-emerald-50 border-emerald-400 ring-2 ring-emerald-400/30 shadow-sm{% else %}bg-slate-50 hover:bg-emerald-50/50 border-slate-200 hover:border-emerald-300{% endif %}">
+            <div class="flex items-center justify-between">
+                <span class="text-lg">🍲</span>
+                <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded {% if user.username == 'testdonor' %}bg-emerald-600 text-white{% else %}bg-slate-200 text-slate-700 group-hover:bg-emerald-200 group-hover:text-emerald-900{% endif %}">
+                    DONOR
+                </span>
+            </div>
+            <div>
+                <div class="text-xs font-bold text-slate-900">Food Donor</div>
+                <div class="text-[11px] text-slate-500 font-mono">testdonor (Restaurant)</div>
+            </div>
+        </a>
+
+        <!-- Receiver -->
+        <a href="{% url 'quick_switch' 'testreceiver' %}" 
+           class="p-3.5 rounded-xl border text-left transition-all duration-200 flex flex-col justify-between gap-2 group
+           {% if user.username == 'testreceiver' %}bg-blue-50 border-blue-400 ring-2 ring-blue-400/30 shadow-sm{% else %}bg-slate-50 hover:bg-blue-50/50 border-slate-200 hover:border-blue-300{% endif %}">
+            <div class="flex items-center justify-between">
+                <span class="text-lg">🤝</span>
+                <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded {% if user.username == 'testreceiver' %}bg-blue-600 text-white{% else %}bg-slate-200 text-slate-700 group-hover:bg-blue-200 group-hover:text-blue-900{% endif %}">
+                    RECEIVER
+                </span>
+            </div>
+            <div>
+                <div class="text-xs font-bold text-slate-900">Food Receiver</div>
+                <div class="text-[11px] text-slate-500 font-mono">testreceiver (Shelter)</div>
+            </div>
+        </a>
+
+        <!-- Volunteer -->
+        <a href="{% url 'quick_switch' 'testvolunteer' %}" 
+           class="p-3.5 rounded-xl border text-left transition-all duration-200 flex flex-col justify-between gap-2 group
+           {% if user.username == 'testvolunteer' %}bg-indigo-50 border-indigo-400 ring-2 ring-indigo-400/30 shadow-sm{% else %}bg-slate-50 hover:bg-indigo-50/50 border-slate-200 hover:border-indigo-300{% endif %}">
+            <div class="flex items-center justify-between">
+                <span class="text-lg">🚴</span>
+                <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded {% if user.username == 'testvolunteer' %}bg-indigo-600 text-white{% else %}bg-slate-200 text-slate-700 group-hover:bg-indigo-200 group-hover:text-indigo-900{% endif %}">
+                    VOLUNTEER
+                </span>
+            </div>
+            <div>
+                <div class="text-xs font-bold text-slate-900">Rescue Volunteer</div>
+                <div class="text-[11px] text-slate-500 font-mono">testvolunteer (Logistics)</div>
+            </div>
+        </a>
+    </div>
+</div>
