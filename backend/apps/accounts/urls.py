@@ -6,8 +6,10 @@ from . import api_views
 urlpatterns = [
     # Template Auth Routes
     path('', views.home_view, name='home'),
+    path('quick-switch/<str:username>/', views.quick_switch_view, name='quick_switch'),
     path('register/', views.RegisterView.as_view(), name='register'),
     path('login/', views.LoginView.as_view(), name='login'),
+    path('api/v1/login/', views.LoginView.as_view()),
     path('logout/', views.LogoutView.as_view(), name='logout'),
 
     # Role Dashboard Placeholder Routes

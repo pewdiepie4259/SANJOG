@@ -1,32 +1,169 @@
 {% extends "base.html" %}
 
-{% block title %}Volunteer Operating Portal — SANJOG{% endblock %}
+{% block title %}Rescue Volunteer Field Logistics — SANJOG{% endblock %}
 
 {% block content %}
 <div class="space-y-6">
-    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex items-center justify-between">
-        <div>
-            <h1 class="text-2xl font-black text-slate-900">Volunteer Operating Dashboard</h1>
-            <p class="text-xs text-slate-500 mt-1">Logged in as: <span class="font-bold text-primary-700">{{ user.username }}</span> (Rescue Volunteer)</p>
+
+    <!-- FAST ROLE SWITCHER -->
+    {% include "components/role_switcher.html" %}
+
+    <!-- VOLUNTEER HEADER -->
+    <div class="bg-gradient-to-r from-indigo-900 via-indigo-800 to-slate-900 text-white p-6 sm:p-8 rounded-3xl shadow-lg border border-indigo-800 relative overflow-hidden">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+            <div class="space-y-2">
+                <div class="flex items-center gap-2">
+                    <span class="px-3 py-1 bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 rounded-full text-xs font-mono font-bold uppercase">
+                        VOLUNTEER FIELD LOGISTICS
+                    </span>
+                    <span class="px-2.5 py-0.5 bg-indigo-950 text-indigo-200 rounded text-xs font-mono">Role: VOLUNTEER</span>
+                </div>
+                <h1 class="text-3xl font-black text-white tracking-tight">
+                    Food Rescue Dispatch &amp; Route Execution
+                </h1>
+                <p class="text-indigo-100/80 text-xs sm:text-sm max-w-2xl">
+                    Accept nearby surplus food pickup alerts, navigate optimal routes, verify donor and receiver dual OTPs, and complete emergency food dispatches.
+                </p>
+            </div>
+
+            <!-- Volunteer Duty Status Card -->
+            <div class="bg-indigo-950/60 border border-indigo-700/60 p-4 rounded-2xl min-w-[240px] flex items-center justify-between">
+                <div>
+                    <span class="text-xs text-indigo-300/80">Duty Status</span>
+                    <div class="font-bold text-white text-base flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                        Available on Duty
+                    </div>
+                    <div class="text-[11px] text-indigo-300 font-mono mt-0.5">Two-Wheeler &bull; 5km Radius</div>
+                </div>
+                <span class="text-xs px-2.5 py-1 bg-emerald-900 text-emerald-200 border border-emerald-700 rounded-lg font-bold">
+                    ONLINE
+                </span>
+            </div>
         </div>
-        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-bold border border-blue-300">
-            ROLE: VOLUNTEER
-        </span>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div class="bg-white p-6 rounded-xl border border-slate-200 text-center space-y-2">
-            <span class="text-xs text-slate-500 font-semibold uppercase">Open Rescue Missions</span>
-            <p class="text-3xl font-black text-primary-700">0</p>
+    <!-- VOLUNTEER PERFORMANCE METRICS -->
+    <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center">
+            <span class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Nearby Rescue Alerts</span>
+            <div class="text-3xl font-black text-amber-600 mt-2">2 Tasks</div>
+            <span class="text-[10px] text-amber-700 font-medium">Ready for immediate pickup</span>
         </div>
-        <div class="bg-white p-6 rounded-xl border border-slate-200 text-center space-y-2">
-            <span class="text-xs text-slate-500 font-semibold uppercase">Assigned Deliveries</span>
-            <p class="text-3xl font-black text-amber-600">0</p>
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center">
+            <span class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Active Mission</span>
+            <div class="text-3xl font-black text-indigo-600 mt-2">1 Active</div>
+            <span class="text-[10px] text-indigo-700 font-medium">En route to donor</span>
         </div>
-        <div class="bg-white p-6 rounded-xl border border-slate-200 text-center space-y-2">
-            <span class="text-xs text-slate-500 font-semibold uppercase">Completed Rescue Missions</span>
-            <p class="text-3xl font-black text-slate-900">0</p>
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center">
+            <span class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Completed Rescues</span>
+            <div class="text-3xl font-black text-slate-900 mt-2">42</div>
+            <span class="text-[10px] text-slate-500">Deliveries executed</span>
+        </div>
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center">
+            <span class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Volunteer Rating</span>
+            <div class="text-3xl font-black text-amber-500 mt-2">4.9 ★</div>
+            <span class="text-[10px] text-emerald-700 font-medium">Top rescuer tier</span>
         </div>
     </div>
+
+    <!-- ACTIVE MISSION CARD (Phase 9 & 10 Prototype Preview) -->
+    <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 border border-indigo-800 text-white p-6 rounded-3xl shadow-xl space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-indigo-900 pb-3">
+            <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-emerald-400 animate-ping"></span>
+                <span class="font-bold text-sm tracking-wide">ACTIVE MISSION #SANJOG-R-104</span>
+                <span class="text-[11px] bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded font-mono font-bold">
+                    SLA CRITICAL (42 MIN REMAINING)
+                </span>
+            </div>
+            <span class="text-xs text-slate-400 font-mono">Phase 9 Route Engine</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Pickup Leg -->
+            <div class="bg-slate-800/80 p-4 rounded-2xl border border-slate-700/80 space-y-2">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Step 1: Donor Pickup</span>
+                    <span class="text-[10px] bg-emerald-950 text-emerald-300 px-2 py-0.5 rounded border border-emerald-800 font-bold">VERIFIED</span>
+                </div>
+                <div class="font-bold text-sm text-white">Royal Palace Restaurant &amp; Caterers</div>
+                <p class="text-xs text-slate-300">
+                    42 Heritage Lane, MG Road, Mumbai &bull; Contact: Chef Rajesh (+91 98765 43210)
+                </p>
+                <div class="text-xs text-slate-400 bg-slate-900/60 p-2.5 rounded-lg border border-slate-800">
+                    Cargo: 50 Servings (22 kg) Veg Biryani in sealed hot-holding container.
+                </div>
+            </div>
+
+            <!-- Delivery Leg & OTP -->
+            <div class="bg-slate-800/80 p-4 rounded-2xl border border-slate-700/80 space-y-2">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold text-blue-400 uppercase tracking-wider">Step 2: Receiver Delivery</span>
+                    <span class="text-[10px] bg-blue-950 text-blue-300 px-2 py-0.5 rounded border border-blue-800 font-bold">NEXT</span>
+                </div>
+                <div class="font-bold text-sm text-white">Hope Community Kitchen &amp; Shelter</div>
+                <p class="text-xs text-slate-300">
+                    15 Relief Colony, Kurla West, Mumbai &bull; Contact: Sister Maria (+91 98123 45678)
+                </p>
+                <div class="flex items-center gap-2 pt-1">
+                    <input type="text" placeholder="Enter 4-digit Delivery OTP" maxlength="4" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white font-mono w-48 focus:border-indigo-500 focus:outline-none">
+                    <button class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-lg transition-colors">
+                        Verify &amp; Complete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AVAILABLE RESCUE FEED -->
+    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+            <div>
+                <h2 class="text-lg font-black text-slate-900">Available Nearby Rescue Missions (5km Radar)</h2>
+                <p class="text-xs text-slate-500">Pickups posted by verified donors with active safety compliance</p>
+            </div>
+            <span class="text-xs px-2.5 py-1 bg-indigo-100 text-indigo-800 font-bold rounded-lg border border-indigo-200">
+                Phase 9 Live Radar
+            </span>
+        </div>
+
+        <div class="space-y-3">
+            <div class="p-4 rounded-xl border border-slate-200 hover:border-indigo-400 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-50/50">
+                <div class="space-y-1">
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-slate-900 text-sm">Paneer Butter Masala &amp; Roti (30 portions)</span>
+                        <span class="text-[10px] bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-mono font-bold">SLA: NORMAL (3.5h)</span>
+                    </div>
+                    <p class="text-xs text-slate-500">
+                        From: <span class="text-slate-800 font-medium">Royal Palace Restaurant</span> &bull; 
+                        Distance: <span class="font-bold text-slate-800">1.8 km away</span> &bull; 
+                        Vehicle: Two-Wheeler OK
+                    </p>
+                </div>
+                <button class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl transition-all shadow-sm whitespace-nowrap self-start sm:self-auto">
+                    Accept Mission &rarr;
+                </button>
+            </div>
+
+            <div class="p-4 rounded-xl border border-slate-200 hover:border-indigo-400 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-50/50">
+                <div class="space-y-1">
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-slate-900 text-sm">Fresh Artisan Breads &amp; Rolls (40 portions)</span>
+                        <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-mono font-bold">SLA: PACKAGED (6h)</span>
+                    </div>
+                    <p class="text-xs text-slate-500">
+                        From: <span class="text-slate-800 font-medium">Central Bakery Co.</span> &bull; 
+                        Distance: <span class="font-bold text-slate-800">2.6 km away</span> &bull; 
+                        Vehicle: Two-Wheeler / Bicycle
+                    </p>
+                </div>
+                <button class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl transition-all shadow-sm whitespace-nowrap self-start sm:self-auto">
+                    Accept Mission &rarr;
+                </button>
+            </div>
+        </div>
+    </div>
+
 </div>
 {% endblock %}

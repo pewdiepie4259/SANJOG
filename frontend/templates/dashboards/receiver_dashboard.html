@@ -1,68 +1,174 @@
 {% extends "base.html" %}
 
-{% block title %}Receiver Operating Portal — SANJOG{% endblock %}
+{% block title %}Food Receiver Operating Portal — SANJOG{% endblock %}
 
 {% block content %}
 <div class="space-y-6">
-    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex items-center justify-between">
-        <div>
-            <h1 class="text-2xl font-black text-slate-900">Receiver Operating Dashboard</h1>
-            <p class="text-xs text-slate-500 mt-1">Logged in as: <span class="font-bold text-primary-700">{{ user.username }}</span> (NGO / Shelter Receiver)</p>
+
+    <!-- FAST ROLE SWITCHER -->
+    {% include "components/role_switcher.html" %}
+
+    <!-- RECEIVER HEADER -->
+    <div class="bg-gradient-to-r from-blue-900 via-blue-800 to-slate-900 text-white p-6 sm:p-8 rounded-3xl shadow-lg border border-blue-800 relative overflow-hidden">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+            <div class="space-y-2">
+                <div class="flex items-center gap-2">
+                    <span class="px-3 py-1 bg-blue-500/20 text-blue-300 border border-blue-500/30 rounded-full text-xs font-mono font-bold uppercase">
+                        RECEIVER DEMAND PORTAL
+                    </span>
+                    <span class="px-2.5 py-0.5 bg-blue-950 text-blue-200 rounded text-xs font-mono">Role: RECEIVER</span>
+                </div>
+                <h1 class="text-3xl font-black text-white tracking-tight">
+                    NGO &amp; Community Shelter Meal Logistics
+                </h1>
+                <p class="text-blue-100/80 text-xs sm:text-sm max-w-2xl">
+                    Register active meal demands, review incoming surplus allocations, track volunteer delivery dispatches, and coordinate distribution to verified beneficiaries.
+                </p>
+            </div>
+
+            <!-- Profile Summary Pill -->
+            <div class="bg-blue-950/60 border border-blue-700/60 p-4 rounded-2xl min-w-[240px]">
+                <div class="text-xs text-blue-300/80">Active Receiver Account</div>
+                <div class="font-bold text-white text-base">{{ user.username }}</div>
+                <div class="text-xs text-blue-400 font-mono mt-0.5">
+                    {% if org_profile %}{{ org_profile.name }}{% else %}No Organization Linked{% endif %}
+                </div>
+            </div>
         </div>
-        <span class="px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-xs font-bold border border-amber-300">
-            ROLE: RECEIVER
-        </span>
     </div>
 
-    <!-- Organization Verification Status Banner -->
-    {% if user.organization_profile %}
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div class="space-y-1">
-                <div class="flex items-center gap-2">
-                    <span class="text-sm font-bold text-slate-800">{{ user.organization_profile.name }}</span>
-                    {% include "organizations/partials/status_badge.html" with status=user.organization_profile.verification_status %}
-                </div>
-                <p class="text-xs text-slate-500">
-                    Category: <span class="font-medium text-slate-700">{{ user.organization_profile.get_org_type_display }}</span> &bull;
-                    Location: {{ user.organization_profile.city }}, {{ user.organization_profile.state }}
-                </p>
-                {% if not user.organization_profile.is_verified %}
-                    <p class="text-xs text-amber-600 font-semibold mt-1">
-                        &bull; Note: Claiming rescued food requires administrative verification of your registration & tax-exemption credentials.
+    <!-- ORGANIZATION ACCREDITATION CARD -->
+    {% if org_profile %}
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+                <div class="space-y-1">
+                    <div class="flex items-center gap-2">
+                        <span class="font-black text-slate-900 text-lg">{{ org_profile.name }}</span>
+                        {% include "organizations/partials/status_badge.html" with status=org_profile.verification_status %}
+                    </div>
+                    <p class="text-xs text-slate-500">
+                        Type: <span class="font-bold text-slate-700">{{ org_profile.get_org_type_display }}</span> &bull; 
+                        Accreditation: <span class="font-mono font-bold text-slate-800">{{ org_profile.registration_number|default:"Pending Upload" }}</span> &bull; 
+                        City: <span class="font-medium text-slate-700">{{ org_profile.city }}, {{ org_profile.state }}</span>
                     </p>
-                {% endif %}
+                </div>
+                <div class="flex items-center gap-2">
+                    <a href="{% url 'organization_documents' %}" class="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold rounded-xl transition-all shadow-sm">
+                        Manage 80G Documents &rarr;
+                    </a>
+                    <a href="{% url 'organization_profile' %}" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold rounded-xl transition-all">
+                        Edit Profile
+                    </a>
+                </div>
             </div>
-            <a href="{% url 'organization_profile' %}" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold transition-all shadow-sm whitespace-nowrap self-start sm:self-auto">
-                View Organization &rarr;
-            </a>
+
+            {% if not org_profile.is_verified %}
+                <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-center gap-3">
+                    <span class="text-xl">⚠️</span>
+                    <div class="text-xs text-amber-800">
+                        <span class="font-bold">Verification Notice:</span> 
+                        Your receiver profile status is <strong>{{ org_profile.get_verification_status_display }}</strong>. 
+                        Once approved by an administrator, your shelter will be prioritized for automatic need-first food rescue matching.
+                    </div>
+                </div>
+            {% endif %}
         </div>
     {% else %}
-        <div class="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 p-6 rounded-2xl shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 p-6 rounded-2xl shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div class="space-y-1">
-                <h3 class="text-sm font-bold text-amber-900">Complete Receiver Organization Onboarding</h3>
-                <p class="text-xs text-amber-700 max-w-xl">
-                    Register your NGO, community shelter, or charitable kitchen and upload verification documents (80G / Trust Deed) to request meal distributions.
+                <h3 class="text-base font-bold text-blue-900">Complete Receiver Organization Onboarding</h3>
+                <p class="text-xs text-blue-700 max-w-xl">
+                    Register your shelter, orphanage, community kitchen, or charitable trust and upload your 80G or NGO Darpan certificate to request meals.
                 </p>
             </div>
-            <a href="{% url 'organization_onboarding' %}" class="px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold transition-all shadow-sm whitespace-nowrap self-start sm:self-auto">
+            <a href="{% url 'organization_onboarding' %}" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-all shadow-sm">
                 Start Onboarding &rarr;
             </a>
         </div>
     {% endif %}
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div class="bg-white p-6 rounded-xl border border-slate-200 text-center space-y-2">
-            <span class="text-xs text-slate-500 font-semibold uppercase">Active Meal Demands</span>
-            <p class="text-3xl font-black text-primary-700">0</p>
+    <!-- RECEIVER METRICS GRID -->
+    <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center">
+            <span class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Active Meal Demands</span>
+            <div class="text-3xl font-black text-blue-600 mt-2">2</div>
+            <span class="text-[10px] text-blue-700 font-medium">Awaiting matching</span>
         </div>
-        <div class="bg-white p-6 rounded-xl border border-slate-200 text-center space-y-2">
-            <span class="text-xs text-slate-500 font-semibold uppercase">Incoming Deliveries</span>
-            <p class="text-3xl font-black text-amber-600">0</p>
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center">
+            <span class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Incoming Rescues</span>
+            <div class="text-3xl font-black text-amber-600 mt-2">1</div>
+            <span class="text-[10px] text-amber-700 font-medium">Volunteer en route</span>
         </div>
-        <div class="bg-white p-6 rounded-xl border border-slate-200 text-center space-y-2">
-            <span class="text-xs text-slate-500 font-semibold uppercase">Total Servings Received</span>
-            <p class="text-3xl font-black text-slate-900">0</p>
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center">
+            <span class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Total Servings Received</span>
+            <div class="text-3xl font-black text-slate-900 mt-2">1,240</div>
+            <span class="text-[10px] text-slate-500">Meals distributed</span>
+        </div>
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center">
+            <span class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Shelter Beneficiaries</span>
+            <div class="text-3xl font-black text-emerald-600 mt-2">85</div>
+            <span class="text-[10px] text-emerald-700 font-medium">People supported daily</span>
         </div>
     </div>
+
+    <!-- ACTIVE DEMAND & ALLOCATION QUEUE (Phase 5 Prototype Preview) -->
+    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+            <div>
+                <h2 class="text-lg font-black text-slate-900">Active Meal Demands &amp; Claims</h2>
+                <p class="text-xs text-slate-500">Requirements logged for dinner service and youth shelter programs</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="text-xs px-2.5 py-1 bg-blue-100 text-blue-800 font-bold rounded-lg border border-blue-200">
+                    Phase 5 Feature
+                </span>
+            </div>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+                <thead>
+                    <tr class="bg-slate-50 text-slate-600 uppercase tracking-wider font-semibold border-b border-slate-200">
+                        <th class="p-3">Demand Request</th>
+                        <th class="p-3">Target Meal</th>
+                        <th class="p-3">Dietary Need</th>
+                        <th class="p-3">Required Servings</th>
+                        <th class="p-3">Matched Donor Surplus</th>
+                        <th class="p-3">Delivery Status</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 font-medium">
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="p-3 font-bold text-slate-900">Dinner Service for 50 Children</td>
+                        <td class="p-3 text-slate-600">Dinner (7:30 PM)</td>
+                        <td class="p-3"><span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded font-bold">VEG</span></td>
+                        <td class="p-3 font-bold text-slate-800">50 Portions</td>
+                        <td class="p-3 text-emerald-700 font-bold">Royal Veg Biryani (Matched)</td>
+                        <td class="p-3"><span class="px-2 py-0.5 bg-amber-100 text-amber-800 rounded font-mono font-bold">PICKUP IN PROGRESS</span></td>
+                    </tr>
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="p-3 font-bold text-slate-900">Breakfast Bread &amp; Staples</td>
+                        <td class="p-3 text-slate-600">Breakfast (Tomorrow)</td>
+                        <td class="p-3"><span class="px-2 py-0.5 bg-slate-100 text-slate-800 rounded font-bold">ANY</span></td>
+                        <td class="p-3 font-bold text-slate-800">30 Portions</td>
+                        <td class="p-3 text-slate-400">Searching matching donors...</td>
+                        <td class="p-3"><span class="px-2 py-0.5 bg-blue-100 text-blue-800 rounded font-bold">PENDING MATCH</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- DUAL OTP DELIVERY VERIFICATION WORKFLOW -->
+    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+        <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-800 uppercase tracking-wider">Dual OTP Safe Delivery Protocol</span>
+            <span class="text-xs font-mono text-blue-700 font-bold">Phase 10 Architecture</span>
+        </div>
+        <p class="text-xs text-slate-600">
+            When a volunteer arrives with rescued food, they will ask for your 4-digit Delivery OTP. Once entered and confirmed, the chain of custody completes, generating an immutable audit entry in the Food Passport.
+        </p>
+    </div>
+
 </div>
 {% endblock %}
