@@ -1,0 +1,320 @@
+<!-- NGO & SHELTER HUB INTEGRATED WORKSPACE -->
+<div id="hub-ngo" class="hub-container hidden space-y-6">
+    
+    <!-- Sub-Navigation Pill Switcher for NGO Hub -->
+    <div class="flex flex-wrap items-center justify-between gap-3 bg-white p-3.5 rounded-2xl border border-ivory-300 shadow-soft">
+        <div class="flex items-center gap-2">
+            <span class="w-8 h-8 rounded-xl bg-salmon-100 text-salmon-700 flex items-center justify-center font-bold text-sm">
+                <i class="fa-solid fa-hands-holding-child"></i>
+            </span>
+            <div>
+                <span class="text-xs font-serif font-black text-pista-950 block leading-tight">NGO &amp; Shelter Operations</span>
+                <span class="text-[10px] text-ivory-600">Hope Community Shelter &bull; St. Marks Road, Bengaluru</span>
+            </div>
+        </div>
+
+        <!-- Sub-Pills -->
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0" id="ngo-subnav">
+            <button onclick="showSubView('ngo', 'ngo-dashboard')" id="btn-ngo-dashboard"
+                    class="ngo-subpill px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-salmon-500 text-white shadow-xs flex items-center gap-1.5">
+                <i class="fa-solid fa-gauge text-xs"></i>
+                <span>Dashboard</span>
+            </button>
+            <button onclick="showSubView('ngo', 'ngo-nearby')" id="btn-ngo-nearby"
+                    class="ngo-subpill px-3 py-1.5 rounded-xl text-xs font-semibold transition-all bg-ivory-100 text-pista-900 hover:bg-salmon-50 flex items-center gap-1.5 border border-ivory-300">
+                <i class="fa-solid fa-compass text-salmon-500 text-xs"></i>
+                <span>Nearby Food</span>
+            </button>
+            <button onclick="showSubView('ngo', 'ngo-request')" id="btn-ngo-request"
+                    class="ngo-subpill px-3 py-1.5 rounded-xl text-xs font-semibold transition-all bg-ivory-100 text-pista-900 hover:bg-salmon-50 flex items-center gap-1.5 border border-ivory-300">
+                <i class="fa-solid fa-bullhorn text-pista-700 text-xs"></i>
+                <span>Broadcast Need</span>
+            </button>
+            <button onclick="showSubView('ngo', 'ngo-accepted')" id="btn-ngo-accepted"
+                    class="ngo-subpill px-3 py-1.5 rounded-xl text-xs font-semibold transition-all bg-ivory-100 text-pista-900 hover:bg-salmon-50 flex items-center gap-1.5 border border-ivory-300">
+                <i class="fa-solid fa-circle-check text-pista-600 text-xs"></i>
+                <span>Accepted Meals</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- 1. NGO SUB-VIEW: DASHBOARD -->
+    <div id="subview-ngo-dashboard" class="ngo-view-pane space-y-6">
+        <!-- 4 Metric Cards -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-white p-4.5 rounded-2xl border border-ivory-300 shadow-soft">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600 block">Residents Fed Daily</span>
+                <div class="text-3xl font-serif font-black text-pista-900 mt-1">140</div>
+                <span class="text-[11px] text-pista-700 font-semibold mt-1 block">Full capacity active</span>
+            </div>
+            <div class="bg-white p-4.5 rounded-2xl border border-ivory-300 shadow-soft">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600 block">Incoming Rescues</span>
+                <div class="text-3xl font-serif font-black text-salmon-600 mt-1">1 En Route</div>
+                <span class="text-[11px] text-salmon-600 font-semibold mt-1 block">60 warm meals (12m ETA)</span>
+            </div>
+            <div class="bg-white p-4.5 rounded-2xl border border-ivory-300 shadow-soft">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600 block">Total Meals Received</span>
+                <div class="text-3xl font-serif font-black text-pista-900 mt-1">3,480</div>
+                <span class="text-[11px] text-ivory-600 mt-1 block">Since joining network</span>
+            </div>
+            <div class="bg-white p-4.5 rounded-2xl border border-ivory-300 shadow-soft">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600 block">Accreditation</span>
+                <div class="text-3xl font-serif font-black text-pista-800 mt-1">Darpan A+</div>
+                <span class="text-[11px] text-pista-700 font-semibold mt-1 block">Verified NGO status</span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Left 2 Cols: Incoming Meals & Quick Actions -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Incoming Delivery Alert -->
+                <div class="p-6 rounded-3xl bg-gradient-to-r from-salmon-50 to-ivory-50 border-2 border-salmon-300 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="px-3 py-1 bg-salmon-500 text-white font-bold text-xs rounded-full uppercase tracking-wider">
+                            <i class="fa-solid fa-truck-fast mr-1"></i> Delivery In Transit
+                        </span>
+                        <span class="text-xs font-mono font-bold text-salmon-700 bg-white px-2.5 py-1 rounded-lg border border-salmon-200">
+                            ETA: 12 Mins
+                        </span>
+                    </div>
+
+                    <div>
+                        <h3 class="font-serif text-lg font-bold text-pista-950">60 North Indian Buffet Thalis</h3>
+                        <p class="text-xs text-ivory-700 mt-0.5">
+                            Donated by <strong>Annapurna Grand (Indiranagar)</strong> &bull; Packed at 68&deg;C &bull; Courier: Aniket Kumar (TVS iQube EV)
+                        </p>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-white border border-ivory-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div>
+                            <span class="text-[11px] text-ivory-600 uppercase font-bold block">Your Handover Code (Provide to Courier):</span>
+                            <span class="text-2xl font-mono font-black text-salmon-600">3180</span>
+                        </div>
+                        <button onclick="showSubView('tools', 'tools-scanner')" class="px-4 py-2 bg-pista-700 hover:bg-pista-800 text-ivory-50 font-bold text-xs rounded-xl shadow-pista transition-colors flex items-center gap-1.5 shrink-0">
+                            <i class="fa-solid fa-qrcode"></i>
+                            <span>Scan Courier QR</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quick Action Buttons -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <button onclick="showSubView('ngo', 'ngo-nearby')" class="p-5 rounded-2xl bg-white hover:bg-pista-50 border border-ivory-300 transition-all text-left space-y-2 shadow-soft">
+                        <div class="w-10 h-10 rounded-xl bg-pista-100 text-pista-700 flex items-center justify-center font-bold">
+                            <i class="fa-solid fa-compass text-base"></i>
+                        </div>
+                        <h4 class="font-bold text-sm text-pista-950">Browse Nearby Food</h4>
+                        <p class="text-xs text-ivory-700 leading-relaxed">Claim fresh surplus dishes available right now in Central Bengaluru.</p>
+                    </button>
+                    <button onclick="showSubView('ngo', 'ngo-request')" class="p-5 rounded-2xl bg-white hover:bg-salmon-50 border border-ivory-300 transition-all text-left space-y-2 shadow-soft">
+                        <div class="w-10 h-10 rounded-xl bg-salmon-100 text-salmon-600 flex items-center justify-center font-bold">
+                            <i class="fa-solid fa-bullhorn text-base"></i>
+                        </div>
+                        <h4 class="font-bold text-sm text-pista-950">Broadcast Meal Need</h4>
+                        <p class="text-xs text-ivory-700 leading-relaxed">Post shelter headcount and dietary requirements to alert nearby kitchens.</p>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right 1 Col: Shelter Partner Card -->
+            <div class="space-y-4">
+                <div class="bg-white p-5 rounded-3xl border border-ivory-300 shadow-soft space-y-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-2xl bg-salmon-100 border border-salmon-200 flex items-center justify-center text-salmon-700 text-lg">
+                            <i class="fa-solid fa-handshake-angle text-salmon-600"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-sm text-pista-950">Hope Community Shelter</div>
+                            <div class="text-xs text-ivory-700">St. Marks Road, Bengaluru</div>
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-pista-100 text-pista-800 font-bold text-[10px] mt-1 border border-pista-300">
+                                <i class="fa-solid fa-circle-check text-pista-600"></i> NGO Darpan Verified
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-t border-ivory-200 text-xs space-y-2 text-ivory-800">
+                        <div class="flex justify-between">
+                            <span class="text-ivory-600">Darpan ID:</span>
+                            <span class="font-mono font-bold text-ivory-900">KA/2021/008129</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-ivory-600">Kitchen Manager:</span>
+                            <span class="font-semibold text-ivory-900">Sister Maria</span>
+                        </div>
+                    </div>
+
+                    <div class="pt-2 flex flex-col gap-2">
+                        <button onclick="showSubView('ngo', 'ngo-accepted')" class="w-full py-2 bg-ivory-100 hover:bg-pista-100 text-pista-900 font-bold text-xs rounded-xl border border-ivory-300 transition-colors flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-list-check text-pista-600"></i> View Accepted Log
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. NGO SUB-VIEW: NEARBY SURPLUS FOOD -->
+    <div id="subview-ngo-nearby" class="ngo-view-pane hidden space-y-6">
+        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-ivory-300 shadow-soft max-w-4xl mx-auto space-y-6">
+            <div class="flex items-center justify-between pb-4 border-b border-ivory-200">
+                <div>
+                    <span class="px-3 py-1 bg-pista-100 text-pista-900 border border-pista-300 rounded-full text-xs font-bold inline-flex items-center gap-1.5 mb-2">
+                        <i class="fa-solid fa-compass text-pista-700"></i> Live Kitchen Surplus Feed
+                    </span>
+                    <h2 class="font-serif text-2xl font-black text-pista-950">Nearby Available Food Batches</h2>
+                    <p class="text-xs text-ivory-700 mt-1">Fresh surplus ready for immediate pickup within 5 km of your shelter.</p>
+                </div>
+                <button onclick="showSubView('ngo', 'ngo-dashboard')" class="text-xs font-bold text-ivory-600 hover:text-pista-800 transition-colors flex items-center gap-1">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+                </button>
+            </div>
+
+            <!-- List of Nearby Batches -->
+            <div class="space-y-4">
+                <div class="p-5 rounded-2xl bg-ivory-50 border border-ivory-300 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-base text-pista-950">Annapurna Grand &bull; North Indian Buffet Thalis</span>
+                            <span class="px-2.5 py-0.5 rounded-full bg-pista-200 text-pista-900 text-[10px] font-bold">Cooked Meals</span>
+                        </div>
+                        <p class="text-xs text-ivory-700">
+                            Indiranagar (3.8 km away) &bull; 60 Servings &bull; Verified Temp: 68&deg;C &bull; Shelf life: 2h 15m
+                        </p>
+                    </div>
+                    <button onclick="claimBatch('Annapurna Grand', 60)" class="px-4 py-2 bg-salmon-500 hover:bg-salmon-600 text-white font-bold text-xs rounded-xl shadow-salmon transition-colors flex items-center gap-1.5 shrink-0">
+                        <i class="fa-solid fa-hand-holding-heart"></i>
+                        <span>Claim for Shelter</span>
+                    </button>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-ivory-50 border border-ivory-300 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-base text-pista-950">The Royal Palace Caterers &bull; Continental Lunch Boxes</span>
+                            <span class="px-2.5 py-0.5 rounded-full bg-salmon-100 text-salmon-800 text-[10px] font-bold">Packaged Boxes</span>
+                        </div>
+                        <p class="text-xs text-ivory-700">
+                            Koramangala (4.6 km away) &bull; 120 Servings &bull; Prepared 1h ago &bull; Urgent SLA
+                        </p>
+                    </div>
+                    <button onclick="claimBatch('Royal Palace', 120)" class="px-4 py-2 bg-salmon-500 hover:bg-salmon-600 text-white font-bold text-xs rounded-xl shadow-salmon transition-colors flex items-center gap-1.5 shrink-0">
+                        <i class="fa-solid fa-hand-holding-heart"></i>
+                        <span>Claim for Shelter</span>
+                    </button>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-ivory-50 border border-ivory-300 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-base text-pista-950">GreenLeaf Organic Cafe &bull; Artisan Bread &amp; Sandwiches</span>
+                            <span class="px-2.5 py-0.5 rounded-full bg-pista-100 text-pista-800 text-[10px] font-bold">Bakery Produce</span>
+                        </div>
+                        <p class="text-xs text-ivory-700">
+                            MG Road (2.1 km away) &bull; 25 Servings &bull; Vegan Friendly &bull; Shelf life: 3h 30m
+                        </p>
+                    </div>
+                    <button onclick="claimBatch('GreenLeaf Cafe', 25)" class="px-4 py-2 bg-salmon-500 hover:bg-salmon-600 text-white font-bold text-xs rounded-xl shadow-salmon transition-colors flex items-center gap-1.5 shrink-0">
+                        <i class="fa-solid fa-hand-holding-heart"></i>
+                        <span>Claim for Shelter</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. NGO SUB-VIEW: BROADCAST MEAL NEED -->
+    <div id="subview-ngo-request" class="ngo-view-pane hidden space-y-6">
+        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-ivory-300 shadow-soft max-w-3xl mx-auto space-y-6">
+            <div class="flex items-center justify-between pb-4 border-b border-ivory-200">
+                <div>
+                    <span class="px-3 py-1 bg-salmon-50 text-salmon-700 border border-salmon-200 rounded-full text-xs font-bold inline-flex items-center gap-1.5 mb-2">
+                        <i class="fa-solid fa-bullhorn text-salmon-500"></i> Shelter Demand Broadcast
+                    </span>
+                    <h2 class="font-serif text-2xl font-black text-pista-950">Broadcast Meal Need</h2>
+                    <p class="text-xs text-ivory-700 mt-1">Post shelter hunger demands to alert partner restaurants and volunteer drivers.</p>
+                </div>
+                <button onclick="showSubView('ngo', 'ngo-dashboard')" class="text-xs font-bold text-ivory-600 hover:text-pista-800 transition-colors flex items-center gap-1">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+                </button>
+            </div>
+
+            <form onsubmit="handleNeedBroadcast(event)" class="space-y-5">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-ivory-900 mb-1.5">
+                            <i class="fa-solid fa-users text-salmon-500 mr-1"></i> Beneficiaries Headcount
+                        </label>
+                        <input type="number" value="80" required
+                               class="w-full px-4 py-2.5 rounded-xl border border-ivory-300 focus:ring-2 focus:ring-salmon-500 text-xs font-bold text-pista-900">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-ivory-900 mb-1.5">
+                            <i class="fa-solid fa-clock text-salmon-500 mr-1"></i> Required Before
+                        </label>
+                        <select class="w-full px-4 py-2.5 rounded-xl border border-ivory-300 focus:ring-2 focus:ring-salmon-500 text-xs bg-white">
+                            <option>Tonight before 8:30 PM (Dinner)</option>
+                            <option>Immediate (Critical Urgency)</option>
+                            <option>Tomorrow Morning (Breakfast)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-ivory-900 mb-1.5">
+                        <i class="fa-solid fa-utensils text-pista-700 mr-1"></i> Dietary Preferences &amp; Allergens
+                    </label>
+                    <input type="text" value="Vegetarian preferred, wholesome balanced food"
+                           class="w-full px-4 py-2.5 rounded-xl border border-ivory-300 focus:ring-2 focus:ring-pista-500 text-xs">
+                </div>
+
+                <div class="flex items-center justify-between pt-3 border-t border-ivory-200">
+                    <span class="text-xs text-ivory-600">Radius: <strong>5 km Central Bengaluru Grid</strong></span>
+                    <button type="submit" class="px-6 py-2.5 bg-salmon-500 hover:bg-salmon-600 text-white font-bold text-xs rounded-xl shadow-salmon transition-all flex items-center gap-2">
+                        <span>Broadcast Meal Request</span>
+                        <i class="fa-solid fa-paper-plane text-xs"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 4. NGO SUB-VIEW: ACCEPTED DELIVERIES LOG -->
+    <div id="subview-ngo-accepted" class="ngo-view-pane hidden space-y-6">
+        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-ivory-300 shadow-soft max-w-4xl mx-auto space-y-6">
+            <div class="flex items-center justify-between pb-4 border-b border-ivory-200">
+                <div>
+                    <span class="px-3 py-1 bg-pista-100 text-pista-900 border border-pista-300 rounded-full text-xs font-bold inline-flex items-center gap-1.5 mb-2">
+                        <i class="fa-solid fa-circle-check text-pista-700"></i> Shelter Distribution Archive
+                    </span>
+                    <h2 class="font-serif text-2xl font-black text-pista-950">Accepted Donations Log</h2>
+                    <p class="text-xs text-ivory-700 mt-1">Historical ledger of meals received, inspected, and distributed to residents.</p>
+                </div>
+                <button onclick="showSubView('ngo', 'ngo-dashboard')" class="text-xs font-bold text-ivory-600 hover:text-pista-800 transition-colors flex items-center gap-1">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+                </button>
+            </div>
+
+            <div class="divide-y divide-ivory-200">
+                <div class="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div class="space-y-1">
+                        <div class="font-bold text-sm text-pista-950">60 Servings Thalis &bull; Annapurna Grand</div>
+                        <div class="text-xs text-ivory-700">Oct 13, 2026 &bull; Handover OTP Verified &bull; Temp: 68&deg;C Safe</div>
+                    </div>
+                    <span class="px-3 py-1 rounded-xl bg-pista-100 text-pista-800 font-bold text-xs border border-pista-200 self-start sm:self-auto">
+                        <i class="fa-solid fa-check mr-1"></i> Distributed
+                    </span>
+                </div>
+                <div class="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div class="space-y-1">
+                        <div class="font-bold text-sm text-pista-950">50 Continental Boxes &bull; The Royal Palace Caterers</div>
+                        <div class="text-xs text-ivory-700">Oct 11, 2026 &bull; Handover OTP Verified &bull; Temp: 66&deg;C Safe</div>
+                    </div>
+                    <span class="px-3 py-1 rounded-xl bg-pista-100 text-pista-800 font-bold text-xs border border-pista-200 self-start sm:self-auto">
+                        <i class="fa-solid fa-check mr-1"></i> Distributed
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

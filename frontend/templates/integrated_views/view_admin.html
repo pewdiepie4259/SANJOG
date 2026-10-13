@@ -1,0 +1,212 @@
+<!-- ADMIN HUB INTEGRATED WORKSPACE -->
+<div id="hub-admin" class="hub-container hidden space-y-6">
+    
+    <!-- Sub-Navigation Pill Switcher for Admin Hub -->
+    <div class="flex flex-wrap items-center justify-between gap-3 bg-white p-3.5 rounded-2xl border border-ivory-300 shadow-soft">
+        <div class="flex items-center gap-2">
+            <span class="w-8 h-8 rounded-xl bg-ivory-200 text-ivory-900 flex items-center justify-center font-bold text-sm">
+                <i class="fa-solid fa-shield"></i>
+            </span>
+            <div>
+                <span class="text-xs font-serif font-black text-pista-950 block leading-tight">Platform Administration &amp; Governance</span>
+                <span class="text-[10px] text-ivory-600">Compliance Desk &bull; Central Control</span>
+            </div>
+        </div>
+
+        <!-- Sub-Pills -->
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0" id="admin-subnav">
+            <button onclick="showSubView('admin', 'admin-dashboard')" id="btn-admin-dashboard"
+                    class="admin-subpill px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-pista-900 text-ivory-50 shadow-xs flex items-center gap-1.5">
+                <i class="fa-solid fa-gauge text-xs"></i>
+                <span>Command Center</span>
+            </button>
+            <button onclick="showSubView('admin', 'admin-verification')" id="btn-admin-verification"
+                    class="admin-subpill px-3 py-1.5 rounded-xl text-xs font-semibold transition-all bg-ivory-100 text-pista-900 hover:bg-pista-100 flex items-center gap-1.5 border border-ivory-300">
+                <i class="fa-solid fa-file-circle-check text-pista-700 text-xs"></i>
+                <span>NGO Verification Queue</span>
+            </button>
+            <button onclick="showSubView('admin', 'admin-users')" id="btn-admin-users"
+                    class="admin-subpill px-3 py-1.5 rounded-xl text-xs font-semibold transition-all bg-ivory-100 text-pista-900 hover:bg-pista-100 flex items-center gap-1.5 border border-ivory-300">
+                <i class="fa-solid fa-users-gear text-salmon-600 text-xs"></i>
+                <span>User Management</span>
+            </button>
+            <button onclick="showSubView('admin', 'admin-telemetry')" id="btn-admin-telemetry"
+                    class="admin-subpill px-3 py-1.5 rounded-xl text-xs font-semibold transition-all bg-ivory-100 text-pista-900 hover:bg-pista-100 flex items-center gap-1.5 border border-ivory-300">
+                <i class="fa-solid fa-satellite-dish text-pista-700 text-xs"></i>
+                <span>Rescue Telemetry</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- 1. ADMIN SUB-VIEW: DASHBOARD -->
+    <div id="subview-admin-dashboard" class="admin-view-pane space-y-6">
+        <!-- 4 Metric Cards -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-white p-4.5 rounded-2xl border border-ivory-300 shadow-soft">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600 block">Total Entities</span>
+                <div class="text-3xl font-serif font-black text-pista-900 mt-1">{{ total_orgs_count|default:"2" }}</div>
+                <span class="text-[11px] text-pista-700 font-semibold mt-1 block">Registered kitchens &amp; NGOs</span>
+            </div>
+            <div class="bg-white p-4.5 rounded-2xl border border-ivory-300 shadow-soft">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600 block">Pending Reviews</span>
+                <div class="text-3xl font-serif font-black text-salmon-600 mt-1">{{ pending_count|default:"0" }}</div>
+                <span class="text-[11px] text-salmon-600 font-semibold mt-1 block">Requires manual audit</span>
+            </div>
+            <div class="bg-white p-4.5 rounded-2xl border border-ivory-300 shadow-soft">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600 block">Active Couriers</span>
+                <div class="text-3xl font-serif font-black text-pista-900 mt-1">14 EV Bikes</div>
+                <span class="text-[11px] text-ivory-600 mt-1 block">On road in Bengaluru</span>
+            </div>
+            <div class="bg-white p-4.5 rounded-2xl border border-ivory-300 shadow-soft">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600 block">Compliance Rate</span>
+                <div class="text-3xl font-serif font-black text-pista-800 mt-1">100%</div>
+                <span class="text-[11px] text-pista-700 font-semibold mt-1 block">Zero SLA violations</span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <button onclick="showSubView('admin', 'admin-verification')" class="p-5 rounded-2xl bg-white hover:bg-pista-50 border border-ivory-300 transition-all text-left space-y-2 shadow-soft">
+                <div class="w-10 h-10 rounded-xl bg-pista-100 text-pista-700 flex items-center justify-center font-bold">
+                    <i class="fa-solid fa-file-circle-check text-base"></i>
+                </div>
+                <h4 class="font-bold text-sm text-pista-950">NGO Verification Queue</h4>
+                <p class="text-xs text-ivory-700 leading-relaxed">Audit uploaded FSSAI &amp; Darpan legal certificates and unlock dispatches.</p>
+            </button>
+            <button onclick="showSubView('admin', 'admin-users')" class="p-5 rounded-2xl bg-white hover:bg-salmon-50 border border-ivory-300 transition-all text-left space-y-2 shadow-soft">
+                <div class="w-10 h-10 rounded-xl bg-salmon-100 text-salmon-600 flex items-center justify-center font-bold">
+                    <i class="fa-solid fa-users-gear text-base"></i>
+                </div>
+                <h4 class="font-bold text-sm text-pista-950">User Management</h4>
+                <p class="text-xs text-ivory-700 leading-relaxed">Inspect registered accounts, roles, access permissions, and session records.</p>
+            </button>
+            <button onclick="showSubView('admin', 'admin-telemetry')" class="p-5 rounded-2xl bg-white hover:bg-ivory-100 border border-ivory-300 transition-all text-left space-y-2 shadow-soft">
+                <div class="w-10 h-10 rounded-xl bg-ivory-200 text-ivory-800 flex items-center justify-center font-bold">
+                    <i class="fa-solid fa-satellite-dish text-base"></i>
+                </div>
+                <h4 class="font-bold text-sm text-pista-950">Rescue Telemetry</h4>
+                <p class="text-xs text-ivory-700 leading-relaxed">Monitor real-time food temperature and transit velocity across city dispatches.</p>
+            </button>
+        </div>
+    </div>
+
+    <!-- 2. ADMIN SUB-VIEW: NGO VERIFICATION QUEUE -->
+    <div id="subview-admin-verification" class="admin-view-pane hidden space-y-6">
+        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-ivory-300 shadow-soft max-w-4xl mx-auto space-y-6">
+            <div class="flex items-center justify-between pb-4 border-b border-ivory-200">
+                <div>
+                    <span class="px-3 py-1 bg-pista-100 text-pista-900 border border-pista-300 rounded-full text-xs font-bold inline-flex items-center gap-1.5 mb-2">
+                        <i class="fa-solid fa-file-circle-check text-pista-700"></i> Accreditation Desk
+                    </span>
+                    <h2 class="font-serif text-2xl font-black text-pista-950">NGO &amp; Kitchen Verification Queue</h2>
+                    <p class="text-xs text-ivory-700 mt-1">Review legal documentation before granting live broadcast permissions.</p>
+                </div>
+                <button onclick="showSubView('admin', 'admin-dashboard')" class="text-xs font-bold text-ivory-600 hover:text-pista-800 transition-colors flex items-center gap-1">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+                </button>
+            </div>
+
+            <div class="space-y-4">
+                <div class="p-5 rounded-2xl bg-ivory-50 border border-ivory-300 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-base text-pista-950">Annapurna Grand Restaurant</span>
+                            <span class="px-2.5 py-0.5 rounded-full bg-pista-200 text-pista-900 text-[10px] font-bold">Approved</span>
+                        </div>
+                        <p class="text-xs text-ivory-700">Food Donor &bull; Indiranagar &bull; FSSAI Lic #11223344009812 verified on file</p>
+                    </div>
+                    <span class="px-3 py-1.5 rounded-xl bg-pista-100 text-pista-800 font-bold text-xs border border-pista-300">
+                        <i class="fa-solid fa-circle-check text-pista-600 mr-1"></i> Accredited
+                    </span>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-ivory-50 border border-ivory-300 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-base text-pista-950">Hope Community Shelter</span>
+                            <span class="px-2.5 py-0.5 rounded-full bg-pista-200 text-pista-900 text-[10px] font-bold">Approved</span>
+                        </div>
+                        <p class="text-xs text-ivory-700">Food Receiver &bull; St. Marks Road &bull; NGO Darpan #KA/2021/008129 verified</p>
+                    </div>
+                    <span class="px-3 py-1.5 rounded-xl bg-pista-100 text-pista-800 font-bold text-xs border border-pista-300">
+                        <i class="fa-solid fa-circle-check text-pista-600 mr-1"></i> Accredited
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. ADMIN SUB-VIEW: USER MANAGEMENT -->
+    <div id="subview-admin-users" class="admin-view-pane hidden space-y-6">
+        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-ivory-300 shadow-soft max-w-4xl mx-auto space-y-6">
+            <div class="flex items-center justify-between pb-4 border-b border-ivory-200">
+                <div>
+                    <span class="px-3 py-1 bg-salmon-50 text-salmon-700 border border-salmon-200 rounded-full text-xs font-bold inline-flex items-center gap-1.5 mb-2">
+                        <i class="fa-solid fa-users-gear text-salmon-500"></i> RBAC Security Registry
+                    </span>
+                    <h2 class="font-serif text-2xl font-black text-pista-950">User Management &amp; Roles</h2>
+                    <p class="text-xs text-ivory-700 mt-1">Platform role assignments and account status oversight.</p>
+                </div>
+                <button onclick="showSubView('admin', 'admin-dashboard')" class="text-xs font-bold text-ivory-600 hover:text-pista-800 transition-colors flex items-center gap-1">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+                </button>
+            </div>
+
+            <div class="divide-y divide-ivory-200 text-xs">
+                {% for acc in demo_accounts %}
+                    <div class="py-3.5 flex items-center justify-between gap-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-ivory-100 border border-ivory-300 flex items-center justify-center font-bold text-pista-800">
+                                {{ acc.username|slice:":1"|upper }}
+                            </div>
+                            <div>
+                                <span class="font-bold text-sm text-pista-950 block">@{{ acc.username }}</span>
+                                <span class="text-ivory-700">{{ acc.name }} &bull; {{ acc.role }}</span>
+                            </div>
+                        </div>
+                        <span class="px-2.5 py-1 rounded-full bg-pista-100 text-pista-800 font-bold text-[10px] border border-pista-200">
+                            {{ acc.badge }}
+                        </span>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. ADMIN SUB-VIEW: RESCUE MONITORING TELEMETRY -->
+    <div id="subview-admin-telemetry" class="admin-view-pane hidden space-y-6">
+        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-ivory-300 shadow-soft max-w-4xl mx-auto space-y-6">
+            <div class="flex items-center justify-between pb-4 border-b border-ivory-200">
+                <div>
+                    <span class="px-3 py-1 bg-pista-100 text-pista-900 border border-pista-300 rounded-full text-xs font-bold inline-flex items-center gap-1.5 mb-2">
+                        <i class="fa-solid fa-satellite-dish text-pista-700"></i> Citywide Mesh Telemetry
+                    </span>
+                    <h2 class="font-serif text-2xl font-black text-pista-950">Active Rescue Telemetry Monitor</h2>
+                    <p class="text-xs text-ivory-700 mt-1">Real-time status of warm food transit across Bengaluru.</p>
+                </div>
+                <button onclick="showSubView('admin', 'admin-dashboard')" class="text-xs font-bold text-ivory-600 hover:text-pista-800 transition-colors flex items-center gap-1">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+                </button>
+            </div>
+
+            <div class="divide-y divide-ivory-200">
+                {% for dispatch in active_dispatches %}
+                    <div class="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-2">
+                                <span class="font-mono font-bold text-xs text-salmon-700 bg-salmon-50 px-2 py-0.5 rounded border border-salmon-200">{{ dispatch.mission_id }}</span>
+                                <span class="font-bold text-sm text-pista-950">{{ dispatch.donor }} &rarr; {{ dispatch.receiver }}</span>
+                            </div>
+                            <p class="text-xs text-ivory-700">
+                                Courier: <strong>{{ dispatch.volunteer_name }}</strong> &bull; Distance: {{ dispatch.distance }} &bull; ETA: {{ dispatch.eta }} &bull; {{ dispatch.servings }} Servings
+                            </p>
+                        </div>
+                        <span class="px-3 py-1 rounded-xl bg-pista-100 text-pista-800 font-bold text-xs border border-pista-200 self-start sm:self-auto">
+                            {{ dispatch.status_display }}
+                        </span>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</div>

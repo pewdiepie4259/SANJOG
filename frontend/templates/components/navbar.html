@@ -22,16 +22,16 @@
         <nav class="hidden lg:flex items-center gap-1 text-xs font-semibold text-ivory-800">
             
             <!-- 1. LANDING & FEED -->
-            <a href="/" 
-               class="px-3 py-2 rounded-xl transition-all flex items-center gap-1.5 {% if request.path == '/' and not request.GET.tab %}bg-pista-100 text-pista-900 font-bold border border-pista-300 shadow-xs{% else %}hover:bg-ivory-200/70 hover:text-pista-900{% endif %}">
+            <a href="/?view=overview" 
+               class="px-3 py-2 rounded-xl transition-all flex items-center gap-1.5 {% if request.path == '/' and not request.GET.tab and not request.GET.view %}bg-pista-100 text-pista-900 font-bold border border-pista-300 shadow-xs{% else %}hover:bg-ivory-200/70 hover:text-pista-900{% endif %}">
                 <i class="fa-solid fa-house-chimney text-pista-700"></i>
                 <span>Home</span>
             </a>
 
             <!-- 2. DONOR DROPDOWN -->
             <div class="relative group">
-                <a href="/donor/dashboard/" 
-                   class="px-3 py-2 rounded-xl transition-all flex items-center gap-1.5 {% if '/donor/' in request.path %}bg-pista-100 text-pista-900 font-bold border border-pista-300 shadow-xs{% else %}hover:bg-ivory-200/70 hover:text-pista-900{% endif %}">
+                <a href="/?view=donor-dashboard" 
+                   class="px-3 py-2 rounded-xl transition-all flex items-center gap-1.5 {% if 'donor' in request.GET.view or '/donor/' in request.path %}bg-pista-100 text-pista-900 font-bold border border-pista-300 shadow-xs{% else %}hover:bg-ivory-200/70 hover:text-pista-900{% endif %}">
                     <i class="fa-solid fa-bowl-food text-pista-700"></i>
                     <span>Donor</span>
                     <i class="fa-solid fa-chevron-down text-[9px] text-ivory-600 group-hover:rotate-180 transition-transform"></i>
@@ -41,19 +41,19 @@
                         <div class="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-pista-800 bg-pista-50 rounded-lg">
                             <i class="fa-solid fa-hand-holding-heart mr-1 text-pista-600"></i> Donor Portal
                         </div>
-                        <a href="/donor/dashboard/" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-pista-100/70 hover:text-pista-900 transition-colors">
+                        <a href="/?view=donor-dashboard" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-pista-100/70 hover:text-pista-900 transition-colors">
                             <i class="fa-solid fa-gauge text-pista-600 w-4"></i> Dashboard
                         </a>
-                        <a href="/donor/report-surplus/" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-pista-100/70 hover:text-pista-900 transition-colors">
+                        <a href="/?view=donor-report" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-pista-100/70 hover:text-pista-900 transition-colors">
                             <i class="fa-solid fa-plus-circle text-salmon-500 w-4"></i> Report Surplus
                         </a>
-                        <a href="/donor/ai-match/" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-pista-100/70 hover:text-pista-900 transition-colors">
+                        <a href="/?view=donor-ai" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-pista-100/70 hover:text-pista-900 transition-colors">
                             <i class="fa-solid fa-brain text-pista-700 w-4"></i> AI Match Engine
                         </a>
-                        <a href="/donor/live-tracking/" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-pista-100/70 hover:text-pista-900 transition-colors">
+                        <a href="/?view=donor-tracking" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-pista-100/70 hover:text-pista-900 transition-colors">
                             <i class="fa-solid fa-location-crosshairs text-salmon-600 w-4"></i> Live Tracking
                         </a>
-                        <a href="/donor/history/" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-pista-100/70 hover:text-pista-900 transition-colors">
+                        <a href="/?view=donor-history" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-pista-100/70 hover:text-pista-900 transition-colors">
                             <i class="fa-solid fa-clock-rotate-left text-ivory-700 w-4"></i> Donation History
                         </a>
                     </div>
@@ -62,8 +62,8 @@
 
             <!-- 3. NGO (RECEIVER) DROPDOWN -->
             <div class="relative group">
-                <a href="/ngo/dashboard/" 
-                   class="px-3 py-2 rounded-xl transition-all flex items-center gap-1.5 {% if '/ngo/' in request.path or '/receiver/' in request.path %}bg-salmon-100 text-salmon-900 font-bold border border-salmon-300 shadow-xs{% else %}hover:bg-ivory-200/70 hover:text-salmon-800{% endif %}">
+                <a href="/?view=ngo-dashboard" 
+                   class="px-3 py-2 rounded-xl transition-all flex items-center gap-1.5 {% if 'ngo' in request.GET.view or '/ngo/' in request.path or '/receiver/' in request.path %}bg-salmon-100 text-salmon-900 font-bold border border-salmon-300 shadow-xs{% else %}hover:bg-ivory-200/70 hover:text-salmon-800{% endif %}">
                     <i class="fa-solid fa-hands-holding-child text-salmon-500"></i>
                     <span>NGO</span>
                     <i class="fa-solid fa-chevron-down text-[9px] text-ivory-600 group-hover:rotate-180 transition-transform"></i>
@@ -73,16 +73,16 @@
                         <div class="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-salmon-800 bg-salmon-50 rounded-lg">
                             <i class="fa-solid fa-people-roof mr-1 text-salmon-600"></i> NGO &amp; Shelter Portal
                         </div>
-                        <a href="/ngo/dashboard/" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-salmon-100/70 hover:text-salmon-900 transition-colors">
+                        <a href="/?view=ngo-dashboard" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-salmon-100/70 hover:text-salmon-900 transition-colors">
                             <i class="fa-solid fa-gauge text-salmon-600 w-4"></i> Dashboard
                         </a>
-                        <a href="/ngo/nearby-food/" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-salmon-100/70 hover:text-salmon-900 transition-colors">
+                        <a href="/?view=ngo-nearby" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-salmon-100/70 hover:text-salmon-900 transition-colors">
                             <i class="fa-solid fa-compass text-pista-600 w-4"></i> Nearby Food
                         </a>
-                        <a href="/ngo/request-food/" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-salmon-100/70 hover:text-salmon-900 transition-colors">
+                        <a href="/?view=ngo-request" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-salmon-100/70 hover:text-salmon-900 transition-colors">
                             <i class="fa-solid fa-utensils text-salmon-600 w-4"></i> Request Food
                         </a>
-                        <a href="/ngo/accepted-donations/" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-salmon-100/70 hover:text-salmon-900 transition-colors">
+                        <a href="/?view=ngo-accepted" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-salmon-100/70 hover:text-salmon-900 transition-colors">
                             <i class="fa-solid fa-circle-check text-pista-700 w-4"></i> Accepted Donations
                         </a>
                     </div>
@@ -91,8 +91,8 @@
 
             <!-- 4. VOLUNTEER DROPDOWN -->
             <div class="relative group">
-                <a href="/volunteer/dashboard/" 
-                   class="px-3 py-2 rounded-xl transition-all flex items-center gap-1.5 {% if '/volunteer/' in request.path %}bg-pista-100 text-pista-900 font-bold border border-pista-300 shadow-xs{% else %}hover:bg-ivory-200/70 hover:text-pista-900{% endif %}">
+                <a href="/?view=volunteer-dashboard" 
+                   class="px-3 py-2 rounded-xl transition-all flex items-center gap-1.5 {% if 'volunteer' in request.GET.view or '/volunteer/' in request.path %}bg-pista-100 text-pista-900 font-bold border border-pista-300 shadow-xs{% else %}hover:bg-ivory-200/70 hover:text-pista-900{% endif %}">
                     <i class="fa-solid fa-person-biking text-pista-700"></i>
                     <span>Volunteer</span>
                     <i class="fa-solid fa-chevron-down text-[9px] text-ivory-600 group-hover:rotate-180 transition-transform"></i>
@@ -102,13 +102,13 @@
                         <div class="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-pista-800 bg-pista-50 rounded-lg">
                             <i class="fa-solid fa-truck-fast mr-1 text-pista-600"></i> Rescue Drivers
                         </div>
-                        <a href="/volunteer/dashboard/" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-pista-100/70 hover:text-pista-900 transition-colors">
+                        <a href="/?view=volunteer-dashboard" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-pista-100/70 hover:text-pista-900 transition-colors">
                             <i class="fa-solid fa-gauge text-pista-600 w-4"></i> Dashboard
                         </a>
-                        <a href="/volunteer/available-rescues/" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-pista-100/70 hover:text-pista-900 transition-colors">
+                        <a href="/?view=volunteer-rescues" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-pista-100/70 hover:text-pista-900 transition-colors">
                             <i class="fa-solid fa-list-check text-salmon-500 w-4"></i> Available Rescues
                         </a>
-                        <a href="/volunteer/active-delivery/" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-pista-100/70 hover:text-pista-900 transition-colors">
+                        <a href="/?view=volunteer-delivery" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-pista-100/70 hover:text-pista-900 transition-colors">
                             <i class="fa-solid fa-route text-pista-700 w-4"></i> Active Delivery (OTP)
                         </a>
                     </div>
@@ -117,8 +117,8 @@
 
             <!-- 5. ADMIN DROPDOWN -->
             <div class="relative group">
-                <a href="/platform-admin/dashboard/" 
-                   class="px-3 py-2 rounded-xl transition-all flex items-center gap-1.5 {% if '/platform-admin/' in request.path %}bg-ivory-300 text-ivory-950 font-bold border border-ivory-400 shadow-xs{% else %}hover:bg-ivory-200/70 hover:text-ivory-950{% endif %}">
+                <a href="/?view=admin-dashboard" 
+                   class="px-3 py-2 rounded-xl transition-all flex items-center gap-1.5 {% if 'admin' in request.GET.view or '/platform-admin/' in request.path %}bg-ivory-300 text-ivory-950 font-bold border border-ivory-400 shadow-xs{% else %}hover:bg-ivory-200/70 hover:text-ivory-950{% endif %}">
                     <i class="fa-solid fa-shield-halved text-pista-800"></i>
                     <span>Admin</span>
                     <i class="fa-solid fa-chevron-down text-[9px] text-ivory-600 group-hover:rotate-180 transition-transform"></i>
@@ -128,16 +128,16 @@
                         <div class="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-ivory-900 bg-ivory-100 rounded-lg">
                             <i class="fa-solid fa-lock mr-1 text-ivory-800"></i> Platform Trust &amp; Ops
                         </div>
-                        <a href="/platform-admin/dashboard/" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-ivory-100 hover:text-ivory-900 transition-colors">
+                        <a href="/?view=admin-dashboard" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-ivory-100 hover:text-ivory-900 transition-colors">
                             <i class="fa-solid fa-gauge text-ivory-700 w-4"></i> Admin Dashboard
                         </a>
-                        <a href="/platform-admin/ngo-verification/" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-ivory-100 hover:text-ivory-900 transition-colors">
+                        <a href="/?view=admin-verification" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-ivory-100 hover:text-ivory-900 transition-colors">
                             <i class="fa-solid fa-file-circle-check text-pista-600 w-4"></i> NGO Verification Queue
                         </a>
-                        <a href="/platform-admin/user-management/" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-ivory-100 hover:text-ivory-900 transition-colors">
+                        <a href="/?view=admin-users" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-ivory-100 hover:text-ivory-900 transition-colors">
                             <i class="fa-solid fa-users-gear text-salmon-600 w-4"></i> User Management
                         </a>
-                        <a href="/platform-admin/rescue-monitoring/" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-ivory-100 hover:text-ivory-900 transition-colors">
+                        <a href="/?view=admin-telemetry" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-ivory-100 hover:text-ivory-900 transition-colors">
                             <i class="fa-solid fa-satellite-dish text-pista-700 w-4"></i> Rescue Monitoring
                         </a>
                     </div>
@@ -146,32 +146,32 @@
 
             <!-- 6. SHARED TOOLS DROPDOWN -->
             <div class="relative group">
-                <button class="px-3 py-2 rounded-xl transition-all flex items-center gap-1.5 hover:bg-ivory-200/70 hover:text-pista-900 {% if request.path in '/map/,/qr-scanner/,/food-passport/,/notifications/,/profile/' %}bg-pista-100 font-bold border border-pista-300{% endif %}">
+                <a href="/?view=tools-map" class="px-3 py-2 rounded-xl transition-all flex items-center gap-1.5 hover:bg-ivory-200/70 hover:text-pista-900 {% if 'tools' in request.GET.view or request.path in '/map/,/qr-scanner/,/food-passport/,/notifications/,/profile/' %}bg-pista-100 font-bold border border-pista-300{% endif %}">
                     <i class="fa-solid fa-cubes text-salmon-500"></i>
                     <span>Shared Tools</span>
                     <i class="fa-solid fa-chevron-down text-[9px] text-ivory-600 group-hover:rotate-180 transition-transform"></i>
-                </button>
+                </a>
                 <div class="absolute right-0 top-full pt-1.5 w-60 hidden group-hover:block z-50">
                     <div class="bg-white rounded-2xl shadow-xl border border-ivory-300 p-2 space-y-1">
                         <div class="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-salmon-800 bg-salmon-50 rounded-lg">
                             <i class="fa-solid fa-network-wired mr-1 text-salmon-600"></i> Shared Utilities
                         </div>
-                        <a href="/map/" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-pista-100/70 hover:text-pista-900 transition-colors">
+                        <a href="/?view=tools-map" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-pista-100/70 hover:text-pista-900 transition-colors">
                             <i class="fa-solid fa-map-location-dot text-pista-600 w-4"></i> Live Rescue Map
                         </a>
-                        <a href="/qr-scanner/" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-pista-100/70 hover:text-pista-900 transition-colors">
+                        <a href="/?view=tools-scanner" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-pista-100/70 hover:text-pista-900 transition-colors">
                             <i class="fa-solid fa-qrcode text-salmon-500 w-4"></i> Digital QR Scanner
                         </a>
-                        <a href="/food-passport/" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-pista-100/70 hover:text-pista-900 transition-colors">
+                        <a href="/?view=tools-passport" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-pista-100/70 hover:text-pista-900 transition-colors">
                             <i class="fa-solid fa-passport text-pista-700 w-4"></i> Food Safety Passport
                         </a>
-                        <a href="/notifications/" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium hover:bg-pista-100/70 hover:text-pista-900 transition-colors">
+                        <a href="/?view=tools-notifications" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium hover:bg-pista-100/70 hover:text-pista-900 transition-colors">
                             <span class="flex items-center gap-2.5">
                                 <i class="fa-solid fa-bell text-salmon-500 w-4"></i> Notifications
                             </span>
                             <span class="w-4 h-4 rounded-full bg-salmon-500 text-white text-[10px] font-bold flex items-center justify-center">3</span>
                         </a>
-                        <a href="/profile/" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-pista-100/70 hover:text-pista-900 transition-colors">
+                        <a href="/?view=tools-profile" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium hover:bg-pista-100/70 hover:text-pista-900 transition-colors">
                             <i class="fa-solid fa-id-badge text-ivory-700 w-4"></i> Organization Profile
                         </a>
                     </div>
@@ -204,7 +204,7 @@
             </div>
 
             <!-- Shared Icon Quick Links: Notifications & Scanner -->
-            <a href="/notifications/" 
+            <a href="/?view=tools-notifications" 
                class="relative w-9 h-9 rounded-xl bg-ivory-100 hover:bg-salmon-50 border border-ivory-300 text-ivory-700 hover:text-salmon-600 flex items-center justify-center transition-colors"
                title="Notifications">
                 <i class="fa-solid fa-bell text-xs"></i>
@@ -212,7 +212,7 @@
                 <span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-salmon-500"></span>
             </a>
 
-            <a href="/qr-scanner/" 
+            <a href="/?view=tools-scanner" 
                class="w-9 h-9 rounded-xl bg-ivory-100 hover:bg-pista-100 border border-ivory-300 text-ivory-700 hover:text-pista-800 flex items-center justify-center transition-colors"
                title="QR Scanner">
                 <i class="fa-solid fa-qrcode text-xs"></i>
@@ -221,7 +221,7 @@
             <!-- User Auth Controls -->
             {% if user.is_authenticated %}
                 <div class="flex items-center gap-2 pl-2 border-l border-ivory-300">
-                    <a href="/profile/" class="text-xs font-bold text-pista-900 bg-pista-100/90 hover:bg-pista-200 border border-pista-300 px-3 py-1.5 rounded-xl transition-colors flex items-center gap-1.5">
+                    <a href="/?view=tools-profile" class="text-xs font-bold text-pista-900 bg-pista-100/90 hover:bg-pista-200 border border-pista-300 px-3 py-1.5 rounded-xl transition-colors flex items-center gap-1.5">
                         <i class="fa-solid fa-circle-user text-pista-700"></i>
                         <span class="hidden sm:inline">{{ user.username }}</span>
                     </a>
@@ -256,28 +256,28 @@
     <!-- RESPONSIVE MOBILE NAVIGATION DRAWER -->
     <div id="mobile-nav" class="hidden lg:hidden border-t border-ivory-300 bg-white px-4 py-4 space-y-4 shadow-lg animate-fadeIn">
         <div class="grid grid-cols-2 gap-2 text-xs font-bold">
-            <a href="/" class="p-2.5 rounded-xl bg-ivory-100 text-ivory-900 flex items-center gap-2">
+            <a href="/?view=overview" class="p-2.5 rounded-xl bg-ivory-100 text-ivory-900 flex items-center gap-2">
                 <i class="fa-solid fa-house text-pista-700"></i> Home
             </a>
-            <a href="/donor/dashboard/" class="p-2.5 rounded-xl bg-pista-50 text-pista-900 flex items-center gap-2 border border-pista-200">
+            <a href="/?view=donor-dashboard" class="p-2.5 rounded-xl bg-pista-50 text-pista-900 flex items-center gap-2 border border-pista-200">
                 <i class="fa-solid fa-bowl-food text-pista-600"></i> Donor Hub
             </a>
-            <a href="/ngo/dashboard/" class="p-2.5 rounded-xl bg-salmon-50 text-salmon-900 flex items-center gap-2 border border-salmon-200">
+            <a href="/?view=ngo-dashboard" class="p-2.5 rounded-xl bg-salmon-50 text-salmon-900 flex items-center gap-2 border border-salmon-200">
                 <i class="fa-solid fa-hands-holding-child text-salmon-600"></i> NGO Hub
             </a>
-            <a href="/volunteer/dashboard/" class="p-2.5 rounded-xl bg-pista-50 text-pista-900 flex items-center gap-2 border border-pista-200">
+            <a href="/?view=volunteer-dashboard" class="p-2.5 rounded-xl bg-pista-50 text-pista-900 flex items-center gap-2 border border-pista-200">
                 <i class="fa-solid fa-person-biking text-pista-600"></i> Volunteer
             </a>
-            <a href="/platform-admin/dashboard/" class="p-2.5 rounded-xl bg-ivory-200 text-ivory-900 flex items-center gap-2 border border-ivory-300">
+            <a href="/?view=admin-dashboard" class="p-2.5 rounded-xl bg-ivory-200 text-ivory-900 flex items-center gap-2 border border-ivory-300">
                 <i class="fa-solid fa-shield text-ivory-700"></i> Admin Ops
             </a>
-            <a href="/map/" class="p-2.5 rounded-xl bg-pista-50 text-pista-900 flex items-center gap-2 border border-pista-200">
+            <a href="/?view=tools-map" class="p-2.5 rounded-xl bg-pista-50 text-pista-900 flex items-center gap-2 border border-pista-200">
                 <i class="fa-solid fa-map text-pista-700"></i> Rescue Map
             </a>
-            <a href="/qr-scanner/" class="p-2.5 rounded-xl bg-salmon-50 text-salmon-900 flex items-center gap-2 border border-salmon-200">
+            <a href="/?view=tools-scanner" class="p-2.5 rounded-xl bg-salmon-50 text-salmon-900 flex items-center gap-2 border border-salmon-200">
                 <i class="fa-solid fa-qrcode text-salmon-600"></i> QR Scanner
             </a>
-            <a href="/food-passport/" class="p-2.5 rounded-xl bg-pista-50 text-pista-900 flex items-center gap-2 border border-pista-200">
+            <a href="/?view=tools-passport" class="p-2.5 rounded-xl bg-pista-50 text-pista-900 flex items-center gap-2 border border-pista-200">
                 <i class="fa-solid fa-passport text-pista-600"></i> Passport
             </a>
         </div>

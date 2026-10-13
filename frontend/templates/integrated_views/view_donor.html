@@ -1,0 +1,397 @@
+<!-- DONOR HUB INTEGRATED WORKSPACE -->
+<div id="hub-donor" class="hub-container hidden space-y-6">
+    
+    <!-- Sub-Navigation Pill Switcher for Donor Hub -->
+    <div class="flex flex-wrap items-center justify-between gap-3 bg-white p-3.5 rounded-2xl border border-ivory-300 shadow-soft">
+        <div class="flex items-center gap-2">
+            <span class="w-8 h-8 rounded-xl bg-pista-100 text-pista-800 flex items-center justify-center font-bold text-sm">
+                <i class="fa-solid fa-bowl-food"></i>
+            </span>
+            <div>
+                <span class="text-xs font-serif font-black text-pista-950 block leading-tight">Donor Kitchen Operations</span>
+                <span class="text-[10px] text-ivory-600">Annapurna Grand &bull; Indiranagar, Bengaluru</span>
+            </div>
+        </div>
+
+        <!-- Sub-Pills -->
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0" id="donor-subnav">
+            <button onclick="showSubView('donor', 'donor-dashboard')" id="btn-donor-dashboard"
+                    class="donor-subpill px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-pista-700 text-ivory-50 shadow-xs flex items-center gap-1.5">
+                <i class="fa-solid fa-gauge text-xs"></i>
+                <span>Dashboard</span>
+            </button>
+            <button onclick="showSubView('donor', 'donor-report')" id="btn-donor-report"
+                    class="donor-subpill px-3 py-1.5 rounded-xl text-xs font-semibold transition-all bg-ivory-100 text-pista-900 hover:bg-pista-100 flex items-center gap-1.5 border border-ivory-300">
+                <i class="fa-solid fa-plus-circle text-salmon-500 text-xs"></i>
+                <span>Report Surplus</span>
+            </button>
+            <button onclick="showSubView('donor', 'donor-ai')" id="btn-donor-ai"
+                    class="donor-subpill px-3 py-1.5 rounded-xl text-xs font-semibold transition-all bg-ivory-100 text-pista-900 hover:bg-pista-100 flex items-center gap-1.5 border border-ivory-300">
+                <i class="fa-solid fa-brain text-pista-600 text-xs"></i>
+                <span>AI Match Engine</span>
+            </button>
+            <button onclick="showSubView('donor', 'donor-tracking')" id="btn-donor-tracking"
+                    class="donor-subpill px-3 py-1.5 rounded-xl text-xs font-semibold transition-all bg-ivory-100 text-pista-900 hover:bg-pista-100 flex items-center gap-1.5 border border-ivory-300">
+                <i class="fa-solid fa-location-crosshairs text-salmon-600 text-xs"></i>
+                <span>Live Tracking &amp; OTP</span>
+            </button>
+            <button onclick="showSubView('donor', 'donor-history')" id="btn-donor-history"
+                    class="donor-subpill px-3 py-1.5 rounded-xl text-xs font-semibold transition-all bg-ivory-100 text-pista-900 hover:bg-pista-100 flex items-center gap-1.5 border border-ivory-300">
+                <i class="fa-solid fa-clock-rotate-left text-xs"></i>
+                <span>History &amp; 80G</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- 1. DONOR SUB-VIEW: DASHBOARD -->
+    <div id="subview-donor-dashboard" class="donor-view-pane space-y-6">
+        <!-- 4 Metric Cards -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-white p-4.5 rounded-2xl border border-ivory-300 shadow-soft">
+                <div class="flex items-center justify-between">
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600">Active Listings</span>
+                    <span class="w-2 h-2 rounded-full bg-pista-500 animate-pulse"></span>
+                </div>
+                <div class="text-3xl font-serif font-black text-pista-900 mt-1">1 Batch</div>
+                <span class="text-[11px] text-pista-700 font-semibold mt-1 block">60 warm meals ready</span>
+            </div>
+            <div class="bg-white p-4.5 rounded-2xl border border-ivory-300 shadow-soft">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600 block">Total Meals Shared</span>
+                <div class="text-3xl font-serif font-black text-pista-900 mt-1">1,420</div>
+                <span class="text-[11px] text-ivory-600 mt-1 block">Across 42 dispatches</span>
+            </div>
+            <div class="bg-white p-4.5 rounded-2xl border border-ivory-300 shadow-soft">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600 block">CO₂ Avoided</span>
+                <div class="text-3xl font-serif font-black text-pista-900 mt-1">852 <span class="text-xs font-sans font-normal text-ivory-600">kg</span></div>
+                <span class="text-[11px] text-pista-700 font-semibold mt-1 block">Verified landfill offset</span>
+            </div>
+            <div class="bg-white p-4.5 rounded-2xl border border-ivory-300 shadow-soft">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600 block">Food Safety Score</span>
+                <div class="text-3xl font-serif font-black text-salmon-600 mt-1">99.4%</div>
+                <span class="text-[11px] text-ivory-600 mt-1 block">FSSAI compliant</span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Left 2 Cols: Active Surplus & Dispatch -->
+            <div class="lg:col-span-2 space-y-6">
+                <div class="bg-white p-6 rounded-3xl border border-ivory-300 shadow-soft space-y-4">
+                    <div class="flex items-center justify-between pb-3 border-b border-ivory-200">
+                        <div>
+                            <h3 class="font-serif text-lg font-bold text-pista-950">Current Surplus Batches</h3>
+                            <p class="text-xs text-ivory-700">Dishes prepared in your kitchen awaiting pickup or currently in transit.</p>
+                        </div>
+                        <button onclick="showSubView('donor', 'donor-report')" class="px-3.5 py-2 bg-salmon-500 hover:bg-salmon-600 text-white font-bold text-xs rounded-xl shadow-salmon transition-colors flex items-center gap-1.5">
+                            <i class="fa-solid fa-plus-circle"></i>
+                            <span>Report Surplus Food</span>
+                        </button>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="p-4 rounded-2xl bg-pista-50/70 border border-pista-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div class="space-y-1">
+                                <div class="flex items-center gap-2">
+                                    <span class="font-bold text-sm text-pista-950">Fresh North Indian Buffet Thalis</span>
+                                    <span class="px-2 py-0.5 rounded-full bg-pista-200 text-pista-900 text-[10px] font-bold">Cooked Meals</span>
+                                </div>
+                                <p class="text-xs text-ivory-700">
+                                    60 Servings &bull; Prepared 35 mins ago &bull; Temperature: 68&deg;C &bull; Shelf life: 2h 15m remaining
+                                </p>
+                            </div>
+                            <div class="flex items-center gap-2 shrink-0">
+                                <button onclick="showSubView('donor', 'donor-ai')" class="px-3 py-1.5 bg-pista-600 hover:bg-pista-700 text-white font-bold text-xs rounded-xl transition-colors flex items-center gap-1">
+                                    <i class="fa-solid fa-brain"></i>
+                                    <span>AI Match</span>
+                                </button>
+                                <button onclick="showSubView('donor', 'donor-tracking')" class="px-3 py-1.5 bg-salmon-500 hover:bg-salmon-600 text-white font-bold text-xs rounded-xl transition-colors flex items-center gap-1">
+                                    <i class="fa-solid fa-location-crosshairs"></i>
+                                    <span>Live Tracking</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right 1 Col: Kitchen Accreditation Card -->
+            <div class="space-y-4">
+                <div class="bg-white p-5 rounded-3xl border border-ivory-300 shadow-soft space-y-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-2xl bg-pista-100 border border-pista-300 flex items-center justify-center text-pista-800 text-lg">
+                            <i class="fa-solid fa-utensils text-pista-700"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-sm text-pista-950">Annapurna Grand</div>
+                            <div class="text-xs text-ivory-700">Indiranagar 100ft Road, Bengaluru</div>
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-pista-100 text-pista-800 font-bold text-[10px] mt-1 border border-pista-300">
+                                <i class="fa-solid fa-circle-check text-pista-600"></i> FSSAI Verified
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-t border-ivory-200 text-xs space-y-2 text-ivory-800">
+                        <div class="flex justify-between">
+                            <span class="text-ivory-600">License No:</span>
+                            <span class="font-mono font-bold text-ivory-900">11223344009812</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-ivory-600">Dock Contact:</span>
+                            <span class="font-semibold text-ivory-900">+91 98765 43210</span>
+                        </div>
+                    </div>
+
+                    <div class="pt-2 flex flex-col gap-2">
+                        <button onclick="showSubView('tools', 'tools-passport')" class="w-full py-2 bg-ivory-100 hover:bg-pista-100 text-pista-900 font-bold text-xs rounded-xl border border-ivory-300 transition-colors flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-passport text-pista-600"></i> View Food Passport
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. DONOR SUB-VIEW: REPORT SURPLUS FOOD -->
+    <div id="subview-donor-report" class="donor-view-pane hidden space-y-6">
+        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-ivory-300 shadow-soft max-w-3xl mx-auto space-y-6">
+            <div class="flex items-start justify-between gap-4 pb-4 border-b border-ivory-200">
+                <div>
+                    <span class="px-3 py-1 bg-salmon-50 text-salmon-700 border border-salmon-200 rounded-full text-xs font-bold inline-flex items-center gap-1.5 mb-2">
+                        <i class="fa-solid fa-plus-circle text-salmon-500"></i>
+                        New Food Rescue Broadcast
+                    </span>
+                    <h2 class="font-serif text-2xl font-black text-pista-950">Report Surplus Kitchen Food</h2>
+                    <p class="text-xs text-ivory-700 mt-1">Enter details of fresh food available for pickup. Verified shelters and couriers are instantly alerted.</p>
+                </div>
+                <button onclick="showSubView('donor', 'donor-dashboard')" class="text-xs font-bold text-ivory-600 hover:text-pista-800 transition-colors flex items-center gap-1">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+                </button>
+            </div>
+
+            <form onsubmit="handleSurplusSubmit(event)" class="space-y-5">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-ivory-900 mb-1.5">
+                            <i class="fa-solid fa-bowl-food text-pista-700 mr-1"></i> Food / Dish Title
+                        </label>
+                        <input type="text" id="surplus-title" value="Fresh North Indian Buffet Thalis" required
+                               class="w-full px-4 py-2.5 rounded-xl border border-ivory-300 focus:ring-2 focus:ring-pista-500 text-xs">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-ivory-900 mb-1.5">
+                            <i class="fa-solid fa-layer-group text-pista-700 mr-1"></i> Food Classification
+                        </label>
+                        <select class="w-full px-4 py-2.5 rounded-xl border border-ivory-300 focus:ring-2 focus:ring-pista-500 text-xs bg-white">
+                            <option>Cooked Hot Meals (Vegetarian)</option>
+                            <option>Cooked Hot Meals (Non-Vegetarian)</option>
+                            <option>Bakery &amp; Bread Produce</option>
+                            <option>Fresh Produce &amp; Fruits</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-ivory-900 mb-1.5">
+                            <i class="fa-solid fa-users text-pista-700 mr-1"></i> Estimated Servings
+                        </label>
+                        <input type="number" id="surplus-servings" value="60" min="5" required
+                               class="w-full px-4 py-2.5 rounded-xl border border-ivory-300 focus:ring-2 focus:ring-pista-500 text-xs font-bold text-pista-900">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-ivory-900 mb-1.5">
+                            <i class="fa-solid fa-temperature-high text-salmon-500 mr-1"></i> Current Temp (&deg;C)
+                        </label>
+                        <input type="number" value="68" required
+                               class="w-full px-4 py-2.5 rounded-xl border border-ivory-300 focus:ring-2 focus:ring-pista-500 text-xs font-mono font-bold text-salmon-600">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-ivory-900 mb-1.5">
+                            <i class="fa-solid fa-clock text-pista-700 mr-1"></i> Shelf Life Remaining
+                        </label>
+                        <select class="w-full px-4 py-2.5 rounded-xl border border-ivory-300 focus:ring-2 focus:ring-pista-500 text-xs bg-white">
+                            <option>2 Hours (Standard Hotline)</option>
+                            <option>3 Hours</option>
+                            <option>4 Hours</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-ivory-100 border border-ivory-200 text-xs space-y-2">
+                    <span class="font-bold text-pista-900 block">Food Safety &amp; Packaging Checklist:</span>
+                    <div class="space-y-1.5 text-ivory-800">
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" checked class="rounded text-pista-600 focus:ring-0">
+                            <span>Maintained safely at or above 65&deg;C (hot bain-marie)</span>
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" checked class="rounded text-pista-600 focus:ring-0">
+                            <span>Packed in clean, food-grade containers suitable for two-wheeler transport</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between pt-3 border-t border-ivory-200">
+                    <div class="text-xs text-ivory-600">
+                        Environmental Benefit: <strong class="text-pista-800 font-bold">~30.0 kg CO₂ saved</strong>
+                    </div>
+                    <button type="submit" class="px-6 py-2.5 bg-pista-700 hover:bg-pista-800 text-ivory-50 font-bold text-xs rounded-xl shadow-pista transition-all flex items-center gap-2">
+                        <span>Broadcast &amp; Open AI Match</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 3. DONOR SUB-VIEW: AI MATCH ENGINE -->
+    <div id="subview-donor-ai" class="donor-view-pane hidden space-y-6">
+        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-ivory-300 shadow-soft max-w-4xl mx-auto space-y-6">
+            <div class="flex items-center justify-between pb-4 border-b border-ivory-200">
+                <div>
+                    <span class="px-3 py-1 bg-pista-100 text-pista-900 border border-pista-300 rounded-full text-xs font-bold inline-flex items-center gap-1.5 mb-2">
+                        <i class="fa-solid fa-brain text-pista-700"></i> AI Matching Matrix
+                    </span>
+                    <h2 class="font-serif text-2xl font-black text-pista-950">Optimal Rescue Pairings Found</h2>
+                    <p class="text-xs text-ivory-700 mt-1">Sanjog AI scored nearby shelters based on transit distance, capacity, and current demand.</p>
+                </div>
+                <button onclick="showSubView('donor', 'donor-dashboard')" class="text-xs font-bold text-ivory-600 hover:text-pista-800 transition-colors flex items-center gap-1">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+                </button>
+            </div>
+
+            <!-- Best Match Spotlight Card -->
+            <div class="p-6 rounded-3xl bg-gradient-to-r from-pista-100/90 via-ivory-50 to-salmon-50 border-2 border-pista-400 space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div class="flex items-center gap-3">
+                        <span class="px-3 py-1 bg-salmon-500 text-white font-bold text-xs rounded-full uppercase tracking-wider">
+                            98% Best Match Score
+                        </span>
+                        <span class="text-xs font-bold text-pista-900">Recommended Recipient</span>
+                    </div>
+                    <span class="text-xs font-mono font-bold text-pista-800 bg-white px-2.5 py-1 rounded-lg border border-ivory-300">
+                        Distance: 3.8 km &bull; ETA: 12 mins
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                    <div class="space-y-1">
+                        <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600 block">Recipient Shelter</span>
+                        <h3 class="font-serif text-lg font-bold text-pista-950">Hope Community Shelter &amp; Kitchen</h3>
+                        <p class="text-xs text-ivory-700">St. Marks Road &bull; Verified NGO Darpan ID: KA/2021/008129</p>
+                    </div>
+                    <div class="space-y-1 sm:text-right">
+                        <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600 block">Beneficiaries Served</span>
+                        <div class="text-xl font-serif font-black text-pista-900">80 Individuals Waiting</div>
+                        <p class="text-xs text-pista-700 font-semibold">Will consume all 60 portions immediately</p>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-pista-200/70 flex flex-wrap items-center justify-between gap-3">
+                    <div class="flex items-center gap-2 text-xs text-ivory-700">
+                        <i class="fa-solid fa-motorcycle text-pista-700"></i>
+                        <span>Auto-assigned Courier: <strong>Aniket Kumar</strong> (TVS iQube EV)</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="showSubView('donor', 'donor-tracking')" class="px-4 py-2 bg-salmon-500 hover:bg-salmon-600 text-white font-bold text-xs rounded-xl shadow-salmon transition-colors flex items-center gap-1.5">
+                            <i class="fa-solid fa-route"></i>
+                            <span>Confirm Match &amp; Track Dispatch</span>
+                        </button>
+                        <button onclick="showSubView('tools', 'tools-map')" class="px-3.5 py-2 bg-white hover:bg-pista-100 text-pista-900 font-bold text-xs rounded-xl border border-ivory-300 transition-colors flex items-center gap-1.5">
+                            <i class="fa-solid fa-map-location-dot text-pista-600"></i>
+                            <span>View on Map</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. DONOR SUB-VIEW: LIVE TRACKING & DUAL OTP -->
+    <div id="subview-donor-tracking" class="donor-view-pane hidden space-y-6">
+        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-ivory-300 shadow-soft max-w-4xl mx-auto space-y-6">
+            <div class="flex items-center justify-between pb-4 border-b border-ivory-200">
+                <div>
+                    <span class="px-3 py-1 bg-salmon-50 text-salmon-700 border border-salmon-200 rounded-full text-xs font-bold inline-flex items-center gap-1.5 mb-2">
+                        <i class="fa-solid fa-location-crosshairs text-salmon-500"></i> Active Dispatch #RS-941
+                    </span>
+                    <h2 class="font-serif text-2xl font-black text-pista-950">Live Food Rescue Telemetry</h2>
+                    <p class="text-xs text-ivory-700 mt-1">Real-time GPS tracking and OTP verification for safe handover.</p>
+                </div>
+                <button onclick="showSubView('donor', 'donor-dashboard')" class="text-xs font-bold text-ivory-600 hover:text-pista-800 transition-colors flex items-center gap-1">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+                </button>
+            </div>
+
+            <!-- OTP Card -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="p-5 rounded-2xl bg-pista-50 border border-pista-300 space-y-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-pista-800 block">Chef Handover OTP (Your Code)</span>
+                    <div class="text-4xl font-mono font-black text-pista-950 tracking-widest">7492</div>
+                    <p class="text-[11px] text-pista-700">Provide this 4-digit code to the courier when they pick up the thermal box.</p>
+                </div>
+                <div class="p-5 rounded-2xl bg-salmon-50 border border-salmon-200 space-y-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-salmon-800 block">Shelter Receipt OTP</span>
+                    <div class="text-4xl font-mono font-black text-salmon-700 tracking-widest">3180</div>
+                    <p class="text-[11px] text-salmon-600">Shelter representative will provide this code upon delivery at Hope Shelter.</p>
+                </div>
+            </div>
+
+            <!-- Courier Details -->
+            <div class="p-4 rounded-2xl bg-ivory-50 border border-ivory-300 flex items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-2xl bg-pista-100 flex items-center justify-center text-pista-800 text-lg">
+                        <i class="fa-solid fa-motorcycle text-pista-700"></i>
+                    </div>
+                    <div>
+                        <div class="font-bold text-sm text-pista-950">Aniket Kumar (Volunteer Courier)</div>
+                        <div class="text-xs text-ivory-700">TVS iQube EV &bull; KA-03-HA-8192 &bull; ETA 12 mins</div>
+                    </div>
+                </div>
+                <button onclick="showSubView('tools', 'tools-scanner')" class="px-4 py-2 bg-pista-600 hover:bg-pista-700 text-white font-bold text-xs rounded-xl shadow-pista transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-qrcode"></i>
+                    <span>Scan QR Handover</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. DONOR SUB-VIEW: HISTORY & 80G -->
+    <div id="subview-donor-history" class="donor-view-pane hidden space-y-6">
+        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-ivory-300 shadow-soft max-w-4xl mx-auto space-y-6">
+            <div class="flex items-center justify-between pb-4 border-b border-ivory-200">
+                <div>
+                    <span class="px-3 py-1 bg-pista-100 text-pista-900 border border-pista-300 rounded-full text-xs font-bold inline-flex items-center gap-1.5 mb-2">
+                        <i class="fa-solid fa-clock-rotate-left text-pista-700"></i> Compliance Archive
+                    </span>
+                    <h2 class="font-serif text-2xl font-black text-pista-950">Donation History &amp; 80G Certificates</h2>
+                    <p class="text-xs text-ivory-700 mt-1">Official audit log of verified surplus dispatches and tax exemption certificates.</p>
+                </div>
+                <button onclick="showSubView('donor', 'donor-dashboard')" class="text-xs font-bold text-ivory-600 hover:text-pista-800 transition-colors flex items-center gap-1">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+                </button>
+            </div>
+
+            <div class="divide-y divide-ivory-200">
+                <div class="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div class="space-y-1">
+                        <div class="font-bold text-sm text-pista-950">60 North Indian Buffet Thalis &bull; Hope Community Shelter</div>
+                        <div class="text-xs text-ivory-700">Oct 13, 2026 &bull; Verified Temp 68&deg;C &bull; Courier: Aniket Kumar</div>
+                    </div>
+                    <span class="px-3 py-1 rounded-xl bg-pista-100 text-pista-800 font-bold text-xs border border-pista-200 self-start sm:self-auto">
+                        <i class="fa-solid fa-check mr-1"></i> 80G Certified
+                    </span>
+                </div>
+                <div class="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div class="space-y-1">
+                        <div class="font-bold text-sm text-pista-950">45 Paneer Pulao &amp; Dal Boxes &bull; Ashraya Orphanage</div>
+                        <div class="text-xs text-ivory-700">Oct 12, 2026 &bull; Verified Temp 69&deg;C &bull; Courier: Sneha Rao</div>
+                    </div>
+                    <span class="px-3 py-1 rounded-xl bg-pista-100 text-pista-800 font-bold text-xs border border-pista-200 self-start sm:self-auto">
+                        <i class="fa-solid fa-check mr-1"></i> 80G Certified
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

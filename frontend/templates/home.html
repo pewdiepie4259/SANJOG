@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Sanjog — Community Food Rescue Network{% endblock %}
+{% block title %}Sanjog — Unified Community Food Rescue Network{% endblock %}
 
 {% block content %}
 <div class="space-y-8">
@@ -26,40 +26,32 @@
                         </span>
                     </div>
                     
-                    <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-pista-900 leading-[1.15]">
+                    <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-pista-950 leading-[1.15]">
                         Fresh food from local kitchens, <span class="text-salmon-500 underline decoration-salmon-300 decoration-wavy decoration-2">shared with neighbors</span> who need it.
                     </h1>
                     
                     <p class="text-ivory-800 text-sm sm:text-base leading-relaxed">
-                        Every day across our city, good restaurants and caterers have wholesome meals that go uneaten, while local shelters and care homes work tirelessly to feed families. Sanjog brings them together through verified volunteers who transport warm food while it is fresh.
+                        Every day across our city, good restaurants and caterers have wholesome meals that go uneaten, while local shelters and care homes work tirelessly to feed families. Sanjog connects them through verified volunteers who transport warm food while it is fresh.
                     </p>
 
+                    <!-- Interactive Quick Action Buttons (Opens Directly in This Single Link) -->
                     <div class="flex flex-wrap items-center gap-3 pt-2">
-                        <!-- Primary CTA: Pista Green -->
-                        <button onclick="switchTab('tab-donor')" 
-                                class="px-5 py-3 bg-pista-600 hover:bg-pista-700 text-white text-xs sm:text-sm font-bold rounded-2xl shadow-pista transition-all flex items-center gap-2 group hover:scale-[1.02]">
-                            <svg class="w-4 h-4 text-white group-hover:rotate-12 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
-                            </svg>
+                        <button onclick="showView('donor-report')" 
+                                class="px-5 py-3 bg-pista-700 hover:bg-pista-800 text-ivory-50 text-xs sm:text-sm font-bold rounded-2xl shadow-pista transition-all flex items-center gap-2 group hover:scale-[1.02]">
+                            <i class="fa-solid fa-plus-circle text-sm group-hover:rotate-90 transition-transform"></i>
                             <span>Donate Surplus Food</span>
                         </button>
                         
-                        <!-- Accent CTA: Salmon Pink -->
-                        <button onclick="switchTab('tab-receiver')" 
+                        <button onclick="showView('ngo-request')" 
                                 class="px-5 py-3 bg-salmon-500 hover:bg-salmon-600 text-white text-xs sm:text-sm font-bold rounded-2xl shadow-salmon transition-all flex items-center gap-2 group hover:scale-[1.02]">
-                            <svg class="w-4 h-4 text-white group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                            </svg>
+                            <i class="fa-solid fa-hands-holding-child text-sm group-hover:scale-110 transition-transform"></i>
                             <span>Request Meals for Shelter</span>
                         </button>
 
-                        <!-- Secondary link -->
-                        <button onclick="switchTab('tab-volunteer')" 
-                                class="px-4 py-3 text-pista-800 hover:text-salmon-600 text-xs sm:text-sm font-bold transition-colors flex items-center gap-1.5">
-                            <span>Volunteer Driving</span>
-                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                            </svg>
+                        <button onclick="showView('volunteer-rescues')" 
+                                class="px-4 py-3 bg-white hover:bg-pista-50 text-pista-900 text-xs sm:text-sm font-bold rounded-2xl border border-ivory-300 transition-colors flex items-center gap-1.5 shadow-soft">
+                            <i class="fa-solid fa-person-biking text-pista-700 text-sm"></i>
+                            <span>Volunteer Couriers</span>
                         </button>
                     </div>
                 </div>
@@ -89,8 +81,8 @@
                                     {{ user.get_role_display }}
                                 </span>
                             {% else %}
-                                <div class="font-bold text-pista-900 text-sm mt-0.5">Guest Visitor</div>
-                                <span class="text-xs text-ivory-600 block">1-Click switch available</span>
+                                <div class="font-bold text-pista-900 text-sm mt-0.5">Guest Explorer</div>
+                                <span class="text-xs text-ivory-600 block">1-Click role preview</span>
                             {% endif %}
                         </div>
                     </div>
@@ -98,11 +90,11 @@
                     <div class="pt-3 border-t border-ivory-200 flex items-center justify-between text-xs">
                         <span class="text-ivory-700 font-semibold flex items-center gap-1.5">
                             <span class="w-2 h-2 rounded-full bg-pista-500 animate-pulse"></span>
-                            Live Mesh Online
+                            Unified Workspace Link
                         </span>
-                        <a href="#mvp-structure-directory" class="text-pista-700 hover:text-salmon-600 font-bold transition-colors">
-                            Explore Structure &darr;
-                        </a>
+                        <button onclick="scrollToWorkspace()" class="text-pista-800 hover:text-salmon-600 font-bold transition-colors">
+                            Jump to Hub &darr;
+                        </button>
                     </div>
                 </div>
 
@@ -110,7 +102,6 @@
 
             <!-- 4 Grounded Community Metrics Tiles -->
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-6 border-t border-ivory-200">
-                
                 <div class="bg-white p-4.5 rounded-2xl border border-ivory-300 shadow-soft flex items-center gap-3.5">
                     <div class="w-11 h-11 rounded-xl bg-pista-100 text-pista-700 flex items-center justify-center shrink-0 text-lg">
                         <i class="fa-solid fa-bowl-food"></i>
@@ -150,1022 +141,387 @@
                         <span class="text-[11px] text-ivory-700 font-medium block mt-1">CO₂ emissions avoided</span>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 
-    <!-- COMPLETE MVP APPLICATION ARCHITECTURE DIRECTORY -->
-    <div id="mvp-structure-directory" class="bg-white p-6 sm:p-8 rounded-3xl border border-ivory-300 shadow-soft space-y-6">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-ivory-200">
-            <div>
-                <span class="px-3 py-1 bg-pista-100 text-pista-900 border border-pista-300 rounded-full text-xs font-bold inline-flex items-center gap-1.5 mb-1.5">
-                    <i class="fa-solid fa-sitemap text-pista-700"></i> MVP Architecture
-                </span>
-                <h2 class="font-serif text-xl sm:text-2xl font-black text-pista-950">
-                    Application Structure &amp; Portals
-                </h2>
-                <p class="text-xs text-ivory-700 mt-0.5">
-                    Fully connected, rectified page structures designed for Donors, NGOs, Volunteer Drivers, Admins, and Shared Tools.
-                </p>
-            </div>
-            <div class="flex items-center gap-2">
-                <span class="text-xs font-semibold text-ivory-600 bg-ivory-100 px-3 py-1.5 rounded-xl border border-ivory-200">
-                    <i class="fa-solid fa-palette text-salmon-500 mr-1"></i> Pista Green &bull; Ivory &bull; Salmon Pink
-                </span>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 text-xs">
-            
-            <!-- 1. DONOR SECTION (PISTA GREEN ACCENT) -->
-            <div class="p-5 rounded-2xl bg-pista-50/70 border-2 border-pista-300 space-y-3 flex flex-col justify-between">
-                <div class="space-y-2.5">
-                    <div class="flex items-center justify-between">
-                        <span class="font-bold text-sm text-pista-950 flex items-center gap-2">
-                            <i class="fa-solid fa-bowl-food text-pista-700 text-base"></i> Donor Portal
-                        </span>
-                        <span class="text-[10px] font-bold bg-pista-200 text-pista-900 px-2 py-0.5 rounded-md uppercase">5 Pages</span>
-                    </div>
-                    <p class="text-ivory-700 text-[11px] leading-relaxed">
-                        For restaurant kitchens, catering teams &amp; hotel buffets donating surplus dishes.
-                    </p>
-                    <div class="space-y-1.5 pt-1">
-                        <a href="/donor/dashboard/" class="flex items-center gap-2 p-2 rounded-xl bg-white hover:bg-pista-100 text-ivory-900 font-bold transition-colors border border-pista-200">
-                            <i class="fa-solid fa-gauge text-pista-600 w-4"></i> Dashboard
-                        </a>
-                        <a href="/donor/report-surplus/" class="flex items-center gap-2 p-2 rounded-xl bg-white hover:bg-salmon-50 text-salmon-800 font-bold transition-colors border border-pista-200">
-                            <i class="fa-solid fa-plus-circle text-salmon-500 w-4"></i> Report Surplus Food
-                        </a>
-                        <a href="/donor/ai-match/" class="flex items-center gap-2 p-2 rounded-xl bg-white hover:bg-pista-100 text-ivory-900 font-bold transition-colors border border-pista-200">
-                            <i class="fa-solid fa-brain text-pista-700 w-4"></i> AI Match Engine
-                        </a>
-                        <a href="/donor/live-tracking/" class="flex items-center gap-2 p-2 rounded-xl bg-white hover:bg-salmon-50 text-salmon-800 font-bold transition-colors border border-pista-200">
-                            <i class="fa-solid fa-location-crosshairs text-salmon-600 w-4"></i> Live Tracking &amp; OTP
-                        </a>
-                        <a href="/donor/history/" class="flex items-center gap-2 p-2 rounded-xl bg-white hover:bg-pista-100 text-ivory-900 font-bold transition-colors border border-pista-200">
-                            <i class="fa-solid fa-clock-rotate-left text-ivory-700 w-4"></i> Donation History &amp; 80G
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 2. NGO (RECEIVER) SECTION (SALMON PINK ACCENT) -->
-            <div class="p-5 rounded-2xl bg-salmon-50/70 border-2 border-salmon-300 space-y-3 flex flex-col justify-between">
-                <div class="space-y-2.5">
-                    <div class="flex items-center justify-between">
-                        <span class="font-bold text-sm text-salmon-950 flex items-center gap-2">
-                            <i class="fa-solid fa-hands-holding-child text-salmon-600 text-base"></i> NGO &amp; Shelter
-                        </span>
-                        <span class="text-[10px] font-bold bg-salmon-200 text-salmon-900 px-2 py-0.5 rounded-md uppercase">4 Pages</span>
-                    </div>
-                    <p class="text-ivory-700 text-[11px] leading-relaxed">
-                        For verified shelters, orphanages, care homes &amp; feeding soup kitchens.
-                    </p>
-                    <div class="space-y-1.5 pt-1">
-                        <a href="/ngo/dashboard/" class="flex items-center gap-2 p-2 rounded-xl bg-white hover:bg-salmon-100 text-salmon-900 font-bold transition-colors border border-salmon-200">
-                            <i class="fa-solid fa-gauge text-salmon-600 w-4"></i> Shelter Dashboard
-                        </a>
-                        <a href="/ngo/nearby-food/" class="flex items-center gap-2 p-2 rounded-xl bg-white hover:bg-pista-100 text-pista-900 font-bold transition-colors border border-salmon-200">
-                            <i class="fa-solid fa-compass text-pista-600 w-4"></i> Nearby Surplus Food
-                        </a>
-                        <a href="/ngo/request-food/" class="flex items-center gap-2 p-2 rounded-xl bg-white hover:bg-salmon-100 text-salmon-900 font-bold transition-colors border border-salmon-200">
-                            <i class="fa-solid fa-utensils text-salmon-600 w-4"></i> Broadcast Meal Need
-                        </a>
-                        <a href="/ngo/accepted-donations/" class="flex items-center gap-2 p-2 rounded-xl bg-white hover:bg-salmon-100 text-salmon-900 font-bold transition-colors border border-salmon-200">
-                            <i class="fa-solid fa-circle-check text-pista-700 w-4"></i> Accepted Deliveries Log
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 3. VOLUNTEER SECTION (PISTA GREEN ACCENT) -->
-            <div class="p-5 rounded-2xl bg-pista-50/70 border-2 border-pista-300 space-y-3 flex flex-col justify-between">
-                <div class="space-y-2.5">
-                    <div class="flex items-center justify-between">
-                        <span class="font-bold text-sm text-pista-950 flex items-center gap-2">
-                            <i class="fa-solid fa-person-biking text-pista-700 text-base"></i> Volunteer Driver
-                        </span>
-                        <span class="text-[10px] font-bold bg-pista-200 text-pista-900 px-2 py-0.5 rounded-md uppercase">3 Pages</span>
-                    </div>
-                    <p class="text-ivory-700 text-[11px] leading-relaxed">
-                        For two-wheeler &amp; EV couriers transporting warm food with insulated kits.
-                    </p>
-                    <div class="space-y-1.5 pt-1">
-                        <a href="/volunteer/dashboard/" class="flex items-center gap-2 p-2 rounded-xl bg-white hover:bg-pista-100 text-ivory-900 font-bold transition-colors border border-pista-200">
-                            <i class="fa-solid fa-gauge text-pista-600 w-4"></i> Volunteer Hub
-                        </a>
-                        <a href="/volunteer/available-rescues/" class="flex items-center gap-2 p-2 rounded-xl bg-white hover:bg-salmon-50 text-salmon-800 font-bold transition-colors border border-pista-200">
-                            <i class="fa-solid fa-list-check text-salmon-500 w-4"></i> Available Rescues (Claim)
-                        </a>
-                        <a href="/volunteer/active-delivery/" class="flex items-center gap-2 p-2 rounded-xl bg-white hover:bg-pista-100 text-pista-900 font-bold transition-colors border border-pista-200">
-                            <i class="fa-solid fa-route text-pista-700 w-4"></i> Active Delivery &amp; Dual OTP
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 4. ADMIN SECTION (IVORY & DEEP TONE) -->
-            <div class="p-5 rounded-2xl bg-ivory-100/90 border-2 border-ivory-300 space-y-3 flex flex-col justify-between">
-                <div class="space-y-2.5">
-                    <div class="flex items-center justify-between">
-                        <span class="font-bold text-sm text-ivory-950 flex items-center gap-2">
-                            <i class="fa-solid fa-shield text-ivory-700 text-base"></i> Platform Admin
-                        </span>
-                        <span class="text-[10px] font-bold bg-ivory-300 text-ivory-950 px-2 py-0.5 rounded-md uppercase">4 Pages</span>
-                    </div>
-                    <p class="text-ivory-700 text-[11px] leading-relaxed">
-                        Compliance team overseeing FSSAI, 80G non-profit audits &amp; active telemetry.
-                    </p>
-                    <div class="space-y-1.5 pt-1">
-                        <a href="/platform-admin/dashboard/" class="flex items-center gap-2 p-2 rounded-xl bg-white hover:bg-ivory-200 text-ivory-900 font-bold transition-colors border border-ivory-300">
-                            <i class="fa-solid fa-gauge text-ivory-700 w-4"></i> Admin Command Center
-                        </a>
-                        <a href="/platform-admin/ngo-verification/" class="flex items-center gap-2 p-2 rounded-xl bg-white hover:bg-pista-100 text-pista-900 font-bold transition-colors border border-ivory-300">
-                            <i class="fa-solid fa-file-circle-check text-pista-600 w-4"></i> NGO Verification Queue
-                        </a>
-                        <a href="/platform-admin/user-management/" class="flex items-center gap-2 p-2 rounded-xl bg-white hover:bg-salmon-50 text-salmon-800 font-bold transition-colors border border-ivory-300">
-                            <i class="fa-solid fa-users-gear text-salmon-600 w-4"></i> User Management &amp; RBAC
-                        </a>
-                        <a href="/platform-admin/rescue-monitoring/" class="flex items-center gap-2 p-2 rounded-xl bg-white hover:bg-pista-100 text-pista-900 font-bold transition-colors border border-ivory-300">
-                            <i class="fa-solid fa-satellite-dish text-pista-700 w-4"></i> City Rescue Telemetry
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 5. SHARED UTILITIES SECTION -->
-            <div class="p-5 rounded-2xl bg-white border-2 border-salmon-300 space-y-3 flex flex-col justify-between md:col-span-2 lg:col-span-2">
-                <div class="space-y-2.5">
-                    <div class="flex items-center justify-between">
-                        <span class="font-bold text-sm text-salmon-950 flex items-center gap-2">
-                            <i class="fa-solid fa-cubes text-salmon-500 text-base"></i> Shared Cross-Role Tools
-                        </span>
-                        <span class="text-[10px] font-bold bg-salmon-100 text-salmon-800 px-2 py-0.5 rounded-md uppercase">5 Utilities</span>
-                    </div>
-                    <p class="text-ivory-700 text-[11px] leading-relaxed">
-                        Core shared services available across all roles: real-time notifications, camera QR scanner, live GPS map, digital passports, and member profiles.
-                    </p>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 pt-1">
-                        <a href="/map/" class="flex items-center gap-2 p-2 rounded-xl bg-ivory-50 hover:bg-pista-100 text-pista-950 font-bold transition-colors border border-ivory-300">
-                            <i class="fa-solid fa-map-location-dot text-pista-600 w-4"></i> Live Rescue Map
-                        </a>
-                        <a href="/qr-scanner/" class="flex items-center gap-2 p-2 rounded-xl bg-ivory-50 hover:bg-salmon-50 text-salmon-900 font-bold transition-colors border border-ivory-300">
-                            <i class="fa-solid fa-qrcode text-salmon-500 w-4"></i> QR Code Scanner
-                        </a>
-                        <a href="/food-passport/" class="flex items-center gap-2 p-2 rounded-xl bg-ivory-50 hover:bg-pista-100 text-pista-950 font-bold transition-colors border border-ivory-300">
-                            <i class="fa-solid fa-passport text-pista-600 w-4"></i> Food Safety Passport
-                        </a>
-                        <a href="/notifications/" class="flex items-center gap-2 p-2 rounded-xl bg-ivory-50 hover:bg-salmon-50 text-salmon-900 font-bold transition-colors border border-ivory-300">
-                            <i class="fa-solid fa-bell text-salmon-500 w-4"></i> Notifications Stream
-                        </a>
-                        <a href="/profile/" class="flex items-center gap-2 p-2 rounded-xl bg-ivory-50 hover:bg-pista-100 text-pista-950 font-bold transition-colors border border-ivory-300">
-                            <i class="fa-solid fa-id-badge text-ivory-700 w-4"></i> Profile &amp; Accreditation
-                        </a>
-                        <a href="/login/" class="flex items-center gap-2 p-2 rounded-xl bg-ivory-50 hover:bg-salmon-50 text-salmon-900 font-bold transition-colors border border-ivory-300">
-                            <i class="fa-solid fa-right-to-bracket text-salmon-500 w-4"></i> Sign In / Register
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- COMMUNITY PERSPECTIVE SWITCHER -->
+    <!-- COMMUNITY PERSPECTIVE SWITCHER (1-CLICK TESTING) -->
     {% include "components/role_switcher.html" %}
 
-    <!-- OPERATIONS HUB CONTAINER -->
-    <div class="bg-white rounded-3xl border border-ivory-300 shadow-soft overflow-hidden">
+    <!-- ========================================================================= -->
+    <!-- MASTER INTEGRATED OPERATIONS WORKSPACE (ALL CONNECTED IN THIS SINGLE LINK) -->
+    <!-- ========================================================================= -->
+    <div id="operations-workspace" class="bg-white rounded-3xl border border-ivory-300 shadow-soft overflow-hidden">
         
-        <!-- Tab Bar Header with Pista & Salmon Styling -->
-        <div class="border-b border-ivory-300 bg-ivory-50 px-4 sm:px-6 pt-3.5">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3.5 gap-2">
+        <!-- Primary Command Bar Header -->
+        <div class="border-b border-ivory-300 bg-ivory-50 px-4 sm:px-6 pt-4 pb-3">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 gap-2">
                 <div>
-                    <h2 class="font-serif text-lg font-bold text-pista-900">Community Operations &amp; Workspaces</h2>
-                    <p class="text-xs text-ivory-700">Explore live city rescues or take action directly within your workspace.</p>
+                    <h2 class="font-serif text-lg font-bold text-pista-950 flex items-center gap-2">
+                        <span>Unified Network Operations Workspace</span>
+                    </h2>
+                    <p class="text-xs text-ivory-700">All portals, dispatches, tools, and verification controls integrated into one interface.</p>
                 </div>
-                <span class="text-xs font-bold text-pista-800 bg-pista-100 border border-pista-300 px-3 py-1 rounded-full self-start sm:self-auto flex items-center gap-1.5 shadow-xs">
-                    <span class="w-1.5 h-1.5 rounded-full bg-pista-600"></span>
-                    <span>Workspace:</span> <span id="active-tab-label" class="font-black text-pista-900">Live Community Feed</span>
-                </span>
+                <div class="flex items-center gap-2">
+                    <span class="text-xs font-bold text-pista-800 bg-pista-100 border border-pista-300 px-3 py-1 rounded-full flex items-center gap-1.5 shadow-xs">
+                        <span class="w-2 h-2 rounded-full bg-pista-600 animate-pulse"></span>
+                        <span id="active-view-indicator">Live Community Mesh</span>
+                    </span>
+                </div>
             </div>
 
-            <!-- Tab Buttons with Crisp SVG Icons -->
-            <nav class="flex space-x-1 sm:space-x-2 overflow-x-auto pb-px" id="hub-tabs">
-                <!-- Tab 1 -->
-                <button onclick="switchTab('tab-exchange')" id="btn-tab-exchange" 
-                        class="tab-btn px-4 py-3 text-xs sm:text-sm font-bold border-b-2 border-pista-600 text-pista-900 whitespace-nowrap transition-all flex items-center gap-2">
-                    <svg class="w-4 h-4 text-pista-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                    <span>Live Community Feed</span>
+            <!-- Primary Workspace Tabs Navigation -->
+            <nav class="flex space-x-1.5 sm:space-x-2 overflow-x-auto pb-1" id="master-nav">
+                <!-- 1. Live Exchange -->
+                <button onclick="showView('overview')" id="tab-btn-overview"
+                        class="master-tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all bg-pista-700 text-ivory-50 shadow-xs flex items-center gap-2 whitespace-nowrap">
+                    <i class="fa-solid fa-satellite-dish text-xs"></i>
+                    <span>Live Mesh Feed</span>
                 </button>
 
-                <!-- Tab 2 -->
-                <button onclick="switchTab('tab-donor')" id="btn-tab-donor" 
-                        class="tab-btn px-4 py-3 text-xs sm:text-sm font-medium border-b-2 border-transparent text-ivory-700 hover:text-pista-900 whitespace-nowrap transition-all flex items-center gap-2">
-                    <svg class="w-4 h-4 text-pista-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
-                    </svg>
-                    <span>Donate Surplus Food</span>
+                <!-- 2. Donor Hub -->
+                <button onclick="showView('donor-dashboard')" id="tab-btn-donor"
+                        class="master-tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold transition-all bg-white text-pista-900 hover:bg-pista-100 flex items-center gap-2 whitespace-nowrap border border-ivory-300">
+                    <i class="fa-solid fa-bowl-food text-pista-600 text-xs"></i>
+                    <span>Donor Kitchen Hub</span>
                 </button>
 
-                <!-- Tab 3 -->
-                <button onclick="switchTab('tab-receiver')" id="btn-tab-receiver" 
-                        class="tab-btn px-4 py-3 text-xs sm:text-sm font-medium border-b-2 border-transparent text-ivory-700 hover:text-salmon-700 whitespace-nowrap transition-all flex items-center gap-2">
-                    <svg class="w-4 h-4 text-salmon-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                    </svg>
-                    <span>Shelter Meal Requests</span>
+                <!-- 3. NGO Hub -->
+                <button onclick="showView('ngo-dashboard')" id="tab-btn-ngo"
+                        class="master-tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold transition-all bg-white text-pista-900 hover:bg-salmon-50 flex items-center gap-2 whitespace-nowrap border border-ivory-300">
+                    <i class="fa-solid fa-hands-holding-child text-salmon-500 text-xs"></i>
+                    <span>NGO &amp; Shelter Hub</span>
                 </button>
 
-                <!-- Tab 4 -->
-                <button onclick="switchTab('tab-volunteer')" id="btn-tab-volunteer" 
-                        class="tab-btn px-4 py-3 text-xs sm:text-sm font-medium border-b-2 border-transparent text-ivory-700 hover:text-pista-900 whitespace-nowrap transition-all flex items-center gap-2">
-                    <svg class="w-4 h-4 text-pista-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    </svg>
-                    <span>Volunteer Deliveries</span>
+                <!-- 4. Volunteer Hub -->
+                <button onclick="showView('volunteer-dashboard')" id="tab-btn-volunteer"
+                        class="master-tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold transition-all bg-white text-pista-900 hover:bg-pista-100 flex items-center gap-2 whitespace-nowrap border border-ivory-300">
+                    <i class="fa-solid fa-person-biking text-pista-700 text-xs"></i>
+                    <span>Volunteer Couriers</span>
                 </button>
 
-                <!-- Tab 5 -->
-                <button onclick="switchTab('tab-governance')" id="btn-tab-governance" 
-                        class="tab-btn px-4 py-3 text-xs sm:text-sm font-medium border-b-2 border-transparent text-ivory-700 hover:text-pista-900 whitespace-nowrap transition-all flex items-center gap-2">
-                    <svg class="w-4 h-4 text-pista-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                    </svg>
-                    <span>Trust &amp; Safety</span>
+                <!-- 5. Admin Hub -->
+                <button onclick="showView('admin-dashboard')" id="tab-btn-admin"
+                        class="master-tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold transition-all bg-white text-pista-900 hover:bg-pista-100 flex items-center gap-2 whitespace-nowrap border border-ivory-300">
+                    <i class="fa-solid fa-shield text-xs"></i>
+                    <span>Admin Command</span>
+                </button>
+
+                <!-- 6. Shared Tools -->
+                <button onclick="showView('tools-map')" id="tab-btn-tools"
+                        class="master-tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold transition-all bg-white text-pista-900 hover:bg-salmon-50 flex items-center gap-2 whitespace-nowrap border border-ivory-300">
+                    <i class="fa-solid fa-cubes text-salmon-500 text-xs"></i>
+                    <span>Shared Utilities</span>
                 </button>
             </nav>
         </div>
 
-        <div class="p-6 sm:p-8">
+        <!-- Master Views Container (All views injected seamlessly here) -->
+        <div class="p-6 sm:p-8" id="view-content-root">
+            
+            <!-- VIEW 1: LIVE COMMUNITY FEED -->
+            {% include "integrated_views/view_exchange.html" %}
 
-            <!-- ==================== TAB 1: LIVE COMMUNITY FEED ==================== -->
-            <div id="tab-exchange" class="tab-pane space-y-8">
-                
-                <!-- Match Spotlight Card with Pista & Salmon Gradient -->
-                <div class="bg-gradient-to-r from-pista-100/90 via-ivory-50 to-salmon-50 border border-pista-300 rounded-3xl p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-5 shadow-soft">
-                    <div class="space-y-1.5">
-                        <div class="flex items-center gap-2.5">
-                            <span class="w-2.5 h-2.5 rounded-full bg-salmon-500 animate-ping"></span>
-                            <h3 class="text-sm font-black text-pista-950">Active Neighborhood Match Connected</h3>
-                            <span class="text-[10px] bg-salmon-500 text-white font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-                                Indiranagar &rarr; St. Marks Road
-                            </span>
-                        </div>
-                        <p class="text-xs text-ivory-800 max-w-2xl leading-relaxed">
-                            Chef Rajesh’s 60 freshly prepared North Indian thalis from Annapurna Grand were paired with Sister Maria at Hope Community Shelter. Volunteer driver Aniket is transporting the warm meals now (3.8 km distance &bull; ETA 12 mins).
-                        </p>
-                    </div>
-                    <div class="flex items-center gap-2.5 shrink-0">
-                        <button onclick="switchTab('tab-donor')" 
-                                class="px-4 py-2.5 bg-pista-600 hover:bg-pista-700 text-white text-xs font-bold rounded-xl transition-all shadow-pista flex items-center gap-1.5">
-                            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                            <span>Share Food Today</span>
-                        </button>
-                        <button onclick="switchTab('tab-receiver')" 
-                                class="px-4 py-2.5 bg-salmon-500 hover:bg-salmon-600 text-white text-xs font-bold rounded-xl transition-all shadow-salmon flex items-center gap-1.5">
-                            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
-                            <span>Post Shelter Need</span>
-                        </button>
-                    </div>
-                </div>
+            <!-- VIEW 2: DONOR KITCHEN HUB -->
+            {% include "integrated_views/view_donor.html" %}
 
-                <!-- 3-COLUMN STRUCTURED COMMUNITY BOARD -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- VIEW 3: NGO & SHELTER HUB -->
+            {% include "integrated_views/view_ngo.html" %}
 
-                    <!-- COLUMN 1: SURPLUS MEALS READY (DONORS) -->
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between pb-2 border-b border-ivory-200">
-                            <div class="flex items-center gap-2">
-                                <div class="w-3 h-3 rounded-full bg-pista-500"></div>
-                                <h3 class="text-xs font-bold uppercase tracking-wider text-pista-900">Meals Ready for Pickup</h3>
-                            </div>
-                            <span class="text-xs font-bold text-pista-800 bg-pista-100 px-2.5 py-0.5 rounded-full border border-pista-200">
-                                {{ active_surplus_listings|length }} Kitchens
-                            </span>
-                        </div>
+            <!-- VIEW 4: VOLUNTEER COURIER HUB -->
+            {% include "integrated_views/view_volunteer.html" %}
 
-                        <div class="space-y-3.5">
-                            {% for listing in active_surplus_listings %}
-                                <div class="bg-white p-5 rounded-2xl border border-ivory-300 hover:border-pista-400 hover:shadow-soft transition-all space-y-3.5 group">
-                                    <div class="flex items-start justify-between gap-2">
-                                        <div>
-                                            <span class="text-xs font-bold text-pista-800">{{ listing.donor_name }}</span>
-                                            <h4 class="text-sm font-bold text-ivory-900 mt-0.5 group-hover:text-pista-800 transition-colors">{{ listing.food_title }}</h4>
-                                            <span class="text-xs text-ivory-600 flex items-center gap-1 mt-0.5">
-                                                <svg class="w-3.5 h-3.5 text-salmon-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                                </svg>
-                                                {{ listing.location }}
-                                            </span>
-                                        </div>
-                                        <span class="text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider
-                                            {% if listing.sla_urgency == 'URGENT' %}bg-salmon-100 text-salmon-700 border border-salmon-200
-                                            {% else %}bg-pista-100 text-pista-800 border border-pista-200{% endif %}">
-                                            {{ listing.shelf_life }}
-                                        </span>
-                                    </div>
+            <!-- VIEW 5: ADMIN GOVERNANCE HUB -->
+            {% include "integrated_views/view_admin.html" %}
 
-                                    <div class="p-3 bg-ivory-100/70 rounded-xl text-xs space-y-1.5 border border-ivory-200">
-                                        <div class="flex justify-between font-bold text-ivory-900">
-                                            <span class="flex items-center gap-1 text-pista-800">
-                                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/></svg>
-                                                {{ listing.servings }} Servings
-                                            </span>
-                                            <span class="text-ivory-700">{{ listing.dietary }}</span>
-                                        </div>
-                                        <p class="text-[11px] text-ivory-600 leading-normal">
-                                            Prepared fresh in licensed kitchen &bull; Hygienically sealed in thermal catering trays &bull; Ready for pickup.
-                                        </p>
-                                    </div>
-
-                                    <div class="flex items-center justify-between text-xs pt-1 border-t border-ivory-100">
-                                        <span class="text-pista-700 font-bold flex items-center gap-1">
-                                            <svg class="w-3.5 h-3.5 text-pista-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                                            FSSAI Verified
-                                        </span>
-                                        <span class="text-ivory-500 font-medium">Cooked {{ listing.prep_time }}</span>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-
-                    <!-- COLUMN 2: ACTIVE SHELTER REQUESTS (RECEIVERS) -->
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between pb-2 border-b border-ivory-200">
-                            <div class="flex items-center gap-2">
-                                <div class="w-3 h-3 rounded-full bg-salmon-500"></div>
-                                <h3 class="text-xs font-bold uppercase tracking-wider text-salmon-800">Shelters Needing Food</h3>
-                            </div>
-                            <span class="text-xs font-bold text-salmon-700 bg-salmon-100 px-2.5 py-0.5 rounded-full border border-salmon-200">
-                                {{ active_meal_demands|length }} Care Centers
-                            </span>
-                        </div>
-
-                        <div class="space-y-3.5">
-                            {% for demand in active_meal_demands %}
-                                <div class="bg-white p-5 rounded-2xl border border-ivory-300 hover:border-salmon-300 hover:shadow-soft transition-all space-y-3.5 group">
-                                    <div class="flex items-start justify-between gap-2">
-                                        <div>
-                                            <span class="text-xs font-bold text-ivory-900">{{ demand.receiver_name }}</span>
-                                            <h4 class="text-sm font-black text-salmon-600 mt-0.5 flex items-center gap-1">
-                                                <span>{{ demand.meals_needed }} Meals Needed</span>
-                                            </h4>
-                                            <span class="text-xs text-ivory-600">{{ demand.beneficiaries }}</span>
-                                        </div>
-                                        <span class="text-[10px] font-bold px-2.5 py-1 rounded-full uppercase bg-salmon-50 text-salmon-700 border border-salmon-200">
-                                            {{ demand.target_time }}
-                                        </span>
-                                    </div>
-
-                                    <div class="p-3 bg-ivory-100/70 rounded-xl text-xs space-y-1.5 border border-ivory-200">
-                                        <div class="flex justify-between font-bold text-ivory-900">
-                                            <span class="text-salmon-700">Diet: {{ demand.dietary_preference }}</span>
-                                            <span class="text-ivory-600 font-medium">{{ demand.storage }}</span>
-                                        </div>
-                                        <p class="text-[11px] text-ivory-600 leading-normal">
-                                            Verified center with on-site warming capability. Volunteer delivery welcomed before dinner time.
-                                        </p>
-                                    </div>
-
-                                    <div class="flex items-center justify-between text-xs pt-1 border-t border-ivory-100 text-ivory-600">
-                                        <span class="font-medium flex items-center gap-1">
-                                            <svg class="w-3.5 h-3.5 text-salmon-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                            </svg>
-                                            {{ demand.location }}
-                                        </span>
-                                        <span class="text-pista-700 font-bold">Darpan Verified</span>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-
-                    <!-- COLUMN 3: RESCUE DELIVERIES (VOLUNTEERS) -->
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between pb-2 border-b border-ivory-200">
-                            <div class="flex items-center gap-2">
-                                <div class="w-3 h-3 rounded-full bg-pista-600"></div>
-                                <h3 class="text-xs font-bold uppercase tracking-wider text-pista-900">Deliveries in Transit</h3>
-                            </div>
-                            <span class="text-xs font-bold text-pista-800 bg-pista-100 px-2.5 py-0.5 rounded-full border border-pista-200">
-                                {{ active_dispatches|length }} Active Drivers
-                            </span>
-                        </div>
-
-                        <div class="space-y-3.5">
-                            {% for dispatch in active_dispatches %}
-                                <div class="bg-white p-5 rounded-2xl border border-ivory-300 hover:border-pista-400 hover:shadow-soft transition-all space-y-3.5">
-                                    <div class="flex items-start justify-between gap-2">
-                                        <div>
-                                            <span class="text-[11px] font-bold text-pista-700 flex items-center gap-1">
-                                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                                                Rescue Run #{{ dispatch.mission_id }}
-                                            </span>
-                                            <h4 class="text-xs font-bold text-ivory-900 mt-1 leading-snug">
-                                                {{ dispatch.donor }} &rarr; {{ dispatch.receiver }}
-                                            </h4>
-                                        </div>
-                                        <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-pista-100 text-pista-800 border border-pista-300">
-                                            {{ dispatch.status_display }}
-                                        </span>
-                                    </div>
-
-                                    <!-- Safe Delivery Handoff Card -->
-                                    <div class="bg-ivory-100 p-3 rounded-xl border border-ivory-300 text-xs space-y-2">
-                                        <div class="flex justify-between items-center text-xs">
-                                            <span class="text-ivory-700 font-medium">Pickup Code (Chef):</span>
-                                            <span class="font-mono font-bold text-pista-800 bg-white px-2 py-0.5 rounded border border-ivory-200">
-                                                {{ dispatch.donor_otp }} {% if dispatch.pickup_verified %}(Collected <i class="fa-solid fa-check text-pista-600"></i>){% else %}(Awaiting Handover){% endif %}
-                                            </span>
-                                        </div>
-                                        <div class="flex justify-between items-center text-xs">
-                                            <span class="text-ivory-700 font-medium">Delivery Code (Shelter):</span>
-                                            <span class="font-mono font-bold text-salmon-700 bg-white px-2 py-0.5 rounded border border-ivory-200">
-                                                {{ dispatch.receiver_otp }} (On Handover)
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    <div class="flex items-center justify-between text-xs pt-1 border-t border-ivory-100 text-ivory-600">
-                                        <span class="font-semibold text-ivory-900 flex items-center gap-1.5">
-                                            <svg class="w-4 h-4 text-pista-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                                            {{ dispatch.volunteer_name }} ({{ dispatch.vehicle }})
-                                        </span>
-                                        <span class="font-bold text-salmon-600">ETA {{ dispatch.eta }}</span>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- ==================== TAB 2: DONATE SURPLUS FOOD ==================== -->
-            <div id="tab-donor" class="tab-pane space-y-6 hidden">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-ivory-300">
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <span class="px-2.5 py-0.5 bg-pista-100 text-pista-800 text-xs font-bold rounded-full border border-pista-200">
-                                Kitchen Donor Hub
-                            </span>
-                            <h3 class="font-serif text-xl font-bold text-pista-900">Share Surplus Food from Your Kitchen</h3>
-                        </div>
-                        <p class="text-xs text-ivory-700 mt-1">Submit edible surplus dishes prepared in licensed kitchens for volunteer pickup.</p>
-                    </div>
-                    <div class="text-left sm:text-right">
-                        <span class="text-xs text-ivory-600 block">Logged Kitchen</span>
-                        <span class="font-bold text-pista-800 text-sm">Chef Rajesh Kumar &bull; Annapurna Grand</span>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <!-- Surplus Donation Form -->
-                    <div class="lg:col-span-2 bg-ivory-50 p-6 rounded-3xl border border-ivory-300 space-y-4">
-                        <h4 class="text-sm font-bold text-pista-900 flex items-center gap-2">
-                            <svg class="w-4 h-4 text-pista-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                            <span>Details of Food Being Donated</span>
-                        </h4>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-xs font-bold text-ivory-800 mb-1">What food is being donated?</label>
-                                <input type="text" id="donor-food-title" value="Fresh Steamed Rice & Veg Sambar Curry" 
-                                       class="w-full text-xs p-3 rounded-xl border border-ivory-300 bg-white focus:ring-2 focus:ring-pista-500 focus:outline-none">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-ivory-800 mb-1">Food Category</label>
-                                <select class="w-full text-xs p-3 rounded-xl border border-ivory-300 bg-white focus:ring-2 focus:ring-pista-500 focus:outline-none">
-                                    <option>Hot Cooked Dishes (Buffet / Banquet)</option>
-                                    <option>Fresh Bakery &amp; Bread</option>
-                                    <option>Raw Fresh Produce</option>
-                                    <option>Packed Lunches / Boxes</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-ivory-800 mb-1">How many people can this feed?</label>
-                                <input type="number" id="donor-servings" value="50" oninput="updateDonorCarbon(this.value)"
-                                       class="w-full text-xs p-3 rounded-xl border border-ivory-300 bg-white focus:ring-2 focus:ring-pista-500 focus:outline-none">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-ivory-800 mb-1">Pickup Time Window</label>
-                                <select class="w-full text-xs p-3 rounded-xl border border-ivory-300 bg-white focus:ring-2 focus:ring-pista-500 focus:outline-none">
-                                    <option>Within 2 hours (Hot Food &bull; Immediate)</option>
-                                    <option>Within 4 hours</option>
-                                    <option>Can be refrigerated until tomorrow morning</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- Kitchen Safety Confirmation -->
-                        <div class="bg-white p-4.5 rounded-2xl border border-ivory-300 space-y-2.5">
-                            <span class="text-xs font-bold text-pista-900 block flex items-center gap-1.5">
-                                <svg class="w-4 h-4 text-pista-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                                Food Freshness &amp; Safety SOP Confirmation
-                            </span>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-ivory-700">
-                                <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="checkbox" checked class="rounded text-pista-600 focus:ring-0"> Maintained at safe serving temp (&gt;65°C / &lt;5°C)
-                                </label>
-                                <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="checkbox" checked class="rounded text-pista-600 focus:ring-0"> Packed in clean food-grade catering trays
-                                </label>
-                                <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="checkbox" checked class="rounded text-pista-600 focus:ring-0"> Prepared by licensed FSSAI kitchen staff
-                                </label>
-                                <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="checkbox" checked class="rounded text-pista-600 focus:ring-0"> Safe, fresh, and completely edible
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center justify-between pt-2">
-                            <div class="text-xs text-pista-800 font-bold bg-pista-100 px-3 py-1 rounded-full border border-pista-200">
-                                Environmental Benefit: <strong id="donor-carbon-calc">30.0 kg CO₂ saved</strong>
-                            </div>
-                            <button onclick="dispatchDonorListing()" class="px-5 py-2.5 bg-pista-600 hover:bg-pista-700 text-white text-xs font-bold rounded-xl shadow-pista transition-all flex items-center gap-2">
-                                <span>Notify Volunteers for Pickup &rarr;</span>
-                            </button>
-                        </div>
-
-                        <div id="donor-success-banner" class="hidden p-3.5 bg-pista-100 border border-pista-300 text-pista-900 rounded-2xl text-xs font-bold flex items-center gap-2">
-                            <svg class="w-4 h-4 text-pista-700 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                            <span>Surplus donation posted! Nearby shelters and active volunteer drivers have been notified.</span>
-                        </div>
-                    </div>
-
-                    <!-- Kitchen Profile & Environmental Note -->
-                    <div class="space-y-4">
-                        <div class="bg-white p-6 rounded-3xl border border-ivory-300 shadow-soft space-y-3">
-                            <span class="text-xs font-bold uppercase tracking-wider text-pista-800 block">Annapurna Kitchen Impact</span>
-                            <div class="text-3xl font-serif font-black text-pista-900">1,240 <span class="text-sm font-sans font-normal text-ivory-600">Meals Donated</span></div>
-                            <p class="text-xs text-ivory-700 leading-relaxed">
-                                Annapurna Grand has supported 12 local orphanages and care homes across Bengaluru over the past 3 months.
-                            </p>
-                            <div class="pt-2">
-                                <a href="{% url 'organization_documents' %}" class="block text-center py-2.5 bg-ivory-100 hover:bg-pista-100 text-pista-900 text-xs font-bold rounded-xl transition-colors border border-ivory-300">
-                                    Manage Kitchen Licenses &amp; Certificates
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-5 rounded-2xl border border-ivory-300 text-xs space-y-2">
-                            <span class="font-bold text-pista-900 block">Accreditation Details</span>
-                            <div class="flex justify-between py-1 border-b border-ivory-200">
-                                <span class="text-ivory-600">FSSAI License:</span>
-                                <span class="font-mono font-bold text-ivory-900">11223344556677</span>
-                            </div>
-                            <div class="flex justify-between py-1 border-b border-ivory-200">
-                                <span class="text-ivory-600">Status:</span>
-                                <span class="font-bold text-pista-700">Verified &amp; Active</span>
-                            </div>
-                            <div class="flex justify-between py-1">
-                                <span class="text-ivory-600">Pickup Area:</span>
-                                <span class="text-ivory-800 font-medium">Indiranagar, Bengaluru</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ==================== TAB 3: SHELTER MEAL REQUESTS ==================== -->
-            <div id="tab-receiver" class="tab-pane space-y-6 hidden">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-ivory-300">
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <span class="px-2.5 py-0.5 bg-salmon-100 text-salmon-700 text-xs font-bold rounded-full border border-salmon-200">
-                                Shelter Care Portal
-                            </span>
-                            <h3 class="font-serif text-xl font-bold text-pista-900">Request Meals for Your Shelter or Home</h3>
-                        </div>
-                        <p class="text-xs text-ivory-700 mt-1">Let local restaurants and caterers know what meal support your community needs today.</p>
-                    </div>
-                    <div class="text-left sm:text-right">
-                        <span class="text-xs text-ivory-600 block">Logged Care Center</span>
-                        <span class="font-bold text-salmon-700 text-sm">Sister Maria &bull; Hope Community Shelter</span>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <!-- Demand Broadcast Form -->
-                    <div class="lg:col-span-2 bg-ivory-50 p-6 rounded-3xl border border-ivory-300 space-y-4">
-                        <h4 class="text-sm font-bold text-salmon-700 flex items-center gap-2">
-                            <svg class="w-4 h-4 text-salmon-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            <span>Tell Us About Your Meal Needs</span>
-                        </h4>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-xs font-bold text-ivory-800 mb-1">Center / Shelter Name</label>
-                                <input type="text" value="Hope Community Shelter & Kitchen" 
-                                       class="w-full text-xs p-3 rounded-xl border border-ivory-300 bg-white focus:ring-2 focus:ring-salmon-400 focus:outline-none">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-ivory-800 mb-1">When are meals needed?</label>
-                                <select class="w-full text-xs p-3 rounded-xl border border-ivory-300 bg-white focus:ring-2 focus:ring-salmon-400 focus:outline-none">
-                                    <option>Tonight Dinner (8:00 PM - 9:30 PM)</option>
-                                    <option>Immediate / Emergency Need</option>
-                                    <option>Tomorrow Morning Breakfast</option>
-                                    <option>Tomorrow Lunch</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-ivory-800 mb-1">How many people are you feeding?</label>
-                                <input type="number" value="80" 
-                                       class="w-full text-xs p-3 rounded-xl border border-ivory-300 bg-white focus:ring-2 focus:ring-salmon-400 focus:outline-none">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-ivory-800 mb-1">Dietary Preferences</label>
-                                <select class="w-full text-xs p-3 rounded-xl border border-ivory-300 bg-white focus:ring-2 focus:ring-salmon-400 focus:outline-none">
-                                    <option>All nutritious cooked meals accepted</option>
-                                    <option>Vegetarian food only</option>
-                                    <option>Low spice for children and elderly</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-4 rounded-xl border border-ivory-300 text-xs space-y-1">
-                            <span class="font-bold text-pista-900 block">On-site Food Storage</span>
-                            <p class="text-ivory-600">Commercial refrigerator with 200kg capacity on site. Hot water bain-marie ready for warming.</p>
-                        </div>
-
-                        <div class="flex items-center justify-between pt-2">
-                            <span class="text-xs text-salmon-700 font-bold bg-salmon-50 px-3 py-1 rounded-full border border-salmon-200">
-                                Broadcasts to 8 nearby verified partner kitchens
-                            </span>
-                            <button onclick="broadcastReceiverDemand()" class="px-5 py-2.5 bg-salmon-500 hover:bg-salmon-600 text-white text-xs font-bold rounded-xl shadow-salmon transition-all flex items-center gap-2">
-                                <span>Post Meal Request &rarr;</span>
-                            </button>
-                        </div>
-
-                        <div id="receiver-success-banner" class="hidden p-3.5 bg-salmon-50 border border-salmon-200 text-salmon-800 rounded-2xl text-xs font-bold flex items-center gap-2">
-                            <svg class="w-4 h-4 text-salmon-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                            <span>Meal request broadcasted! Restaurants with surplus food will be matched to your shelter.</span>
-                        </div>
-                    </div>
-
-                    <!-- Inbound Matched Allocations -->
-                    <div class="space-y-4">
-                        <div class="bg-white p-6 rounded-3xl border border-ivory-300 shadow-soft space-y-3.5">
-                            <div class="flex items-center justify-between">
-                                <span class="text-xs font-bold text-pista-900">Inbound Delivery</span>
-                                <span class="text-[10px] bg-pista-100 text-pista-800 font-bold px-2.5 py-0.5 rounded-full border border-pista-200">En Route</span>
-                            </div>
-                            <div class="text-xs space-y-2">
-                                <div class="font-bold text-pista-900 text-sm">60 Meals from Annapurna Grand</div>
-                                <p class="text-ivory-600">Volunteer driver Aniket is on the way with insulated containers.</p>
-                                <div class="p-3 bg-ivory-100 rounded-xl font-mono text-xs flex justify-between items-center border border-ivory-200">
-                                    <span class="text-ivory-700 font-medium">Delivery Code:</span>
-                                    <span class="font-bold text-salmon-600 text-sm bg-white px-2 py-0.5 rounded border border-ivory-200">3180</span>
-                                </div>
-                            </div>
-                            <button class="w-full py-2.5 bg-pista-600 hover:bg-pista-700 text-white text-xs font-bold rounded-xl shadow-pista transition-colors">
-                                Confirm &amp; Accept Delivery
-                            </button>
-                        </div>
-
-                        <div class="bg-white p-5 rounded-2xl border border-ivory-300 text-xs space-y-2">
-                            <span class="font-bold text-pista-900 block">Shelter Accreditation</span>
-                            <div class="flex justify-between py-1 border-b border-ivory-200">
-                                <span class="text-ivory-600">NGO Darpan ID:</span>
-                                <span class="font-mono text-ivory-900 font-bold">DARPAN-KA-2024-00192</span>
-                            </div>
-                            <div class="flex justify-between py-1 border-b border-ivory-200">
-                                <span class="text-ivory-600">80G Status:</span>
-                                <span class="font-bold text-pista-700">Verified Tax-Exempt</span>
-                            </div>
-                            <div class="flex justify-between py-1">
-                                <span class="text-ivory-600">Location:</span>
-                                <span class="text-ivory-800 font-medium">St. Marks Road, Bengaluru</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ==================== TAB 4: VOLUNTEER DELIVERIES ==================== -->
-            <div id="tab-volunteer" class="tab-pane space-y-6 hidden">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-ivory-300">
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <span class="px-2.5 py-0.5 bg-pista-100 text-pista-800 text-xs font-bold rounded-full border border-pista-200">
-                                Volunteer Driver Hub
-                            </span>
-                            <h3 class="font-serif text-xl font-bold text-pista-900">Volunteer Deliveries &amp; Safe Handoff</h3>
-                        </div>
-                        <p class="text-xs text-ivory-700 mt-1">Pick up meals from kitchens, deliver safely to local shelters, and confirm handoff with simple 4-digit codes.</p>
-                    </div>
-                    <div class="text-left sm:text-right">
-                        <span class="text-xs text-ivory-600 block">Volunteer Driver</span>
-                        <span class="font-bold text-pista-800 text-sm">Aniket Kumar &bull; Active on Duty</span>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <!-- Active Mission Card -->
-                    <div class="lg:col-span-2 bg-ivory-50 p-6 rounded-3xl border border-ivory-300 space-y-5">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-2">
-                                <span class="px-3 py-1 bg-pista-700 text-white rounded-xl text-xs font-bold shadow-xs">
-                                    RUN #RS-941
-                                </span>
-                                <span class="text-xs text-salmon-700 font-bold bg-salmon-50 px-2.5 py-1 rounded-full border border-salmon-200">
-                                    Hot Food &bull; Indiranagar to St. Marks Road
-                                </span>
-                            </div>
-                            <span class="text-xs font-bold text-ivory-700">Distance: 3.8 km</span>
-                        </div>
-
-                        <!-- Route Cards -->
-                        <div class="bg-white p-5 rounded-2xl border border-ivory-300 space-y-4">
-                            <div class="flex items-start gap-3">
-                                <div class="w-7 h-7 rounded-full bg-pista-100 text-pista-800 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5 border border-pista-300">1</div>
-                                <div>
-                                    <span class="text-[11px] text-pista-700 font-bold uppercase block">Step 1: Collect from Kitchen</span>
-                                    <div class="text-xs font-bold text-ivory-900">Annapurna Grand Restaurant</div>
-                                    <span class="text-xs text-ivory-600">104 MG Road, Indiranagar &bull; Contact Chef Rajesh (+91-9876543210)</span>
-                                </div>
-                            </div>
-                            
-                            <div class="border-l-2 border-dashed border-pista-300 ml-3.5 h-4"></div>
-
-                            <div class="flex items-start gap-3">
-                                <div class="w-7 h-7 rounded-full bg-salmon-100 text-salmon-700 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5 border border-salmon-200">2</div>
-                                <div>
-                                    <span class="text-[11px] text-salmon-700 font-bold uppercase block">Step 2: Deliver to Shelter</span>
-                                    <div class="text-xs font-bold text-ivory-900">Hope Community Shelter &amp; Kitchen</div>
-                                    <span class="text-xs text-ivory-600">42 St. Marks Road &bull; Hand over to Sister Maria (+91-9876543211)</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Simple, Human Handoff Code Verification -->
-                        <div class="bg-white p-5 rounded-2xl border border-ivory-300 space-y-4">
-                            <div>
-                                <h4 class="text-xs font-bold text-pista-900 uppercase tracking-wider">Handoff Confirmation Codes</h4>
-                                <p class="text-xs text-ivory-600 mt-0.5">Ask the kitchen and shelter for their 4-digit codes to confirm safe pickup and arrival.</p>
-                            </div>
-
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <!-- Step 1: Donor OTP -->
-                                <div class="p-4 rounded-2xl border border-ivory-200 bg-ivory-50 space-y-2.5">
-                                    <div class="flex justify-between items-center text-xs">
-                                        <span class="font-bold text-ivory-900">1. Pickup from Kitchen</span>
-                                        <span class="text-[11px] text-pista-700 font-bold">(Chef gives: <strong>7492</strong>)</span>
-                                    </div>
-                                    <input type="text" id="input-donor-otp" maxlength="4" placeholder="Enter 4-digit code"
-                                           class="w-full text-center text-base font-bold p-2.5 rounded-xl border border-ivory-300 bg-white focus:outline-none focus:ring-2 focus:ring-pista-500">
-                                    <button onclick="verifyDonorOTP()" class="w-full py-2 bg-pista-600 hover:bg-pista-700 text-white text-xs font-bold rounded-xl transition-colors shadow-pista">
-                                        Confirm Pickup
-                                    </button>
-                                    <span id="donor-otp-status" class="text-xs text-ivory-600 block text-center">Awaiting pickup code</span>
-                                </div>
-
-                                <!-- Step 2: Receiver OTP -->
-                                <div class="p-4 rounded-2xl border border-ivory-200 bg-ivory-50 space-y-2.5">
-                                    <div class="flex justify-between items-center text-xs">
-                                        <span class="font-bold text-ivory-900">2. Arrival at Shelter</span>
-                                        <span class="text-[11px] text-salmon-700 font-bold">(Shelter gives: <strong>3180</strong>)</span>
-                                    </div>
-                                    <input type="text" id="input-receiver-otp" maxlength="4" placeholder="Enter 4-digit code"
-                                           class="w-full text-center text-base font-bold p-2.5 rounded-xl border border-ivory-300 bg-white focus:outline-none focus:ring-2 focus:ring-salmon-400">
-                                    <button onclick="verifyReceiverOTP()" class="w-full py-2 bg-salmon-500 hover:bg-salmon-600 text-white text-xs font-bold rounded-xl transition-colors shadow-salmon">
-                                        Confirm Delivery
-                                    </button>
-                                    <span id="receiver-otp-status" class="text-xs text-ivory-600 block text-center">Awaiting delivery code</span>
-                                </div>
-                            </div>
-
-                            <div id="mission-complete-banner" class="hidden p-4 bg-pista-100 border border-pista-300 text-pista-900 rounded-2xl text-xs font-bold text-center">
-                                <i class="fa-solid fa-circle-check text-pista-700 mr-1.5"></i> Delivery Complete! 60 warm meals safely reached Hope Shelter. Thank you for your service!
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Driver Profile & Nearby Tasks -->
-                    <div class="space-y-4">
-                        <div class="bg-white p-6 rounded-3xl border border-ivory-300 shadow-soft space-y-3">
-                            <span class="text-xs font-bold uppercase tracking-wider text-pista-800 block">Volunteer Profile</span>
-                            <div class="text-3xl font-serif font-black text-pista-900">42 <span class="text-sm font-sans font-normal text-ivory-600">Deliveries Completed</span></div>
-                            <p class="text-xs text-ivory-700 leading-relaxed">
-                                Riding a two-wheeler with insulated delivery boxes in Central Bengaluru.
-                            </p>
-                        </div>
-
-                        <div class="bg-white p-5 rounded-2xl border border-ivory-300 text-xs space-y-2.5">
-                            <span class="font-bold text-pista-900 block">Nearby Pickup Alert</span>
-                            <div class="p-3.5 bg-ivory-50 rounded-xl space-y-2 border border-ivory-200">
-                                <span class="font-bold text-ivory-900 block">Royal Palace Caterers</span>
-                                <span class="text-ivory-600 block">120 Packaged Lunches &bull; Koramangala &bull; 2.1 km away</span>
-                                <button class="w-full py-2 bg-pista-600 hover:bg-pista-700 text-white font-bold rounded-xl text-xs shadow-pista transition-colors">
-                                    Accept Pickup Run
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ==================== TAB 5: COMMUNITY TRUST & SAFETY ==================== -->
-            <div id="tab-governance" class="tab-pane space-y-6 hidden">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-ivory-300">
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <span class="px-2.5 py-0.5 bg-pista-100 text-pista-800 text-xs font-bold rounded-full border border-pista-200">
-                                Platform Coordination
-                            </span>
-                            <h3 class="font-serif text-xl font-bold text-pista-900">Community Trust &amp; Partner Verification</h3>
-                        </div>
-                        <p class="text-xs text-ivory-700 mt-1">Every restaurant kitchen and charity shelter is verified against official government licenses before receiving or donating food.</p>
-                    </div>
-                    <div class="text-left sm:text-right">
-                        <span class="text-xs text-ivory-600 block">Coordination Team</span>
-                        <span class="font-bold text-pista-800 text-sm">Safety &amp; Compliance Team</span>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <!-- Partner Organizations List -->
-                    <div class="lg:col-span-2 bg-ivory-50 p-6 rounded-3xl border border-ivory-300 space-y-4">
-                        <div class="flex items-center justify-between">
-                            <h4 class="text-sm font-bold text-pista-900">
-                                Verified Community Kitchens &amp; Shelters
-                            </h4>
-                            <span class="text-xs font-bold text-pista-800 bg-pista-100 px-3 py-1 rounded-full border border-pista-200">
-                                {{ approved_count }} Approved Partners
-                            </span>
-                        </div>
-
-                        <!-- Organization Cards -->
-                        <div class="space-y-3.5">
-                            {% for org in all_orgs %}
-                                <div class="bg-white p-5 rounded-2xl border border-ivory-300 shadow-soft space-y-3">
-                                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                                        <div>
-                                            <div class="flex items-center gap-2">
-                                                <h5 class="text-sm font-bold text-ivory-900">{{ org.name }}</h5>
-                                                {% include "organizations/partials/status_badge.html" with status=org.verification_status %}
-                                            </div>
-                                            <span class="text-xs text-ivory-600">
-                                                {{ org.get_org_type_display }} &bull; {{ org.city }}, {{ org.state }}
-                                            </span>
-                                        </div>
-                                        <span class="text-xs font-mono text-ivory-800 font-bold bg-ivory-100 px-3 py-1 rounded-xl border border-ivory-200 self-start sm:self-auto">
-                                            License: {{ org.registration_number|default:"Verified on file" }}
-                                        </span>
-                                    </div>
-
-                                    <div class="flex items-center justify-between pt-2 border-t border-ivory-100 text-xs text-ivory-600">
-                                        <span>Contact: {{ org.contact_person }}</span>
-                                        <a href="/platform-admin/ngo-verification/" class="px-3.5 py-1.5 bg-ivory-100 hover:bg-pista-100 text-pista-900 font-bold rounded-xl text-xs transition-colors border border-ivory-300">
-                                            View Licenses &rarr;
-                                        </a>
-                                    </div>
-                                </div>
-                            {% empty %}
-                                <div class="bg-white p-6 rounded-2xl border border-ivory-300 text-center">
-                                    <span class="text-ivory-600 text-xs">No pending organizations to review.</span>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-
-                    <!-- Safety Standards Overview -->
-                    <div class="space-y-4">
-                        <div class="bg-white p-6 rounded-3xl border border-ivory-300 shadow-soft space-y-3.5">
-                            <span class="text-xs font-bold uppercase tracking-wider text-pista-800 block">Our Safety Commitment</span>
-                            <div class="space-y-2.5 text-xs text-ivory-700 leading-relaxed">
-                                <p>
-                                    <strong class="text-pista-900">1. Licensed Kitchens Only:</strong> Every food donor must hold an active FSSAI food safety license.
-                                </p>
-                                <p>
-                                    <strong class="text-pista-900">2. 2-Hour Hot Food Window:</strong> Cooked meals must be picked up within safe temperature limits.
-                                </p>
-                                <p>
-                                    <strong class="text-pista-900">3. Certified Shelters:</strong> All receivers are verified non-profits registered on NITI Aayog NGO Darpan.
-                                </p>
-                            </div>
-                            <div class="pt-2">
-                                <a href="{% url 'admin_verification_queue' %}" class="block text-center py-2.5 bg-pista-700 hover:bg-pista-800 text-white text-xs font-bold rounded-xl shadow-pista transition-colors">
-                                    Open Full Verification Portal &rarr;
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- VIEW 6: SHARED CROSS-ROLE UTILITIES -->
+            {% include "integrated_views/view_tools.html" %}
 
         </div>
     </div>
 
 </div>
-{% endblock %}
 
-{% block extra_js %}
+<!-- JAVASCRIPT MASTER INTERACTIVE ENGINE (SEAMLESS SWITCHING IN SINGLE LINK) -->
 <script>
-    const tabLabels = {
-        'tab-exchange': 'Live Community Feed',
-        'tab-donor': 'Donate Surplus Food',
-        'tab-receiver': 'Shelter Meal Requests',
-        'tab-volunteer': 'Volunteer Deliveries',
-        'tab-governance': 'Community Trust & Safety'
+    // Configuration mapping view IDs to their hub and subview containers
+    const VIEW_MAP = {
+        // Exchange / Overview
+        'overview': { hub: 'hub-exchange', mainTab: 'tab-btn-overview', subview: null, label: 'Live Community Mesh' },
+        'exchange': { hub: 'hub-exchange', mainTab: 'tab-btn-overview', subview: null, label: 'Live Community Mesh' },
+
+        // Donor Hub
+        'donor': { hub: 'hub-donor', mainTab: 'tab-btn-donor', subview: 'subview-donor-dashboard', label: 'Donor: Dashboard' },
+        'donor-dashboard': { hub: 'hub-donor', mainTab: 'tab-btn-donor', subview: 'subview-donor-dashboard', label: 'Donor: Dashboard' },
+        'donor-report': { hub: 'hub-donor', mainTab: 'tab-btn-donor', subview: 'subview-donor-report', label: 'Donor: Report Surplus' },
+        'donor-ai': { hub: 'hub-donor', mainTab: 'tab-btn-donor', subview: 'subview-donor-ai', label: 'Donor: AI Match Engine' },
+        'donor-tracking': { hub: 'hub-donor', mainTab: 'tab-btn-donor', subview: 'subview-donor-tracking', label: 'Donor: Live Tracking & OTP' },
+        'donor-history': { hub: 'hub-donor', mainTab: 'tab-btn-donor', subview: 'subview-donor-history', label: 'Donor: History & 80G' },
+
+        // NGO Hub
+        'ngo': { hub: 'hub-ngo', mainTab: 'tab-btn-ngo', subview: 'subview-ngo-dashboard', label: 'NGO: Dashboard' },
+        'receiver': { hub: 'hub-ngo', mainTab: 'tab-btn-ngo', subview: 'subview-ngo-dashboard', label: 'NGO: Dashboard' },
+        'ngo-dashboard': { hub: 'hub-ngo', mainTab: 'tab-btn-ngo', subview: 'subview-ngo-dashboard', label: 'NGO: Dashboard' },
+        'ngo-nearby': { hub: 'hub-ngo', mainTab: 'tab-btn-ngo', subview: 'subview-ngo-nearby', label: 'NGO: Nearby Surplus Food' },
+        'ngo-request': { hub: 'hub-ngo', mainTab: 'tab-btn-ngo', subview: 'subview-ngo-request', label: 'NGO: Broadcast Meal Need' },
+        'ngo-accepted': { hub: 'hub-ngo', mainTab: 'tab-btn-ngo', subview: 'subview-ngo-accepted', label: 'NGO: Accepted Deliveries' },
+
+        // Volunteer Hub
+        'volunteer': { hub: 'hub-volunteer', mainTab: 'tab-btn-volunteer', subview: 'subview-volunteer-dashboard', label: 'Volunteer: Dashboard' },
+        'volunteer-dashboard': { hub: 'hub-volunteer', mainTab: 'tab-btn-volunteer', subview: 'subview-volunteer-dashboard', label: 'Volunteer: Dashboard' },
+        'volunteer-rescues': { hub: 'hub-volunteer', mainTab: 'tab-btn-volunteer', subview: 'subview-volunteer-rescues', label: 'Volunteer: Available Rescues' },
+        'volunteer-delivery': { hub: 'hub-volunteer', mainTab: 'tab-btn-volunteer', subview: 'subview-volunteer-delivery', label: 'Volunteer: Active Delivery & OTP' },
+
+        // Admin Hub
+        'admin': { hub: 'hub-admin', mainTab: 'tab-btn-admin', subview: 'subview-admin-dashboard', label: 'Admin: Command Center' },
+        'governance': { hub: 'hub-admin', mainTab: 'tab-btn-admin', subview: 'subview-admin-dashboard', label: 'Admin: Command Center' },
+        'admin-dashboard': { hub: 'hub-admin', mainTab: 'tab-btn-admin', subview: 'subview-admin-dashboard', label: 'Admin: Command Center' },
+        'admin-verification': { hub: 'hub-admin', mainTab: 'tab-btn-admin', subview: 'subview-admin-verification', label: 'Admin: NGO Verification Queue' },
+        'admin-users': { hub: 'hub-admin', mainTab: 'tab-btn-admin', subview: 'subview-admin-users', label: 'Admin: User Management' },
+        'admin-telemetry': { hub: 'hub-admin', mainTab: 'tab-btn-admin', subview: 'subview-admin-telemetry', label: 'Admin: City Telemetry' },
+
+        // Shared Tools
+        'tools': { hub: 'hub-tools', mainTab: 'tab-btn-tools', subview: 'subview-tools-map', label: 'Shared: Live Rescue Map' },
+        'tools-map': { hub: 'hub-tools', mainTab: 'tab-btn-tools', subview: 'subview-tools-map', label: 'Shared: Live Rescue Map' },
+        'map': { hub: 'hub-tools', mainTab: 'tab-btn-tools', subview: 'subview-tools-map', label: 'Shared: Live Rescue Map' },
+        'tools-scanner': { hub: 'hub-tools', mainTab: 'tab-btn-tools', subview: 'subview-tools-scanner', label: 'Shared: Digital QR Scanner' },
+        'qr-scanner': { hub: 'hub-tools', mainTab: 'tab-btn-tools', subview: 'subview-tools-scanner', label: 'Shared: Digital QR Scanner' },
+        'tools-passport': { hub: 'hub-tools', mainTab: 'tab-btn-tools', subview: 'subview-tools-passport', label: 'Shared: Food Safety Passport' },
+        'food-passport': { hub: 'hub-tools', mainTab: 'tab-btn-tools', subview: 'subview-tools-passport', label: 'Shared: Food Safety Passport' },
+        'tools-notifications': { hub: 'hub-tools', mainTab: 'tab-btn-tools', subview: 'subview-tools-notifications', label: 'Shared: Notifications' },
+        'notifications': { hub: 'hub-tools', mainTab: 'tab-btn-tools', subview: 'subview-tools-notifications', label: 'Shared: Notifications' },
+        'tools-profile': { hub: 'hub-tools', mainTab: 'tab-btn-tools', subview: 'subview-tools-profile', label: 'Shared: Member Profile' },
+        'profile': { hub: 'hub-tools', mainTab: 'tab-btn-tools', subview: 'subview-tools-profile', label: 'Shared: Member Profile' }
     };
 
-    function switchTab(tabId) {
-        document.querySelectorAll('.tab-pane').forEach(el => el.classList.add('hidden'));
-        
-        const target = document.getElementById(tabId);
-        if (target) {
-            target.classList.remove('hidden');
+    /**
+     * Master function: Switches to any view cleanly in this single link
+     */
+    function showView(viewKey, smoothScroll = true) {
+        const config = VIEW_MAP[viewKey] || VIEW_MAP['overview'];
+
+        // 1. Hide all hub containers
+        document.querySelectorAll('.hub-container').forEach(el => el.classList.add('hidden'));
+
+        // 2. Show the active hub container
+        const targetHub = document.getElementById(config.hub);
+        if (targetHub) {
+            targetHub.classList.remove('hidden');
         }
 
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.classList.remove('border-pista-600', 'text-pista-900', 'font-bold');
-            btn.classList.add('border-transparent', 'text-ivory-700', 'font-medium');
+        // 3. Reset main tab button styles
+        document.querySelectorAll('.master-tab-btn').forEach(btn => {
+            btn.className = 'master-tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold transition-all bg-white text-pista-900 hover:bg-pista-100 flex items-center gap-2 whitespace-nowrap border border-ivory-300';
         });
 
-        const activeBtn = document.getElementById('btn-' + tabId);
-        if (activeBtn) {
-            activeBtn.classList.remove('border-transparent', 'text-ivory-700', 'font-medium');
-            activeBtn.classList.add('border-pista-600', 'text-pista-900', 'font-bold');
+        // 4. Highlight active main tab button
+        const activeTabBtn = document.getElementById(config.mainTab);
+        if (activeTabBtn) {
+            activeTabBtn.className = 'master-tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all bg-pista-700 text-ivory-50 shadow-xs flex items-center gap-2 whitespace-nowrap';
         }
 
-        const labelEl = document.getElementById('active-tab-label');
-        if (labelEl && tabLabels[tabId]) {
-            labelEl.textContent = tabLabels[tabId];
+        // 5. If this hub has subviews, activate the target subview
+        if (config.subview) {
+            // Find which hub prefix (donor, ngo, volunteer, admin, tools)
+            const hubPrefix = config.hub.replace('hub-', '');
+            const subviewKey = config.subview.replace('subview-', '');
+            showSubView(hubPrefix, subviewKey);
         }
 
-        const tabParam = tabId.replace('tab-', '');
-        const newUrl = window.location.pathname + '?tab=' + tabParam;
-        window.history.replaceState({ tab: tabParam }, '', newUrl);
+        // 6. Update indicator label
+        const indicator = document.getElementById('active-view-indicator');
+        if (indicator) {
+            indicator.textContent = config.label;
+        }
+
+        // 7. Update browser URL without reloading (single link experience)
+        if (window.history && window.history.pushState) {
+            const newUrl = window.location.pathname + '?view=' + viewKey;
+            window.history.pushState({ view: viewKey }, '', newUrl);
+        }
+
+        // 8. Optionally smooth scroll to operations workspace
+        if (smoothScroll) {
+            const workspace = document.getElementById('operations-workspace');
+            if (workspace) {
+                workspace.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
     }
 
+    /**
+     * Subview switcher inside a specific hub
+     */
+    function showSubView(hubPrefix, subviewKey) {
+        // Hide all subview panes for this hub
+        document.querySelectorAll(`.${hubPrefix}-view-pane`).forEach(el => el.classList.add('hidden'));
+
+        // Show the active subview pane
+        const targetPane = document.getElementById(`subview-${subviewKey}`);
+        if (targetPane) {
+            targetPane.classList.remove('hidden');
+        }
+
+        // Reset all subpills in this hub
+        document.querySelectorAll(`.${hubPrefix}-subpill`).forEach(pill => {
+            pill.className = `${hubPrefix}-subpill px-3 py-1.5 rounded-xl text-xs font-semibold transition-all bg-ivory-100 text-pista-900 hover:bg-pista-100 flex items-center gap-1.5 border border-ivory-300`;
+        });
+
+        // Highlight active subpill
+        const activePill = document.getElementById(`btn-${subviewKey}`);
+        if (activePill) {
+            activePill.className = `${hubPrefix}-subpill px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-pista-700 text-ivory-50 shadow-xs flex items-center gap-1.5`;
+        }
+
+        // Update indicator label
+        const config = VIEW_MAP[subviewKey];
+        if (config && document.getElementById('active-view-indicator')) {
+            document.getElementById('active-view-indicator').textContent = config.label;
+        }
+
+        // Update URL query param cleanly without reload
+        if (window.history && window.history.pushState) {
+            const newUrl = window.location.pathname + '?view=' + subviewKey;
+            window.history.pushState({ view: subviewKey }, '', newUrl);
+        }
+    }
+
+    function scrollToWorkspace() {
+        const workspace = document.getElementById('operations-workspace');
+        if (workspace) {
+            workspace.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
+    // Interactive helper actions across views
+    function handleSurplusSubmit(e) {
+        e.preventDefault();
+        showToast("Food surplus reported! Sanjog AI is calculating optimal pairings...");
+        setTimeout(() => {
+            showView('donor-ai');
+        }, 600);
+    }
+
+    function claimBatch(name, servings) {
+        showToast(`Claimed ${servings} meals from ${name}! Courier assigned.`);
+        setTimeout(() => {
+            showView('ngo-dashboard');
+        }, 600);
+    }
+
+    function handleNeedBroadcast(e) {
+        e.preventDefault();
+        showToast("Shelter hunger need broadcasted to Central Bengaluru Grid!");
+        setTimeout(() => {
+            showView('ngo-nearby');
+        }, 600);
+    }
+
+    function claimRescue(missionId) {
+        showToast(`Mission #${missionId} accepted! Proceeding to active dispatch.`);
+        setTimeout(() => {
+            showView('volunteer-delivery');
+        }, 600);
+    }
+
+    function simulateScan(code) {
+        const resEl = document.getElementById('scanner-result');
+        if (resEl) {
+            resEl.classList.remove('hidden');
+            resEl.innerHTML = `<i class="fa-solid fa-check text-pista-700 mr-1.5"></i> QR Code Recognized: Valid Code ${code} Accepted!`;
+        }
+        showToast(`QR Code ${code} verified successfully!`);
+    }
+
+    function verifyVolDonorOTP() {
+        const val = document.getElementById('vol-input-donor-otp').value.trim();
+        const status = document.getElementById('vol-donor-otp-status');
+        if (val === '7492') {
+            status.innerHTML = '<span class="text-pista-700 font-bold"><i class="fa-solid fa-check mr-1"></i> Kitchen Pickup Confirmed!</span>';
+            showToast("Kitchen pickup confirmed with Chef OTP 7492!");
+            checkVolMissionComplete();
+        } else {
+            status.innerHTML = '<span class="text-salmon-600 font-bold"><i class="fa-solid fa-xmark mr-1"></i> Invalid OTP. Try 7492</span>';
+        }
+    }
+
+    function verifyVolReceiverOTP() {
+        const val = document.getElementById('vol-input-receiver-otp').value.trim();
+        const status = document.getElementById('vol-receiver-otp-status');
+        if (val === '3180') {
+            status.innerHTML = '<span class="text-pista-700 font-bold"><i class="fa-solid fa-check mr-1"></i> Shelter Handover Confirmed!</span>';
+            showToast("Delivery confirmed with Shelter OTP 3180!");
+            checkVolMissionComplete();
+        } else {
+            status.innerHTML = '<span class="text-salmon-600 font-bold"><i class="fa-solid fa-xmark mr-1"></i> Invalid OTP. Try 3180</span>';
+        }
+    }
+
+    function checkVolMissionComplete() {
+        const d = document.getElementById('vol-input-donor-otp').value.trim();
+        const r = document.getElementById('vol-input-receiver-otp').value.trim();
+        if (d === '7492' && r === '3180') {
+            const banner = document.getElementById('vol-mission-complete-banner');
+            if (banner) banner.classList.remove('hidden');
+        }
+    }
+
+    function markAllNotificationsRead() {
+        showToast("All notifications marked as read!");
+    }
+
+    function showToast(msg) {
+        let toast = document.getElementById('sanjog-toast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'sanjog-toast';
+            toast.className = 'fixed bottom-6 right-6 z-50 bg-pista-900 text-ivory-50 px-5 py-3 rounded-2xl shadow-xl border border-pista-700 text-xs font-bold transition-all transform duration-300 opacity-0 translate-y-4';
+            document.body.appendChild(toast);
+        }
+        toast.innerHTML = `<i class="fa-solid fa-circle-check text-salmon-400 mr-2"></i> ${msg}`;
+        toast.classList.remove('opacity-0', 'translate-y-4');
+        setTimeout(() => {
+            toast.classList.add('opacity-0', 'translate-y-4');
+        }, 3500);
+    }
+
+    // Auto-detect initial view on boot
     document.addEventListener('DOMContentLoaded', () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const tabParam = urlParams.get('tab') || '{{ active_tab }}' || 'exchange';
-        switchTab('tab-' + tabParam);
+        const params = new URLSearchParams(window.location.search);
+        const initialView = params.get('view') || params.get('tab') || '{{ active_tab }}' || 'overview';
+        showView(initialView, false);
+
+        // Global delegation: Intercept any link pointing to ?view=... or ?tab=... so it doesn't cause a page reload
+        document.addEventListener('click', (e) => {
+            const link = e.target.closest('a[href*="?view="], a[href*="?tab="]');
+            if (link) {
+                const href = link.getAttribute('href');
+                let targetView = null;
+                const viewMatch = href.match(/[?&]view=([^&#]+)/);
+                const tabMatch = href.match(/[?&]tab=([^&#]+)/);
+                if (viewMatch && viewMatch[1]) {
+                    targetView = viewMatch[1];
+                } else if (tabMatch && tabMatch[1]) {
+                    targetView = tabMatch[1];
+                }
+
+                if (targetView && (window.location.pathname === '/' || window.location.pathname === '')) {
+                    e.preventDefault();
+                    showView(targetView, true);
+                    const mobileNav = document.getElementById('mobile-nav');
+                    if (mobileNav && !mobileNav.classList.contains('hidden')) {
+                        mobileNav.classList.add('hidden');
+                    }
+                }
+            }
+        });
     });
 
-    function updateDonorCarbon(servings) {
-        const count = parseInt(servings) || 0;
-        const carbon = (count * 0.6).toFixed(1);
-        const calcEl = document.getElementById('donor-carbon-calc');
-        if (calcEl) calcEl.textContent = carbon + ' kg CO₂ saved';
-    }
-
-    function dispatchDonorListing() {
-        const banner = document.getElementById('donor-success-banner');
-        if (banner) {
-            banner.classList.remove('hidden');
-            setTimeout(() => { banner.classList.add('hidden'); }, 6000);
-        }
-    }
-
-    function broadcastReceiverDemand() {
-        const banner = document.getElementById('receiver-success-banner');
-        if (banner) {
-            banner.classList.remove('hidden');
-            setTimeout(() => { banner.classList.add('hidden'); }, 6000);
-        }
-    }
-
-    function verifyDonorOTP() {
-        const input = document.getElementById('input-donor-otp').value.trim();
-        const status = document.getElementById('donor-otp-status');
-        if (input === '7492') {
-            status.innerHTML = '<span class="text-pista-700 font-bold"><i class="fa-solid fa-circle-check mr-1"></i> Pickup Confirmed (Code 7492 accepted)</span>';
-            document.getElementById('input-donor-otp').classList.add('border-pista-500', 'bg-pista-50');
-            checkMissionComplete();
-        } else {
-            status.innerHTML = '<span class="text-salmon-600 font-bold"><i class="fa-solid fa-circle-xmark mr-1"></i> Code not recognized. Try 7492</span>';
-        }
-    }
-
-    function verifyReceiverOTP() {
-        const input = document.getElementById('input-receiver-otp').value.trim();
-        const status = document.getElementById('receiver-otp-status');
-        if (input === '3180') {
-            status.innerHTML = '<span class="text-pista-700 font-bold"><i class="fa-solid fa-circle-check mr-1"></i> Delivery Confirmed (Code 3180 accepted)</span>';
-            document.getElementById('input-receiver-otp').classList.add('border-pista-500', 'bg-pista-50');
-            checkMissionComplete();
-        } else {
-            status.innerHTML = '<span class="text-salmon-600 font-bold"><i class="fa-solid fa-circle-xmark mr-1"></i> Code not recognized. Try 3180</span>';
-        }
-    }
-
-    function checkMissionComplete() {
-        const donorInput = document.getElementById('input-donor-otp').value.trim();
-        const receiverInput = document.getElementById('input-receiver-otp').value.trim();
-        if (donorInput === '7492' && receiverInput === '3180') {
-            const completeBanner = document.getElementById('mission-complete-banner');
-            if (completeBanner) completeBanner.classList.remove('hidden');
-        }
-    }
+    // Handle browser back/forward buttons
+    window.addEventListener('popstate', (e) => {
+        const params = new URLSearchParams(window.location.search);
+        const view = params.get('view') || params.get('tab') || 'overview';
+        showView(view, false);
+    });
 </script>
 {% endblock %}

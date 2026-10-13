@@ -89,14 +89,14 @@ class LoginView(View):
 
     def _get_role_dashboard_url(self, user):
         if user.is_donor:
-            return '/donor/dashboard/'
+            return '/?view=donor-dashboard'
         elif user.is_receiver:
-            return '/receiver/dashboard/'
+            return '/?view=ngo-dashboard'
         elif user.is_volunteer:
-            return '/volunteer/dashboard/'
+            return '/?view=volunteer-dashboard'
         elif user.is_admin_user:
-            return '/platform-admin/dashboard/'
-        return '/'
+            return '/?view=admin-dashboard'
+        return '/?view=overview'
 
 
 class LogoutView(View):
@@ -120,13 +120,13 @@ def quick_switch_view(request, username):
         
         # Route directly to the corresponding workspace within the single web application
         if user.is_donor:
-            return redirect('/?tab=donor')
+            return redirect('/?view=donor-dashboard')
         elif user.is_receiver:
-            return redirect('/?tab=receiver')
+            return redirect('/?view=ngo-dashboard')
         elif user.is_volunteer:
-            return redirect('/?tab=volunteer')
+            return redirect('/?view=volunteer-dashboard')
         elif user.is_admin_user:
-            return redirect('/?tab=governance')
+            return redirect('/?view=admin-dashboard')
     except CustomUser.DoesNotExist:
         messages.error(request, f"User '{username}' not found.")
     return redirect('/')
@@ -143,21 +143,21 @@ def home_view(request):
         org_profile = user.organization_profile
 
     # Determine default active tab based on query param or logged in user's role
-    active_tab = request.GET.get('tab')
+    active_tab = request.GET.get('view') or request.GET.get('tab')
     if not active_tab:
         if user.is_authenticated:
             if user.is_donor:
-                active_tab = 'donor'
+                active_tab = 'donor-dashboard'
             elif user.is_receiver:
-                active_tab = 'receiver'
+                active_tab = 'ngo-dashboard'
             elif user.is_volunteer:
-                active_tab = 'volunteer'
+                active_tab = 'volunteer-dashboard'
             elif user.is_admin_user:
-                active_tab = 'governance'
+                active_tab = 'admin-dashboard'
             else:
-                active_tab = 'exchange'
+                active_tab = 'overview'
         else:
-            active_tab = 'exchange'
+            active_tab = 'overview'
 
     # System overview & metrics
     all_orgs = OrganizationProfile.objects.all().order_by('-created_at')
@@ -326,6 +326,8 @@ def home_view(request):
 
 # --- DONOR SECTION ---
 def donor_dashboard_view(request):
+    if not request.GET.get('standalone'):
+        return redirect('/?view=donor-dashboard')
     org_profile = getattr(request.user, 'organization_profile', None) if request.user.is_authenticated else None
     return render(request, 'dashboards/donor_dashboard.html', {
         'user': request.user,
@@ -333,6 +335,8 @@ def donor_dashboard_view(request):
     })
 
 def donor_report_surplus_view(request):
+    if not request.GET.get('standalone'):
+        return redirect('/?view=donor-report')
     org_profile = getattr(request.user, 'organization_profile', None) if request.user.is_authenticated else None
     return render(request, 'donor/report_surplus.html', {
         'user': request.user,
@@ -340,6 +344,8 @@ def donor_report_surplus_view(request):
     })
 
 def donor_ai_match_view(request):
+    if not request.GET.get('standalone'):
+        return redirect('/?view=donor-ai')
     org_profile = getattr(request.user, 'organization_profile', None) if request.user.is_authenticated else None
     return render(request, 'donor/ai_match.html', {
         'user': request.user,
@@ -347,11 +353,15 @@ def donor_ai_match_view(request):
     })
 
 def donor_live_tracking_view(request):
+    if not request.GET.get('standalone'):
+        return redirect('/?view=donor-tracking')
     return render(request, 'donor/live_tracking.html', {
         'user': request.user,
     })
 
 def donor_history_view(request):
+    if not request.GET.get('standalone'):
+        return redirect('/?view=donor-history')
     return render(request, 'donor/donation_history.html', {
         'user': request.user,
     })
@@ -359,6 +369,8 @@ def donor_history_view(request):
 
 # --- NGO (RECEIVER) SECTION ---
 def receiver_dashboard_view(request):
+    if not request.GET.get('standalone'):
+        return redirect('/?view=ngo-dashboard')
     org_profile = getattr(request.user, 'organization_profile', None) if request.user.is_authenticated else None
     return render(request, 'dashboards/receiver_dashboard.html', {
         'user': request.user,
@@ -366,16 +378,22 @@ def receiver_dashboard_view(request):
     })
 
 def ngo_nearby_food_view(request):
+    if not request.GET.get('standalone'):
+        return redirect('/?view=ngo-nearby')
     return render(request, 'ngo/nearby_food.html', {
         'user': request.user,
     })
 
 def ngo_request_food_view(request):
+    if not request.GET.get('standalone'):
+        return redirect('/?view=ngo-request')
     return render(request, 'ngo/request_food.html', {
         'user': request.user,
     })
 
 def ngo_accepted_donations_view(request):
+    if not request.GET.get('standalone'):
+        return redirect('/?view=ngo-accepted')
     return render(request, 'ngo/accepted_donations.html', {
         'user': request.user,
     })
@@ -383,16 +401,22 @@ def ngo_accepted_donations_view(request):
 
 # --- VOLUNTEER SECTION ---
 def volunteer_dashboard_view(request):
+    if not request.GET.get('standalone'):
+        return redirect('/?view=volunteer-dashboard')
     return render(request, 'dashboards/volunteer_dashboard.html', {
         'user': request.user,
     })
 
 def volunteer_available_rescues_view(request):
+    if not request.GET.get('standalone'):
+        return redirect('/?view=volunteer-rescues')
     return render(request, 'volunteer/available_rescues.html', {
         'user': request.user,
     })
 
 def volunteer_active_delivery_view(request):
+    if not request.GET.get('standalone'):
+        return redirect('/?view=volunteer-delivery')
     return render(request, 'volunteer/active_delivery.html', {
         'user': request.user,
     })
@@ -400,6 +424,8 @@ def volunteer_active_delivery_view(request):
 
 # --- ADMIN SECTION ---
 def admin_dashboard_view(request):
+    if not request.GET.get('standalone'):
+        return redirect('/?view=admin-dashboard')
     from apps.organizations.models import OrganizationProfile, OrganizationVerificationEvent
     from apps.accounts.models import CustomUser
     all_orgs = OrganizationProfile.objects.all().order_by('-created_at')
@@ -414,6 +440,8 @@ def admin_dashboard_view(request):
     return render(request, 'dashboards/admin_dashboard.html', context)
 
 def admin_ngo_verification_view(request):
+    if not request.GET.get('standalone'):
+        return redirect('/?view=admin-verification')
     from apps.organizations.models import OrganizationProfile
     all_orgs = OrganizationProfile.objects.all().order_by('-created_at')
     return render(request, 'admin_portal/ngo_verification.html', {
@@ -423,6 +451,8 @@ def admin_ngo_verification_view(request):
     })
 
 def admin_user_management_view(request):
+    if not request.GET.get('standalone'):
+        return redirect('/?view=admin-users')
     from apps.accounts.models import CustomUser
     return render(request, 'admin_portal/user_management.html', {
         'user': request.user,
@@ -430,6 +460,8 @@ def admin_user_management_view(request):
     })
 
 def admin_rescue_monitoring_view(request):
+    if not request.GET.get('standalone'):
+        return redirect('/?view=admin-telemetry')
     return render(request, 'admin_portal/rescue_monitoring.html', {
         'user': request.user,
     })
@@ -437,11 +469,15 @@ def admin_rescue_monitoring_view(request):
 
 # --- SHARED TOOLS SECTION ---
 def notifications_view(request):
+    if not request.GET.get('standalone'):
+        return redirect('/?view=tools-notifications')
     return render(request, 'shared/notifications.html', {
         'user': request.user,
     })
 
 def profile_view(request):
+    if not request.GET.get('standalone'):
+        return redirect('/?view=tools-profile')
     org_profile = getattr(request.user, 'organization_profile', None) if request.user.is_authenticated else None
     return render(request, 'shared/profile.html', {
         'user': request.user,
@@ -449,16 +485,22 @@ def profile_view(request):
     })
 
 def map_view(request):
+    if not request.GET.get('standalone'):
+        return redirect('/?view=tools-map')
     return render(request, 'shared/map.html', {
         'user': request.user,
     })
 
 def qr_scanner_view(request):
+    if not request.GET.get('standalone'):
+        return redirect('/?view=tools-scanner')
     return render(request, 'shared/qr_scanner.html', {
         'user': request.user,
     })
 
 def food_passport_view(request):
+    if not request.GET.get('standalone'):
+        return redirect('/?view=tools-passport')
     return render(request, 'shared/food_passport.html', {
         'user': request.user,
     })

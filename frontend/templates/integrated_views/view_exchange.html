@@ -1,0 +1,206 @@
+<!-- ==================== 1. LIVE COMMUNITY FEED & MESH ==================== -->
+<div id="hub-exchange" class="hub-container space-y-8">
+    
+    <!-- Match Spotlight Card with Pista & Salmon Gradient -->
+    <div class="bg-gradient-to-r from-pista-100/90 via-ivory-50 to-salmon-50 border border-pista-300 rounded-3xl p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-5 shadow-soft">
+        <div class="space-y-1.5">
+            <div class="flex items-center gap-2.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-salmon-500 animate-ping"></span>
+                <h3 class="text-sm font-black text-pista-950">Active Neighborhood Match Connected</h3>
+                <span class="text-[10px] bg-salmon-500 text-white font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                    Indiranagar &rarr; St. Marks Road
+                </span>
+            </div>
+            <p class="text-xs text-ivory-800 max-w-2xl leading-relaxed">
+                Chef Rajesh’s 60 freshly prepared North Indian thalis from Annapurna Grand were paired with Sister Maria at Hope Community Shelter. Volunteer courier Aniket is transporting the warm meals now (3.8 km distance &bull; ETA 12 mins).
+            </p>
+        </div>
+        <div class="flex items-center gap-2.5 shrink-0">
+            <button onclick="showView('donor-report')" 
+                    class="px-4 py-2.5 bg-pista-600 hover:bg-pista-700 text-white text-xs font-bold rounded-xl transition-all shadow-pista flex items-center gap-1.5">
+                <i class="fa-solid fa-plus-circle text-xs"></i>
+                <span>Share Food Today</span>
+            </button>
+            <button onclick="showView('ngo-request')" 
+                    class="px-4 py-2.5 bg-salmon-500 hover:bg-salmon-600 text-white text-xs font-bold rounded-xl transition-all shadow-salmon flex items-center gap-1.5">
+                <i class="fa-solid fa-bullhorn text-xs"></i>
+                <span>Post Shelter Need</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- 3-COLUMN STRUCTURED COMMUNITY BOARD -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <!-- COLUMN 1: SURPLUS MEALS READY (DONORS) -->
+        <div class="space-y-4">
+            <div class="flex items-center justify-between pb-2 border-b border-ivory-200">
+                <div class="flex items-center gap-2">
+                    <div class="w-3 h-3 rounded-full bg-pista-500"></div>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-pista-900">Meals Ready for Pickup</h3>
+                </div>
+                <span class="text-xs font-bold text-pista-800 bg-pista-100 px-2.5 py-0.5 rounded-full border border-pista-200">
+                    {{ active_surplus_listings|length }} Kitchens
+                </span>
+            </div>
+
+            <div class="space-y-3.5">
+                {% for listing in active_surplus_listings %}
+                    <div class="bg-white p-5 rounded-2xl border border-ivory-300 hover:border-pista-400 hover:shadow-soft transition-all space-y-3.5 group">
+                        <div class="flex items-start justify-between gap-2">
+                            <div>
+                                <span class="text-xs font-bold text-pista-800">{{ listing.donor_name }}</span>
+                                <h4 class="text-sm font-bold text-ivory-900 mt-0.5 group-hover:text-pista-800 transition-colors">{{ listing.food_title }}</h4>
+                                <span class="text-xs text-ivory-600 flex items-center gap-1 mt-0.5">
+                                    <i class="fa-solid fa-location-dot text-salmon-500 text-xs"></i>
+                                    {{ listing.location }}
+                                </span>
+                            </div>
+                            <span class="text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider
+                                {% if listing.sla_urgency == 'URGENT' %}bg-salmon-100 text-salmon-700 border border-salmon-200
+                                {% else %}bg-pista-100 text-pista-800 border border-pista-200{% endif %}">
+                                {{ listing.shelf_life }}
+                            </span>
+                        </div>
+
+                        <div class="p-3 bg-ivory-100/70 rounded-xl text-xs space-y-1.5 border border-ivory-200">
+                            <div class="flex justify-between font-bold text-ivory-900">
+                                <span class="flex items-center gap-1 text-pista-800">
+                                    <i class="fa-solid fa-bowl-food text-pista-600"></i>
+                                    {{ listing.servings }} Servings
+                                </span>
+                                <span class="text-ivory-700">{{ listing.dietary }}</span>
+                            </div>
+                            <p class="text-[11px] text-ivory-600 leading-normal">
+                                Prepared fresh in licensed kitchen &bull; Hygienically sealed in thermal catering trays &bull; Ready for pickup.
+                            </p>
+                        </div>
+
+                        <div class="flex items-center justify-between text-xs pt-1 border-t border-ivory-100">
+                            <span class="text-pista-700 font-bold flex items-center gap-1">
+                                <i class="fa-solid fa-circle-check text-pista-600 text-xs"></i>
+                                FSSAI Verified
+                            </span>
+                            <button onclick="showView('donor-ai')" class="text-pista-800 hover:text-salmon-600 font-bold transition-colors">
+                                View Match &rarr;
+                            </button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- COLUMN 2: ACTIVE SHELTER REQUESTS (RECEIVERS) -->
+        <div class="space-y-4">
+            <div class="flex items-center justify-between pb-2 border-b border-ivory-200">
+                <div class="flex items-center gap-2">
+                    <div class="w-3 h-3 rounded-full bg-salmon-500"></div>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-salmon-800">Shelters Needing Food</h3>
+                </div>
+                <span class="text-xs font-bold text-salmon-700 bg-salmon-100 px-2.5 py-0.5 rounded-full border border-salmon-200">
+                    {{ active_meal_demands|length }} Care Centers
+                </span>
+            </div>
+
+            <div class="space-y-3.5">
+                {% for demand in active_meal_demands %}
+                    <div class="bg-white p-5 rounded-2xl border border-ivory-300 hover:border-salmon-300 hover:shadow-soft transition-all space-y-3.5 group">
+                        <div class="flex items-start justify-between gap-2">
+                            <div>
+                                <span class="text-xs font-bold text-ivory-900">{{ demand.receiver_name }}</span>
+                                <h4 class="text-sm font-black text-salmon-600 mt-0.5 flex items-center gap-1">
+                                    <span>{{ demand.meals_needed }} Meals Needed</span>
+                                </h4>
+                                <span class="text-xs text-ivory-600">{{ demand.beneficiaries }}</span>
+                            </div>
+                            <span class="text-[10px] font-bold px-2.5 py-1 rounded-full uppercase bg-salmon-50 text-salmon-700 border border-salmon-200">
+                                {{ demand.target_time }}
+                            </span>
+                        </div>
+
+                        <div class="p-3 bg-ivory-100/70 rounded-xl text-xs space-y-1.5 border border-ivory-200">
+                            <div class="flex justify-between font-bold text-ivory-900">
+                                <span class="text-salmon-700">Diet: {{ demand.dietary_preference }}</span>
+                                <span class="text-ivory-600 font-medium">{{ demand.storage }}</span>
+                            </div>
+                            <p class="text-[11px] text-ivory-600 leading-normal">
+                                Verified center with on-site warming capability. Volunteer delivery welcomed before dinner time.
+                            </p>
+                        </div>
+
+                        <div class="flex items-center justify-between text-xs pt-1 border-t border-ivory-100 text-ivory-600">
+                            <span class="font-medium flex items-center gap-1">
+                                <i class="fa-solid fa-location-dot text-salmon-500 text-xs"></i>
+                                {{ demand.location }}
+                            </span>
+                            <button onclick="showView('ngo-nearby')" class="text-salmon-600 hover:underline font-bold">
+                                Pair Surplus &rarr;
+                            </button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- COLUMN 3: RESCUE DELIVERIES (VOLUNTEERS) -->
+        <div class="space-y-4">
+            <div class="flex items-center justify-between pb-2 border-b border-ivory-200">
+                <div class="flex items-center gap-2">
+                    <div class="w-3 h-3 rounded-full bg-pista-600"></div>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-pista-900">Deliveries in Transit</h3>
+                </div>
+                <span class="text-xs font-bold text-pista-800 bg-pista-100 px-2.5 py-0.5 rounded-full border border-pista-200">
+                    {{ active_dispatches|length }} Active Couriers
+                </span>
+            </div>
+
+            <div class="space-y-3.5">
+                {% for dispatch in active_dispatches %}
+                    <div class="bg-white p-5 rounded-2xl border border-ivory-300 hover:border-pista-400 hover:shadow-soft transition-all space-y-3.5">
+                        <div class="flex items-start justify-between gap-2">
+                            <div>
+                                <span class="text-[11px] font-bold text-pista-700 flex items-center gap-1">
+                                    <i class="fa-solid fa-route text-xs"></i>
+                                    Rescue Run #{{ dispatch.mission_id }}
+                                </span>
+                                <h4 class="text-xs font-bold text-ivory-900 mt-1 leading-snug">
+                                    {{ dispatch.donor }} &rarr; {{ dispatch.receiver }}
+                                </h4>
+                            </div>
+                            <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-pista-100 text-pista-800 border border-pista-300">
+                                {{ dispatch.status_display }}
+                            </span>
+                        </div>
+
+                        <!-- Safe Delivery Handoff Card -->
+                        <div class="bg-ivory-100 p-3 rounded-xl border border-ivory-300 text-xs space-y-2">
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="text-ivory-700 font-medium">Chef OTP (Indiranagar):</span>
+                                <span class="font-mono font-bold text-pista-800 bg-white px-2 py-0.5 rounded border border-ivory-200">
+                                    {{ dispatch.donor_otp }} {% if dispatch.pickup_verified %}(Collected <i class="fa-solid fa-check text-pista-600"></i>){% else %}(Awaiting Handover){% endif %}
+                                </span>
+                            </div>
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="text-ivory-700 font-medium">Shelter OTP (St. Marks):</span>
+                                <span class="font-mono font-bold text-salmon-700 bg-white px-2 py-0.5 rounded border border-ivory-200">
+                                    {{ dispatch.receiver_otp }} (On Handover)
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between text-xs pt-1 border-t border-ivory-100 text-ivory-600">
+                            <span class="font-semibold text-ivory-900 flex items-center gap-1.5">
+                                <i class="fa-solid fa-motorcycle text-pista-600"></i>
+                                {{ dispatch.volunteer_name }}
+                            </span>
+                            <button onclick="showView('volunteer-delivery')" class="text-pista-800 hover:text-salmon-600 font-bold">
+                                Track Run (ETA {{ dispatch.eta }}) &rarr;
+                            </button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+</div>

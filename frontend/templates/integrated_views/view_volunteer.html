@@ -1,0 +1,280 @@
+<!-- VOLUNTEER COURIER HUB INTEGRATED WORKSPACE -->
+<div id="hub-volunteer" class="hub-container hidden space-y-6">
+    
+    <!-- Sub-Navigation Pill Switcher for Volunteer Hub -->
+    <div class="flex flex-wrap items-center justify-between gap-3 bg-white p-3.5 rounded-2xl border border-ivory-300 shadow-soft">
+        <div class="flex items-center gap-2">
+            <span class="w-8 h-8 rounded-xl bg-pista-100 text-pista-800 flex items-center justify-center font-bold text-sm">
+                <i class="fa-solid fa-person-biking"></i>
+            </span>
+            <div>
+                <span class="text-xs font-serif font-black text-pista-950 block leading-tight">Volunteer Rescue Courier Operations</span>
+                <span class="text-[10px] text-ivory-600">Aniket Kumar &bull; TVS iQube EV (KA-03-HA-8192)</span>
+            </div>
+        </div>
+
+        <!-- Sub-Pills -->
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0" id="volunteer-subnav">
+            <button onclick="showSubView('volunteer', 'volunteer-dashboard')" id="btn-volunteer-dashboard"
+                    class="volunteer-subpill px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-pista-700 text-ivory-50 shadow-xs flex items-center gap-1.5">
+                <i class="fa-solid fa-gauge text-xs"></i>
+                <span>Dashboard</span>
+            </button>
+            <button onclick="showSubView('volunteer', 'volunteer-rescues')" id="btn-volunteer-rescues"
+                    class="volunteer-subpill px-3 py-1.5 rounded-xl text-xs font-semibold transition-all bg-ivory-100 text-pista-900 hover:bg-pista-100 flex items-center gap-1.5 border border-ivory-300">
+                <i class="fa-solid fa-list-check text-salmon-500 text-xs"></i>
+                <span>Available Runs</span>
+            </button>
+            <button onclick="showSubView('volunteer', 'volunteer-delivery')" id="btn-volunteer-delivery"
+                    class="volunteer-subpill px-3 py-1.5 rounded-xl text-xs font-semibold transition-all bg-ivory-100 text-pista-900 hover:bg-pista-100 flex items-center gap-1.5 border border-ivory-300">
+                <i class="fa-solid fa-route text-pista-600 text-xs"></i>
+                <span>Active Delivery &amp; OTP</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- 1. VOLUNTEER SUB-VIEW: DASHBOARD -->
+    <div id="subview-volunteer-dashboard" class="volunteer-view-pane space-y-6">
+        <!-- 4 Metric Cards -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-white p-4.5 rounded-2xl border border-ivory-300 shadow-soft">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600 block">Deliveries Completed</span>
+                <div class="text-3xl font-serif font-black text-pista-900 mt-1">42 Runs</div>
+                <span class="text-[11px] text-pista-700 font-semibold mt-1 block">100% on-time record</span>
+            </div>
+            <div class="bg-white p-4.5 rounded-2xl border border-ivory-300 shadow-soft">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600 block">Active Assignment</span>
+                <div class="text-3xl font-serif font-black text-salmon-600 mt-1">1 En Route</div>
+                <span class="text-[11px] text-salmon-600 font-semibold mt-1 block">Indiranagar &rarr; St. Marks</span>
+            </div>
+            <div class="bg-white p-4.5 rounded-2xl border border-ivory-300 shadow-soft">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600 block">Courier Rating</span>
+                <div class="text-3xl font-serif font-black text-amber-500 mt-1">
+                    4.9 <i class="fa-solid fa-star text-sm align-middle text-amber-400"></i>
+                </div>
+                <span class="text-[11px] text-ivory-600 mt-1 block">Top responder badge</span>
+            </div>
+            <div class="bg-white p-4.5 rounded-2xl border border-ivory-300 shadow-soft">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600 block">Equipment Kit</span>
+                <div class="text-3xl font-serif font-black text-pista-800 mt-1">80L Thermal</div>
+                <span class="text-[11px] text-pista-700 font-semibold mt-1 block">Safe Bain-marie box</span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Left 2 Cols: Active Mission -->
+            <div class="lg:col-span-2 space-y-6">
+                <div class="p-6 rounded-3xl bg-gradient-to-r from-pista-100/90 via-ivory-50 to-salmon-50 border-2 border-pista-400 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="px-3 py-1 bg-salmon-500 text-white font-bold text-xs rounded-full uppercase tracking-wider">
+                            <i class="fa-solid fa-bell mr-1"></i> Active Mission #RS-941
+                        </span>
+                        <span class="text-xs font-mono font-bold text-pista-900 bg-white px-2.5 py-1 rounded-lg border border-ivory-300">
+                            3.8 km &bull; 12 mins
+                        </span>
+                    </div>
+
+                    <div>
+                        <h3 class="font-serif text-lg font-bold text-pista-950">Transport 60 Meals: Annapurna Grand &rarr; Hope Shelter</h3>
+                        <p class="text-xs text-ivory-700 mt-0.5">
+                            Pickup warm thalis in Indiranagar and transport with insulated thermal box to St. Marks Road.
+                        </p>
+                    </div>
+
+                    <div class="pt-2 flex flex-wrap items-center gap-3">
+                        <button onclick="showSubView('volunteer', 'volunteer-delivery')" class="px-5 py-2.5 bg-pista-700 hover:bg-pista-800 text-ivory-50 font-bold text-xs rounded-xl shadow-pista transition-colors flex items-center gap-1.5">
+                            <i class="fa-solid fa-route"></i>
+                            <span>Execute Active Delivery &amp; OTP</span>
+                        </button>
+                        <button onclick="showSubView('tools', 'tools-map')" class="px-4 py-2.5 bg-white hover:bg-pista-100 text-pista-900 font-bold text-xs rounded-xl border border-ivory-300 transition-colors flex items-center gap-1.5">
+                            <i class="fa-solid fa-map-location-dot text-pista-600"></i>
+                            <span>View GPS Route</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quick Action Buttons -->
+                <div class="p-6 rounded-3xl bg-white border border-ivory-300 shadow-soft flex items-center justify-between gap-4">
+                    <div>
+                        <h4 class="font-bold text-sm text-pista-950">Looking for more food rescue runs?</h4>
+                        <p class="text-xs text-ivory-700 mt-0.5">Inspect open batches ready for immediate pickup across the city.</p>
+                    </div>
+                    <button onclick="showSubView('volunteer', 'volunteer-rescues')" class="px-4 py-2.5 bg-salmon-500 hover:bg-salmon-600 text-white font-bold text-xs rounded-xl shadow-salmon transition-colors flex items-center gap-1.5 shrink-0">
+                        <i class="fa-solid fa-list-check"></i>
+                        <span>Browse Available Runs</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right 1 Col: Courier Equipment Card -->
+            <div class="space-y-4">
+                <div class="bg-white p-5 rounded-3xl border border-ivory-300 shadow-soft space-y-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-2xl bg-pista-100 border border-pista-300 flex items-center justify-center text-pista-800 text-lg">
+                            <i class="fa-solid fa-motorcycle text-pista-700"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-sm text-pista-950">Aniket Kumar</div>
+                            <div class="text-xs text-ivory-700">TVS iQube EV (KA-03-HA-8192)</div>
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-pista-100 text-pista-800 font-bold text-[10px] mt-1 border border-pista-300">
+                                <i class="fa-solid fa-circle-check text-pista-600"></i> Safe Food Transport Certified
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-t border-ivory-200 text-xs space-y-2 text-ivory-800">
+                        <div class="flex justify-between">
+                            <span class="text-ivory-600">Thermal Box:</span>
+                            <span class="font-bold text-pista-800">80L Insulated Bain-marie</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-ivory-600">Battery Level:</span>
+                            <span class="font-bold text-pista-800">78% Charged (54 km range)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. VOLUNTEER SUB-VIEW: AVAILABLE RESCUES (CLAIM) -->
+    <div id="subview-volunteer-rescues" class="volunteer-view-pane hidden space-y-6">
+        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-ivory-300 shadow-soft max-w-4xl mx-auto space-y-6">
+            <div class="flex items-center justify-between pb-4 border-b border-ivory-200">
+                <div>
+                    <span class="px-3 py-1 bg-salmon-50 text-salmon-700 border border-salmon-200 rounded-full text-xs font-bold inline-flex items-center gap-1.5 mb-2">
+                        <i class="fa-solid fa-list-check text-salmon-500"></i> Open Rescues Ready to Claim
+                    </span>
+                    <h2 class="font-serif text-2xl font-black text-pista-950">Available Food Deliveries</h2>
+                    <p class="text-xs text-ivory-700 mt-1">Claim a transport mission matching your two-wheeler capacity and location.</p>
+                </div>
+                <button onclick="showSubView('volunteer', 'volunteer-dashboard')" class="text-xs font-bold text-ivory-600 hover:text-pista-800 transition-colors flex items-center gap-1">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+                </button>
+            </div>
+
+            <div class="space-y-4">
+                <div class="p-5 rounded-2xl bg-ivory-50 border border-ivory-300 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-base text-pista-950">Annapurna Grand &rarr; Hope Shelter</span>
+                            <span class="px-2.5 py-0.5 rounded-full bg-pista-200 text-pista-900 text-[10px] font-bold">In Progress by You</span>
+                        </div>
+                        <p class="text-xs text-ivory-700">60 Thalis &bull; 3.8 km &bull; Indiranagar to St. Marks Road &bull; 12m ETA</p>
+                    </div>
+                    <button onclick="showSubView('volunteer', 'volunteer-delivery')" class="px-4 py-2 bg-pista-700 hover:bg-pista-800 text-ivory-50 font-bold text-xs rounded-xl shadow-pista transition-colors flex items-center gap-1.5 shrink-0">
+                        <i class="fa-solid fa-route"></i>
+                        <span>Continue Run</span>
+                    </button>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-ivory-50 border border-ivory-300 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-base text-pista-950">The Royal Palace Caterers &rarr; Karuna Care Home</span>
+                            <span class="px-2.5 py-0.5 rounded-full bg-salmon-100 text-salmon-800 text-[10px] font-bold">Claimable (Urgent)</span>
+                        </div>
+                        <p class="text-xs text-ivory-700">120 Continental Boxes &bull; 4.6 km &bull; Koramangala to Shivajinagar</p>
+                    </div>
+                    <button onclick="claimRescue('RS-942')" class="px-4 py-2 bg-salmon-500 hover:bg-salmon-600 text-white font-bold text-xs rounded-xl shadow-salmon transition-colors flex items-center gap-1.5 shrink-0">
+                        <i class="fa-solid fa-check"></i>
+                        <span>Accept Rescue Run</span>
+                    </button>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-ivory-50 border border-ivory-300 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-base text-pista-950">GreenLeaf Organic Cafe &rarr; Ashraya Trust</span>
+                            <span class="px-2.5 py-0.5 rounded-full bg-pista-100 text-pista-800 text-[10px] font-bold">Claimable</span>
+                        </div>
+                        <p class="text-xs text-ivory-700">25 Bakery Items &bull; 2.1 km &bull; MG Road to Wilson Garden</p>
+                    </div>
+                    <button onclick="claimRescue('RS-943')" class="px-4 py-2 bg-salmon-500 hover:bg-salmon-600 text-white font-bold text-xs rounded-xl shadow-salmon transition-colors flex items-center gap-1.5 shrink-0">
+                        <i class="fa-solid fa-check"></i>
+                        <span>Accept Rescue Run</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. VOLUNTEER SUB-VIEW: ACTIVE DELIVERY & DUAL OTP -->
+    <div id="subview-volunteer-delivery" class="volunteer-view-pane hidden space-y-6">
+        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-ivory-300 shadow-soft max-w-4xl mx-auto space-y-6">
+            <div class="flex items-center justify-between pb-4 border-b border-ivory-200">
+                <div>
+                    <span class="px-3 py-1 bg-pista-100 text-pista-900 border border-pista-300 rounded-full text-xs font-bold inline-flex items-center gap-1.5 mb-2">
+                        <i class="fa-solid fa-route text-pista-700"></i> Dispatch In Flight: Mission #RS-941
+                    </span>
+                    <h2 class="font-serif text-2xl font-black text-pista-950">Active Food Delivery &amp; Dual OTP</h2>
+                    <p class="text-xs text-ivory-700 mt-1">Authenticate handover at kitchen pickup and shelter drop-off.</p>
+                </div>
+                <button onclick="showSubView('volunteer', 'volunteer-dashboard')" class="text-xs font-bold text-ivory-600 hover:text-pista-800 transition-colors flex items-center gap-1">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+                </button>
+            </div>
+
+            <!-- Dual OTP Verification Form -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Step 1: Donor OTP -->
+                <div class="bg-ivory-50 p-6 rounded-2xl border border-ivory-300 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold uppercase tracking-wider text-pista-800">Step 1: Chef Pickup</span>
+                        <span class="text-xs font-mono font-bold text-pista-800 bg-pista-100 px-2 py-0.5 rounded">Target: 7492</span>
+                    </div>
+                    <p class="text-xs text-ivory-700">Ask Chef Rajesh at Annapurna Grand for their 4-digit pickup code.</p>
+                    <div class="space-y-2">
+                        <input type="text" id="vol-input-donor-otp" placeholder="Enter Chef OTP (e.g. 7492)"
+                               class="w-full px-4 py-2.5 rounded-xl border border-ivory-300 text-center font-mono font-bold text-lg tracking-widest text-pista-900 bg-white">
+                        <button onclick="verifyVolDonorOTP()" class="w-full py-2.5 bg-pista-700 hover:bg-pista-800 text-ivory-50 font-bold text-xs rounded-xl shadow-pista transition-colors flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-check"></i> Verify Kitchen Pickup
+                        </button>
+                        <span id="vol-donor-otp-status" class="text-xs block text-center text-ivory-600">Awaiting code</span>
+                    </div>
+                </div>
+
+                <!-- Step 2: Receiver OTP -->
+                <div class="bg-ivory-50 p-6 rounded-2xl border border-ivory-300 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold uppercase tracking-wider text-salmon-700">Step 2: Shelter Delivery</span>
+                        <span class="text-xs font-mono font-bold text-salmon-700 bg-salmon-50 px-2 py-0.5 rounded">Target: 3180</span>
+                    </div>
+                    <p class="text-xs text-ivory-700">Ask Sister Maria at Hope Shelter for their 4-digit receipt code.</p>
+                    <div class="space-y-2">
+                        <input type="text" id="vol-input-receiver-otp" placeholder="Enter Shelter OTP (e.g. 3180)"
+                               class="w-full px-4 py-2.5 rounded-xl border border-ivory-300 text-center font-mono font-bold text-lg tracking-widest text-salmon-700 bg-white">
+                        <button onclick="verifyVolReceiverOTP()" class="w-full py-2.5 bg-salmon-500 hover:bg-salmon-600 text-white font-bold text-xs rounded-xl shadow-salmon transition-colors flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-check"></i> Verify Shelter Handover
+                        </button>
+                        <span id="vol-receiver-otp-status" class="text-xs block text-center text-ivory-600">Awaiting code</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Complete Mission Banner -->
+            <div id="vol-mission-complete-banner" class="hidden p-5 bg-pista-100 border-2 border-pista-400 text-pista-950 rounded-2xl text-xs font-bold text-center space-y-2">
+                <div class="text-base font-serif font-black flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-circle-check text-pista-700 text-lg"></i>
+                    <span>Delivery Complete! 60 warm meals safely reached Hope Shelter.</span>
+                </div>
+                <p class="text-pista-800">Thank you for your service! Handover recorded in the food safety ledger.</p>
+                <div class="pt-2 flex justify-center gap-3">
+                    <button onclick="showSubView('tools', 'tools-passport')" class="px-4 py-2 bg-pista-700 text-ivory-50 font-bold rounded-xl text-xs">
+                        <i class="fa-solid fa-passport mr-1"></i> Inspect Food Passport
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-3 border-t border-ivory-200">
+                <button onclick="showSubView('tools', 'tools-map')" class="text-xs font-bold text-pista-700 hover:underline flex items-center gap-1.5">
+                    <i class="fa-solid fa-map-location-dot"></i> View Route on Map
+                </button>
+                <button onclick="showSubView('tools', 'tools-scanner')" class="text-xs font-bold text-salmon-600 hover:underline flex items-center gap-1.5">
+                    <i class="fa-solid fa-qrcode"></i> Use QR Scanner Instead
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
