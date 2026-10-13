@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}Accepted Food Deliveries — Sanjog NGO Portal{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+
+    <!-- MVP HIERARCHY NAVIGATION -->
+    {% include "components/section_nav.html" with section="ngo" page="accepted_donations" %}
+
+    <!-- ROLE SWITCHER -->
+    {% include "components/role_switcher.html" %}
+
+    <!-- HEADER -->
+    <div class="bg-white p-6 rounded-3xl border border-ivory-300 shadow-soft flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <span class="px-3 py-1 bg-pista-100 text-pista-800 rounded-full text-xs font-bold inline-flex items-center gap-1.5 mb-2">
+                <i class="fa-solid fa-circle-check text-pista-600"></i>
+                Verified Meal Deliveries
+            </span>
+            <h1 class="font-serif text-2xl font-black text-pista-950">
+                Accepted Food Donations
+            </h1>
+            <p class="text-xs text-ivory-700 mt-1">
+                Audited intake record for Hope Community Shelter with digital temperature receipts and driver sign-offs.
+            </p>
+        </div>
+
+        <div class="flex items-center gap-2">
+            <a href="/food-passport/" class="px-4 py-2.5 bg-pista-600 hover:bg-pista-700 text-white font-bold text-xs rounded-xl shadow-pista transition-all flex items-center gap-1.5">
+                <i class="fa-solid fa-passport"></i>
+                <span>View Food Passports</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- METRICS -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="bg-white p-5 rounded-3xl border border-ivory-300 shadow-soft">
+            <span class="text-[10px] text-ivory-600 font-bold uppercase tracking-wider block">Total Meals Received</span>
+            <div class="text-3xl font-serif font-black text-pista-900 mt-1">1,240 Meals</div>
+            <span class="text-xs text-pista-700 font-medium mt-1 block">18 Verified Dropoffs</span>
+        </div>
+        <div class="bg-white p-5 rounded-3xl border border-ivory-300 shadow-soft">
+            <span class="text-[10px] text-ivory-600 font-bold uppercase tracking-wider block">Average Food Temp</span>
+            <div class="text-3xl font-serif font-black text-salmon-600 mt-1">67.4°C</div>
+            <span class="text-xs text-salmon-700 font-medium mt-1 block">100% Within FSSAI Safe Band</span>
+        </div>
+        <div class="bg-white p-5 rounded-3xl border border-ivory-300 shadow-soft">
+            <span class="text-[10px] text-ivory-600 font-bold uppercase tracking-wider block">Partner Kitchens</span>
+            <div class="text-3xl font-serif font-black text-pista-900 mt-1">14 Kitchens</div>
+            <span class="text-xs text-pista-700 font-medium mt-1 block">Regular weekly donor donors</span>
+        </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="bg-white rounded-3xl border border-ivory-300 shadow-soft overflow-hidden">
+        <div class="p-5 border-b border-ivory-200">
+            <h3 class="font-serif text-base font-bold text-pista-950 flex items-center gap-2">
+                <i class="fa-solid fa-clipboard-check text-pista-600"></i> Intake Logbook
+            </h3>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-xs">
+                <thead>
+                    <tr class="bg-ivory-50 text-ivory-800 border-b border-ivory-200">
+                        <th class="py-3 px-4 font-bold">Rescue ID</th>
+                        <th class="py-3 px-4 font-bold">Food Description</th>
+                        <th class="py-3 px-4 font-bold">Kitchen Donor</th>
+                        <th class="py-3 px-4 font-bold">Servings</th>
+                        <th class="py-3 px-4 font-bold">Driver</th>
+                        <th class="py-3 px-4 font-bold">Delivery Time</th>
+                        <th class="py-3 px-4 font-bold text-right">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-ivory-200 text-ivory-900">
+                    <tr class="hover:bg-ivory-50/70 transition-colors">
+                        <td class="py-3.5 px-4 font-mono font-bold text-pista-900">#RS-935</td>
+                        <td class="py-3.5 px-4 font-semibold">Paneer Butter Masala &amp; Rotis</td>
+                        <td class="py-3.5 px-4">Annapurna Grand</td>
+                        <td class="py-3.5 px-4 font-bold text-salmon-600">80 meals</td>
+                        <td class="py-3.5 px-4">Aniket Kumar</td>
+                        <td class="py-3.5 px-4 text-ivory-600">Oct 11, 2026 &bull; 8:44 PM</td>
+                        <td class="py-3.5 px-4 text-right">
+                            <a href="/food-passport/" class="text-pista-700 hover:text-salmon-600 font-bold transition-colors">
+                                <i class="fa-solid fa-passport mr-1"></i> Passport
+                            </a>
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-ivory-50/70 transition-colors">
+                        <td class="py-3.5 px-4 font-mono font-bold text-pista-900">#RS-924</td>
+                        <td class="py-3.5 px-4 font-semibold">Veg Pulao, Curd &amp; Gulab Jamun</td>
+                        <td class="py-3.5 px-4">The Royal Palace Caterers</td>
+                        <td class="py-3.5 px-4 font-bold text-salmon-600">120 meals</td>
+                        <td class="py-3.5 px-4">Sneha Rao</td>
+                        <td class="py-3.5 px-4 text-ivory-600">Oct 09, 2026 &bull; 9:10 PM</td>
+                        <td class="py-3.5 px-4 text-right">
+                            <a href="/food-passport/" class="text-pista-700 hover:text-salmon-600 font-bold transition-colors">
+                                <i class="fa-solid fa-passport mr-1"></i> Passport
+                            </a>
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-ivory-50/70 transition-colors">
+                        <td class="py-3.5 px-4 font-mono font-bold text-pista-900">#RS-918</td>
+                        <td class="py-3.5 px-4 font-semibold">Fresh Bread Loaves &amp; Banana Boxes</td>
+                        <td class="py-3.5 px-4">GreenLeaf Cafe</td>
+                        <td class="py-3.5 px-4 font-bold text-salmon-600">45 servings</td>
+                        <td class="py-3.5 px-4">Karthik M</td>
+                        <td class="py-3.5 px-4 text-ivory-600">Oct 08, 2026 &bull; 4:30 PM</td>
+                        <td class="py-3.5 px-4 text-right">
+                            <a href="/food-passport/" class="text-pista-700 hover:text-salmon-600 font-bold transition-colors">
+                                <i class="fa-solid fa-passport mr-1"></i> Passport
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

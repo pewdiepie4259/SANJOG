@@ -1,0 +1,115 @@
+{% comment %}
+Reusable Section Navigation Component reflecting the exact MVP Hierarchy.
+Usage: {% include "components/section_nav.html" with section="donor" page="report_surplus" %}
+{% endcomment %}
+
+<div class="bg-white border border-ivory-300 rounded-2xl p-2.5 shadow-soft mb-6 flex flex-wrap items-center justify-between gap-3">
+    
+    <!-- Section Title & Breadcrumb -->
+    <div class="flex items-center gap-2 px-2">
+        <a href="/" class="text-xs text-ivory-600 hover:text-pista-800 transition-colors flex items-center gap-1 font-medium">
+            <i class="fa-solid fa-house text-[10px]"></i> MVP
+        </a>
+        <span class="text-ivory-400 text-xs">/</span>
+        
+        {% if section == 'donor' %}
+            <span class="text-xs font-bold text-pista-900 flex items-center gap-1.5">
+                <i class="fa-solid fa-bowl-food text-pista-600"></i> Donor
+            </span>
+        {% elif section == 'ngo' %}
+            <span class="text-xs font-bold text-salmon-900 flex items-center gap-1.5">
+                <i class="fa-solid fa-hands-holding-child text-salmon-600"></i> NGO (Receiver)
+            </span>
+        {% elif section == 'volunteer' %}
+            <span class="text-xs font-bold text-pista-900 flex items-center gap-1.5">
+                <i class="fa-solid fa-person-biking text-pista-600"></i> Volunteer
+            </span>
+        {% elif section == 'admin' %}
+            <span class="text-xs font-bold text-ivory-950 flex items-center gap-1.5">
+                <i class="fa-solid fa-shield text-ivory-700"></i> Admin
+            </span>
+        {% elif section == 'shared' %}
+            <span class="text-xs font-bold text-salmon-800 flex items-center gap-1.5">
+                <i class="fa-solid fa-cubes text-salmon-500"></i> Shared Tools
+            </span>
+        {% endif %}
+    </div>
+
+    <!-- Navigation Pills for Current Section -->
+    <div class="flex flex-wrap items-center gap-1.5">
+        {% if section == 'donor' %}
+            <a href="/donor/dashboard/" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 {% if page == 'dashboard' %}bg-pista-600 text-white shadow-soft{% else %}bg-ivory-100 text-ivory-800 hover:bg-pista-100 hover:text-pista-900{% endif %}">
+                <i class="fa-solid fa-gauge text-[11px]"></i> Dashboard
+            </a>
+            <a href="/donor/report-surplus/" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 {% if page == 'report_surplus' %}bg-salmon-500 text-white shadow-salmon{% else %}bg-ivory-100 text-ivory-800 hover:bg-salmon-50 hover:text-salmon-700{% endif %}">
+                <i class="fa-solid fa-plus-circle text-[11px]"></i> Report Surplus
+            </a>
+            <a href="/donor/ai-match/" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 {% if page == 'ai_match' %}bg-pista-600 text-white shadow-soft{% else %}bg-ivory-100 text-ivory-800 hover:bg-pista-100 hover:text-pista-900{% endif %}">
+                <i class="fa-solid fa-brain text-[11px]"></i> AI Match
+            </a>
+            <a href="/donor/live-tracking/" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 {% if page == 'live_tracking' %}bg-salmon-500 text-white shadow-salmon{% else %}bg-ivory-100 text-ivory-800 hover:bg-salmon-50 hover:text-salmon-700{% endif %}">
+                <i class="fa-solid fa-location-crosshairs text-[11px]"></i> Live Tracking
+            </a>
+            <a href="/donor/history/" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 {% if page == 'history' %}bg-pista-600 text-white shadow-soft{% else %}bg-ivory-100 text-ivory-800 hover:bg-pista-100 hover:text-pista-900{% endif %}">
+                <i class="fa-solid fa-clock-rotate-left text-[11px]"></i> History
+            </a>
+
+        {% elif section == 'ngo' %}
+            <a href="/ngo/dashboard/" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 {% if page == 'dashboard' %}bg-salmon-500 text-white shadow-salmon{% else %}bg-ivory-100 text-ivory-800 hover:bg-salmon-50 hover:text-salmon-700{% endif %}">
+                <i class="fa-solid fa-gauge text-[11px]"></i> Dashboard
+            </a>
+            <a href="/ngo/nearby-food/" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 {% if page == 'nearby_food' %}bg-pista-600 text-white shadow-soft{% else %}bg-ivory-100 text-ivory-800 hover:bg-pista-100 hover:text-pista-900{% endif %}">
+                <i class="fa-solid fa-compass text-[11px]"></i> Nearby Food
+            </a>
+            <a href="/ngo/request-food/" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 {% if page == 'request_food' %}bg-salmon-500 text-white shadow-salmon{% else %}bg-ivory-100 text-ivory-800 hover:bg-salmon-50 hover:text-salmon-700{% endif %}">
+                <i class="fa-solid fa-utensils text-[11px]"></i> Request Food
+            </a>
+            <a href="/ngo/accepted-donations/" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 {% if page == 'accepted_donations' %}bg-pista-600 text-white shadow-soft{% else %}bg-ivory-100 text-ivory-800 hover:bg-pista-100 hover:text-pista-900{% endif %}">
+                <i class="fa-solid fa-circle-check text-[11px]"></i> Accepted Donations
+            </a>
+
+        {% elif section == 'volunteer' %}
+            <a href="/volunteer/dashboard/" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 {% if page == 'dashboard' %}bg-pista-600 text-white shadow-soft{% else %}bg-ivory-100 text-ivory-800 hover:bg-pista-100 hover:text-pista-900{% endif %}">
+                <i class="fa-solid fa-gauge text-[11px]"></i> Dashboard
+            </a>
+            <a href="/volunteer/available-rescues/" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 {% if page == 'available_rescues' %}bg-salmon-500 text-white shadow-salmon{% else %}bg-ivory-100 text-ivory-800 hover:bg-salmon-50 hover:text-salmon-700{% endif %}">
+                <i class="fa-solid fa-list-check text-[11px]"></i> Available Rescues
+            </a>
+            <a href="/volunteer/active-delivery/" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 {% if page == 'active_delivery' %}bg-pista-600 text-white shadow-soft{% else %}bg-ivory-100 text-ivory-800 hover:bg-pista-100 hover:text-pista-900{% endif %}">
+                <i class="fa-solid fa-route text-[11px]"></i> Active Delivery (OTP)
+            </a>
+
+        {% elif section == 'admin' %}
+            <a href="/platform-admin/dashboard/" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 {% if page == 'dashboard' %}bg-ivory-900 text-white shadow-soft{% else %}bg-ivory-100 text-ivory-800 hover:bg-ivory-200 hover:text-ivory-950{% endif %}">
+                <i class="fa-solid fa-gauge text-[11px]"></i> Dashboard
+            </a>
+            <a href="/platform-admin/ngo-verification/" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 {% if page == 'ngo_verification' %}bg-pista-600 text-white shadow-soft{% else %}bg-ivory-100 text-ivory-800 hover:bg-pista-100 hover:text-pista-900{% endif %}">
+                <i class="fa-solid fa-file-circle-check text-[11px]"></i> NGO Verification
+            </a>
+            <a href="/platform-admin/user-management/" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 {% if page == 'user_management' %}bg-salmon-500 text-white shadow-salmon{% else %}bg-ivory-100 text-ivory-800 hover:bg-salmon-50 hover:text-salmon-700{% endif %}">
+                <i class="fa-solid fa-users-gear text-[11px]"></i> User Management
+            </a>
+            <a href="/platform-admin/rescue-monitoring/" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 {% if page == 'rescue_monitoring' %}bg-pista-600 text-white shadow-soft{% else %}bg-ivory-100 text-ivory-800 hover:bg-pista-100 hover:text-pista-900{% endif %}">
+                <i class="fa-solid fa-satellite-dish text-[11px]"></i> Rescue Monitoring
+            </a>
+
+        {% elif section == 'shared' %}
+            <a href="/notifications/" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 {% if page == 'notifications' %}bg-salmon-500 text-white shadow-salmon{% else %}bg-ivory-100 text-ivory-800 hover:bg-salmon-50 hover:text-salmon-700{% endif %}">
+                <i class="fa-solid fa-bell text-[11px]"></i> Notifications
+            </a>
+            <a href="/profile/" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 {% if page == 'profile' %}bg-pista-600 text-white shadow-soft{% else %}bg-ivory-100 text-ivory-800 hover:bg-pista-100 hover:text-pista-900{% endif %}">
+                <i class="fa-solid fa-id-badge text-[11px]"></i> Profile
+            </a>
+            <a href="/map/" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 {% if page == 'map' %}bg-pista-600 text-white shadow-soft{% else %}bg-ivory-100 text-ivory-800 hover:bg-pista-100 hover:text-pista-900{% endif %}">
+                <i class="fa-solid fa-map-location-dot text-[11px]"></i> Map
+            </a>
+            <a href="/qr-scanner/" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 {% if page == 'qr_scanner' %}bg-salmon-500 text-white shadow-salmon{% else %}bg-ivory-100 text-ivory-800 hover:bg-salmon-50 hover:text-salmon-700{% endif %}">
+                <i class="fa-solid fa-qrcode text-[11px]"></i> QR Scanner
+            </a>
+            <a href="/food-passport/" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 {% if page == 'food_passport' %}bg-pista-600 text-white shadow-soft{% else %}bg-ivory-100 text-ivory-800 hover:bg-pista-100 hover:text-pista-900{% endif %}">
+                <i class="fa-solid fa-passport text-[11px]"></i> Food Passport
+            </a>
+        {% endif %}
+    </div>
+
+</div>

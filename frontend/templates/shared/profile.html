@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}Organization &amp; User Profile — Sanjog{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+
+    <!-- MVP HIERARCHY NAVIGATION -->
+    {% include "components/section_nav.html" with section="shared" page="profile" %}
+
+    <!-- ROLE SWITCHER -->
+    {% include "components/role_switcher.html" %}
+
+    <div class="max-w-4xl mx-auto space-y-6">
+        
+        <!-- PROFILE HERO CARD -->
+        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-ivory-300 shadow-soft flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+            <div class="flex items-center gap-4">
+                <div class="w-16 h-16 rounded-3xl bg-pista-100 border border-pista-300 flex items-center justify-center font-serif text-2xl font-black text-pista-800 shadow-soft">
+                    {% if user.is_authenticated %}{{ user.username|slice:":1"|upper }}{% else %}SJ{% endif %}
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="font-serif text-2xl font-black text-pista-950">
+                            {% if user.is_authenticated %}{{ user.username }}{% else %}Guest User{% endif %}
+                        </h1>
+                        <span class="px-2.5 py-0.5 rounded-full bg-pista-100 text-pista-800 font-bold text-xs border border-pista-300">
+                            {% if user.is_authenticated %}{{ user.get_role_display }}{% else %}Visitor{% endif %}
+                        </span>
+                    </div>
+                    <p class="text-xs text-ivory-700 mt-1">
+                        {{ user.email|default:"contact@sanjog.local" }} &bull; Active Member since 2026
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <a href="{% url 'logout' %}" class="px-4 py-2.5 bg-salmon-50 hover:bg-salmon-100 text-salmon-700 font-bold text-xs rounded-xl border border-salmon-200 transition-colors">
+                    Sign Out
+                </a>
+            </div>
+        </div>
+
+        <!-- DETAILS GRID -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- Organization Information -->
+            <div class="bg-white p-6 rounded-3xl border border-ivory-300 shadow-soft space-y-4">
+                <div class="flex items-center justify-between pb-3 border-b border-ivory-200">
+                    <h3 class="font-serif text-base font-bold text-pista-950 flex items-center gap-2">
+                        <i class="fa-solid fa-building text-pista-700"></i> Organization Details
+                    </h3>
+                    <span class="px-2.5 py-0.5 rounded-full bg-pista-100 text-pista-800 font-bold text-[10px]">
+                        VERIFIED
+                    </span>
+                </div>
+
+                <div class="space-y-3 text-xs text-ivory-800">
+                    <div class="flex justify-between py-1 border-b border-ivory-100">
+                        <span class="text-ivory-600">Entity Name:</span>
+                        <span class="font-bold text-pista-950">
+                            {% if user.username == 'testdonor' %}Annapurna Grand Restaurant
+                            {% elif user.username == 'testreceiver' %}Hope Community Shelter
+                            {% elif user.username == 'testvolunteer' %}Bengaluru Riders Network
+                            {% else %}Sanjog Foundation Team{% endif %}
+                        </span>
+                    </div>
+
+                    <div class="flex justify-between py-1 border-b border-ivory-100">
+                        <span class="text-ivory-600">Location:</span>
+                        <span class="font-bold text-ivory-900">Bengaluru, Karnataka</span>
+                    </div>
+
+                    <div class="flex justify-between py-1 border-b border-ivory-100">
+                        <span class="text-ivory-600">Registration / FSSAI:</span>
+                        <span class="font-mono font-bold text-ivory-900">11223344009812</span>
+                    </div>
+
+                    <div class="flex justify-between py-1">
+                        <span class="text-ivory-600">Operating Window:</span>
+                        <span class="font-bold text-ivory-900">10:00 AM - 11:00 PM Daily</span>
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <a href="{% url 'organization_documents' %}" class="block text-center py-2.5 bg-pista-100 hover:bg-pista-200 text-pista-900 font-bold text-xs rounded-xl border border-pista-300 transition-colors">
+                        Manage Uploaded Documents &rarr;
+                    </a>
+                </div>
+            </div>
+
+            <!-- Operational Impact & Trust -->
+            <div class="bg-white p-6 rounded-3xl border border-ivory-300 shadow-soft space-y-4">
+                <div class="flex items-center justify-between pb-3 border-b border-ivory-200">
+                    <h3 class="font-serif text-base font-bold text-pista-950 flex items-center gap-2">
+                        <i class="fa-solid fa-medal text-salmon-500"></i> Trust &amp; Community Standing
+                    </h3>
+                    <span class="text-xs font-bold text-pista-700">100% Reliability</span>
+                </div>
+
+                <div class="space-y-3 text-xs text-ivory-800">
+                    <div class="p-3 bg-pista-50 rounded-2xl border border-pista-200 space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-pista-950">Zero Food Waste Badge</span>
+                            <span class="text-pista-700 font-bold"><i class="fa-solid fa-check-circle"></i> Active</span>
+                        </div>
+                        <p class="text-[11px] text-pista-800">Awarded for 40+ completed temperature-logged food rescues.</p>
+                    </div>
+
+                    <div class="p-3 bg-salmon-50 rounded-2xl border border-salmon-200 space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-salmon-950">Dual-OTP Verification Protocol</span>
+                            <span class="text-salmon-700 font-bold"><i class="fa-solid fa-shield"></i> Enforced</span>
+                        </div>
+                        <p class="text-[11px] text-salmon-800">All pickups and deliveries require cryptographically verified 4-digit PINs.</p>
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <a href="/food-passport/" class="block text-center py-2.5 bg-salmon-50 hover:bg-salmon-100 text-salmon-700 font-bold text-xs rounded-xl border border-salmon-200 transition-colors">
+                        Inspect Digital Food Passport &rarr;
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

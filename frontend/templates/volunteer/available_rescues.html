@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}Available Rescue Runs — Sanjog Volunteer Portal{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+
+    <!-- MVP HIERARCHY NAVIGATION -->
+    {% include "components/section_nav.html" with section="volunteer" page="available_rescues" %}
+
+    <!-- ROLE SWITCHER -->
+    {% include "components/role_switcher.html" %}
+
+    <!-- HEADER -->
+    <div class="bg-white p-6 rounded-3xl border border-ivory-300 shadow-soft flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <span class="px-3 py-1 bg-salmon-50 text-salmon-700 rounded-full text-xs font-bold inline-flex items-center gap-1.5 mb-2">
+                <i class="fa-solid fa-list-check text-salmon-500"></i>
+                Neighborhood Food Dispatches
+            </span>
+            <h1 class="font-serif text-2xl font-black text-pista-950">
+                Available Rescue Missions
+            </h1>
+            <p class="text-xs text-ivory-700 mt-1">
+                Open surplus food pickups near you awaiting a verified volunteer driver in Bengaluru.
+            </p>
+        </div>
+
+        <div class="flex items-center gap-2">
+            <span class="text-xs text-pista-800 bg-pista-100 border border-pista-300 px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-pista-600 animate-pulse"></span>
+                2 Missions Open
+            </span>
+        </div>
+    </div>
+
+    <!-- RESCUE CARDS -->
+    <div class="space-y-4">
+        
+        <!-- CARD 1 -->
+        <div class="bg-white p-6 rounded-3xl border-2 border-salmon-300 shadow-soft space-y-4">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                <div class="space-y-2">
+                    <div class="flex items-center gap-2.5">
+                        <span class="font-mono font-bold text-xs text-pista-900 bg-pista-100 px-2.5 py-0.5 rounded-lg">#RS-939</span>
+                        <h3 class="font-serif text-lg font-bold text-pista-950">120 Servings: Continental Lunch Boxes &amp; Wraps</h3>
+                        <span class="px-2.5 py-0.5 rounded-full bg-salmon-500 text-white font-bold text-[10px] animate-pulse">
+                            URGENT &bull; 45M LEFT
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs pt-1">
+                        <div class="space-y-1">
+                            <span class="text-ivory-600 font-bold block"><i class="fa-solid fa-utensils text-pista-700 mr-1"></i> Pickup (Donor):</span>
+                            <div class="font-bold text-ivory-900">The Royal Palace Caterers</div>
+                            <div class="text-ivory-600">80ft Road, Koramangala &bull; Contact: Manager Vikram (+91 98450 78210)</div>
+                        </div>
+
+                        <div class="space-y-1">
+                            <span class="text-ivory-600 font-bold block"><i class="fa-solid fa-hands-holding-child text-salmon-600 mr-1"></i> Dropoff (NGO):</span>
+                            <div class="font-bold text-ivory-900">Karuna Care Home for Elderly</div>
+                            <div class="text-ivory-600">Shivajinagar, Bengaluru &bull; 45 Seniors awaiting meal</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
+                    <div class="text-right sm:pr-2">
+                        <span class="text-[10px] text-ivory-600 uppercase font-bold block">Distance</span>
+                        <span class="font-bold text-sm text-pista-900">6.2 km &bull; 18m drive</span>
+                    </div>
+                    <button onclick="alert('Mission #RS-939 Accepted! Routing details sent to your device...')" 
+                            class="px-6 py-3 bg-salmon-500 hover:bg-salmon-600 text-white font-bold text-xs rounded-2xl shadow-salmon transition-all flex items-center justify-center gap-2 hover:scale-[1.02]">
+                        <i class="fa-solid fa-bicycle"></i>
+                        <span>Accept Mission</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="pt-3 border-t border-ivory-200 flex items-center justify-between text-xs text-ivory-600">
+                <span>Vehicle recommended: <strong>Two-Wheeler or EV Cargo</strong></span>
+                <span class="text-pista-700 font-semibold"><i class="fa-solid fa-shield mr-1"></i> Food pre-packed in thermo boxes</span>
+            </div>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="bg-white p-6 rounded-3xl border border-ivory-300 shadow-soft space-y-4">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                <div class="space-y-2">
+                    <div class="flex items-center gap-2.5">
+                        <span class="font-mono font-bold text-xs text-pista-900 bg-pista-100 px-2.5 py-0.5 rounded-lg">#RS-942</span>
+                        <h3 class="font-serif text-lg font-bold text-pista-950">25 Servings: Artisan Bread, Sandwiches &amp; Fruit</h3>
+                        <span class="px-2.5 py-0.5 rounded-full bg-pista-100 text-pista-800 font-bold text-[10px]">
+                            NORMAL &bull; 3H REMAINING
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs pt-1">
+                        <div class="space-y-1">
+                            <span class="text-ivory-600 font-bold block"><i class="fa-solid fa-utensils text-pista-700 mr-1"></i> Pickup (Donor):</span>
+                            <div class="font-bold text-ivory-900">GreenLeaf Organic Cafe</div>
+                            <div class="text-ivory-600">MG Road &bull; Contact: Deepak (+91 98450 11920)</div>
+                        </div>
+
+                        <div class="space-y-1">
+                            <span class="text-ivory-600 font-bold block"><i class="fa-solid fa-hands-holding-child text-salmon-600 mr-1"></i> Dropoff (NGO):</span>
+                            <div class="font-bold text-ivory-900">Ashraya Orphanage Trust</div>
+                            <div class="text-ivory-600">Wilson Garden &bull; 35 Children</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
+                    <div class="text-right sm:pr-2">
+                        <span class="text-[10px] text-ivory-600 uppercase font-bold block">Distance</span>
+                        <span class="font-bold text-sm text-pista-900">2.8 km &bull; 10m drive</span>
+                    </div>
+                    <button onclick="alert('Mission #RS-942 Accepted! Routing details sent to your device...')" 
+                            class="px-6 py-3 bg-pista-600 hover:bg-pista-700 text-white font-bold text-xs rounded-2xl shadow-pista transition-all flex items-center justify-center gap-2 hover:scale-[1.02]">
+                        <i class="fa-solid fa-bicycle"></i>
+                        <span>Accept Mission</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="pt-3 border-t border-ivory-200 flex items-center justify-between text-xs text-ivory-600">
+                <span>Vehicle recommended: <strong>Two-Wheeler with Backpack Box</strong></span>
+                <span class="text-pista-700 font-semibold"><i class="fa-solid fa-shield mr-1"></i> Bakery &amp; produce in biodegradable packaging</span>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block title %}Nearby Surplus Food — Sanjog NGO Portal{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+
+    <!-- MVP HIERARCHY NAVIGATION -->
+    {% include "components/section_nav.html" with section="ngo" page="nearby_food" %}
+
+    <!-- ROLE SWITCHER -->
+    {% include "components/role_switcher.html" %}
+
+    <!-- HEADER & FILTERS -->
+    <div class="bg-white p-6 rounded-3xl border border-ivory-300 shadow-soft flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <span class="px-3 py-1 bg-salmon-50 text-salmon-700 rounded-full text-xs font-bold inline-flex items-center gap-1.5 mb-2">
+                <i class="fa-solid fa-compass text-salmon-500"></i>
+                Real-Time Food Discovery
+            </span>
+            <h1 class="font-serif text-2xl font-black text-pista-950">
+                Surplus Food Near Your Shelter
+            </h1>
+            <p class="text-xs text-ivory-700 mt-1">
+                Showing available kitchen donations within 5 km of Hope Community Shelter (St. Marks Road).
+            </p>
+        </div>
+
+        <!-- Filter Pills -->
+        <div class="flex flex-wrap items-center gap-2">
+            <button class="px-3 py-1.5 rounded-xl bg-pista-600 text-white font-bold text-xs shadow-soft">
+                All Diets
+            </button>
+            <button class="px-3 py-1.5 rounded-xl bg-ivory-100 hover:bg-pista-100 text-ivory-800 hover:text-pista-900 font-bold text-xs border border-ivory-300 transition-colors">
+                Vegetarian Only
+            </button>
+            <button class="px-3 py-1.5 rounded-xl bg-ivory-100 hover:bg-pista-100 text-ivory-800 hover:text-pista-900 font-bold text-xs border border-ivory-300 transition-colors">
+                &lt; 3 km Radius
+            </button>
+        </div>
+    </div>
+
+    <!-- LISTINGS GRID -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        
+        <!-- CARD 1 -->
+        <div class="bg-white rounded-3xl border-2 border-pista-400 p-6 shadow-soft space-y-4 flex flex-col justify-between">
+            <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                    <span class="px-2.5 py-1 rounded-full bg-pista-100 text-pista-800 font-bold text-[10px]">
+                        <i class="fa-solid fa-location-dot mr-1"></i> 1.9 km away
+                    </span>
+                    <span class="text-xs font-bold text-salmon-600">3h 30m safe</span>
+                </div>
+
+                <div>
+                    <h3 class="font-serif text-base font-bold text-pista-950">Artisan Bread, Fruit Bowls &amp; Sandwiches</h3>
+                    <p class="text-xs font-bold text-ivory-700 mt-0.5">GreenLeaf Organic Cafe &bull; MG Road</p>
+                </div>
+
+                <div class="p-3 bg-ivory-50 rounded-2xl text-xs space-y-1">
+                    <div class="flex justify-between">
+                        <span class="text-ivory-600">Servings:</span>
+                        <span class="font-bold text-pista-900">25 Servings</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-ivory-600">Dietary:</span>
+                        <span class="font-bold text-ivory-800">Vegan &bull; Bakery &amp; Produce</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-ivory-600">Storage:</span>
+                        <span class="font-bold text-ivory-800">Packed in Bio-boxes</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-3 border-t border-ivory-200">
+                <button onclick="alert('Claim request sent to GreenLeaf Cafe! Volunteer driver being matched...')" 
+                        class="w-full py-2.5 bg-salmon-500 hover:bg-salmon-600 text-white font-bold text-xs rounded-xl shadow-salmon transition-all flex items-center justify-center gap-2 hover:scale-[1.01]">
+                    <i class="fa-solid fa-hand-holding-heart"></i>
+                    <span>Claim Batch for Shelter</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="bg-white rounded-3xl border border-ivory-300 p-6 shadow-soft space-y-4 flex flex-col justify-between">
+            <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                    <span class="px-2.5 py-1 rounded-full bg-pista-100 text-pista-800 font-bold text-[10px]">
+                        <i class="fa-solid fa-location-dot mr-1"></i> 3.8 km away
+                    </span>
+                    <span class="text-xs font-bold text-pista-700">Matched to you!</span>
+                </div>
+
+                <div>
+                    <h3 class="font-serif text-base font-bold text-pista-950">Fresh North Indian Buffet Thalis</h3>
+                    <p class="text-xs font-bold text-ivory-700 mt-0.5">Annapurna Grand &bull; Indiranagar</p>
+                </div>
+
+                <div class="p-3 bg-ivory-50 rounded-2xl text-xs space-y-1">
+                    <div class="flex justify-between">
+                        <span class="text-ivory-600">Servings:</span>
+                        <span class="font-bold text-pista-900">60 Servings</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-ivory-600">Dietary:</span>
+                        <span class="font-bold text-ivory-800">Vegetarian &bull; Warm cooked</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-ivory-600">Status:</span>
+                        <span class="font-bold text-salmon-600">Driver En Route</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-3 border-t border-ivory-200">
+                <a href="/ngo/dashboard/" class="w-full py-2.5 bg-pista-100 hover:bg-pista-200 text-pista-900 font-bold text-xs rounded-xl border border-pista-300 transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-location-arrow"></i>
+                    <span>View Live Dispatch (12m)</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="bg-white rounded-3xl border border-ivory-300 p-6 shadow-soft space-y-4 flex flex-col justify-between">
+            <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                    <span class="px-2.5 py-1 rounded-full bg-ivory-200 text-ivory-800 font-bold text-[10px]">
+                        <i class="fa-solid fa-location-dot mr-1"></i> 4.2 km away
+                    </span>
+                    <span class="text-xs font-bold text-salmon-700">Urgent (45m left)</span>
+                </div>
+
+                <div>
+                    <h3 class="font-serif text-base font-bold text-pista-950">Continental Lunch Boxes &amp; Wraps</h3>
+                    <p class="text-xs font-bold text-ivory-700 mt-0.5">The Royal Palace Caterers &bull; Koramangala</p>
+                </div>
+
+                <div class="p-3 bg-ivory-50 rounded-2xl text-xs space-y-1">
+                    <div class="flex justify-between">
+                        <span class="text-ivory-600">Servings:</span>
+                        <span class="font-bold text-pista-900">120 Servings</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-ivory-600">Dietary:</span>
+                        <span class="font-bold text-ivory-800">Mixed (Veg + Non-Veg)</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-ivory-600">Handling:</span>
+                        <span class="font-bold text-ivory-800">Needs EV Van dispatch</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-3 border-t border-ivory-200">
+                <button onclick="alert('Claiming 120 servings from Koramangala...')" 
+                        class="w-full py-2.5 bg-salmon-500 hover:bg-salmon-600 text-white font-bold text-xs rounded-xl shadow-salmon transition-all flex items-center justify-center gap-2 hover:scale-[1.01]">
+                    <i class="fa-solid fa-hand-holding-heart"></i>
+                    <span>Claim Batch for Shelter</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

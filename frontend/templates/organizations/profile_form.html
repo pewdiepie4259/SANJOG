@@ -1,151 +1,157 @@
 {% extends "base.html" %}
 
-{% block title %}{% if is_create %}Register Organization{% else %}Edit Organization Profile{% endif %} — SANJOG{% endblock %}
+{% block title %}{% if is_create %}Register Organization{% else %}Edit Organization Profile{% endif %} — Sanjog{% endblock %}
 
 {% block content %}
 <div class="max-w-3xl mx-auto space-y-6">
     <div class="flex items-center justify-between">
         <div>
-            <h1 class="text-2xl font-black text-slate-900">
+            <h1 class="text-2xl font-serif font-bold text-pista-950">
                 {% if is_create %}Register Your Organization{% else %}Edit Organization Profile{% endif %}
             </h1>
-            <p class="text-xs text-slate-500 mt-1">
+            <p class="text-xs text-pista-700/80 mt-1">
                 {% if is_create %}Enter official entity credentials to initiate verification.{% else %}Update contact and location information.{% endif %}
             </p>
         </div>
         {% if not is_create %}
-            <a href="{% url 'organization_profile' %}" class="text-xs font-semibold text-slate-600 hover:text-slate-900 border border-slate-300 px-3 py-1.5 rounded-lg bg-white shadow-sm">
-                &larr; Back to Profile
+            <a href="{% url 'organization_profile' %}" class="inline-flex items-center gap-1.5 text-xs font-semibold text-pista-800 hover:text-pista-950 border border-ivory-300 px-3 py-1.5 rounded-lg bg-ivory-50 shadow-sm transition-colors">
+                <i class="fa-solid fa-arrow-left text-xs"></i>
+                <span>Back to Profile</span>
             </a>
         {% endif %}
     </div>
 
     {% if form.non_field_errors %}
-        <div class="p-4 rounded-xl bg-red-50 border border-red-200 text-red-800 text-xs font-medium space-y-1">
+        <div class="p-4 rounded-xl bg-salmon-50 border border-salmon-200 text-salmon-800 text-xs font-medium space-y-1">
             {% for error in form.non_field_errors %}
-                <p>{{ error }}</p>
+                <p class="flex items-center gap-1.5"><i class="fa-solid fa-triangle-exclamation text-salmon-600"></i> {{ error }}</p>
             {% endfor %}
         </div>
     {% endif %}
 
-    <form method="post" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+    <form method="post" class="bg-ivory-50 rounded-2xl p-6 sm:p-8 border border-ivory-300/80 shadow-sm space-y-6">
         {% csrf_token %}
 
         <!-- Section: Entity Core Details -->
         <div>
-            <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500 mb-4 pb-2 border-b border-slate-100">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-pista-800/80 mb-4 pb-2 border-b border-ivory-200 flex items-center gap-2">
+                <i class="fa-solid fa-building text-pista-600"></i>
                 Entity Legal Details
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div class="sm:col-span-2 space-y-1">
-                    <label for="id_name" class="block text-xs font-bold text-slate-700">Official Organization / Trade Name *</label>
+                    <label for="id_name" class="block text-xs font-bold text-pista-900">Official Organization / Trade Name *</label>
                     {{ form.name }}
-                    {% if form.name.errors %}<p class="text-xs text-red-600">{{ form.name.errors.0 }}</p>{% endif %}
+                    {% if form.name.errors %}<p class="text-xs text-salmon-600">{{ form.name.errors.0 }}</p>{% endif %}
                 </div>
 
                 <div class="space-y-1">
-                    <label for="id_org_type" class="block text-xs font-bold text-slate-700">Organization Category *</label>
+                    <label for="id_org_type" class="block text-xs font-bold text-pista-900">Organization Category *</label>
                     {{ form.org_type }}
-                    {% if form.org_type.errors %}<p class="text-xs text-red-600">{{ form.org_type.errors.0 }}</p>{% endif %}
+                    {% if form.org_type.errors %}<p class="text-xs text-salmon-600">{{ form.org_type.errors.0 }}</p>{% endif %}
                 </div>
 
                 <div class="space-y-1">
-                    <label for="id_registration_number" class="block text-xs font-bold text-slate-700">Registration / FSSAI / 80G Number</label>
+                    <label for="id_registration_number" class="block text-xs font-bold text-pista-900">Registration / FSSAI / 80G Number</label>
                     {{ form.registration_number }}
-                    {% if form.registration_number.errors %}<p class="text-xs text-red-600">{{ form.registration_number.errors.0 }}</p>{% endif %}
+                    {% if form.registration_number.errors %}<p class="text-xs text-salmon-600">{{ form.registration_number.errors.0 }}</p>{% endif %}
                 </div>
             </div>
         </div>
 
         <!-- Section: Authorized Contact -->
         <div>
-            <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500 mb-4 pb-2 border-b border-slate-100">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-pista-800/80 mb-4 pb-2 border-b border-ivory-200 flex items-center gap-2">
+                <i class="fa-solid fa-address-book text-pista-600"></i>
                 Authorized Contact Information
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div class="space-y-1">
-                    <label for="id_contact_person" class="block text-xs font-bold text-slate-700">Contact Representative *</label>
+                    <label for="id_contact_person" class="block text-xs font-bold text-pista-900">Contact Representative *</label>
                     {{ form.contact_person }}
-                    {% if form.contact_person.errors %}<p class="text-xs text-red-600">{{ form.contact_person.errors.0 }}</p>{% endif %}
+                    {% if form.contact_person.errors %}<p class="text-xs text-salmon-600">{{ form.contact_person.errors.0 }}</p>{% endif %}
                 </div>
 
                 <div class="space-y-1">
-                    <label for="id_contact_email" class="block text-xs font-bold text-slate-700">Operational Email *</label>
+                    <label for="id_contact_email" class="block text-xs font-bold text-pista-900">Operational Email *</label>
                     {{ form.contact_email }}
-                    {% if form.contact_email.errors %}<p class="text-xs text-red-600">{{ form.contact_email.errors.0 }}</p>{% endif %}
+                    {% if form.contact_email.errors %}<p class="text-xs text-salmon-600">{{ form.contact_email.errors.0 }}</p>{% endif %}
                 </div>
 
                 <div class="space-y-1">
-                    <label for="id_contact_phone" class="block text-xs font-bold text-slate-700">Operational Phone *</label>
+                    <label for="id_contact_phone" class="block text-xs font-bold text-pista-900">Operational Phone *</label>
                     {{ form.contact_phone }}
-                    {% if form.contact_phone.errors %}<p class="text-xs text-red-600">{{ form.contact_phone.errors.0 }}</p>{% endif %}
+                    {% if form.contact_phone.errors %}<p class="text-xs text-salmon-600">{{ form.contact_phone.errors.0 }}</p>{% endif %}
                 </div>
             </div>
         </div>
 
         <!-- Section: Physical Address -->
         <div>
-            <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500 mb-4 pb-2 border-b border-slate-100">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-pista-800/80 mb-4 pb-2 border-b border-ivory-200 flex items-center gap-2">
+                <i class="fa-solid fa-location-dot text-pista-600"></i>
                 Physical Facility Address
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div class="sm:col-span-2 space-y-1">
-                    <label for="id_address_line1" class="block text-xs font-bold text-slate-700">Address Line 1 *</label>
+                    <label for="id_address_line1" class="block text-xs font-bold text-pista-900">Address Line 1 *</label>
                     {{ form.address_line1 }}
-                    {% if form.address_line1.errors %}<p class="text-xs text-red-600">{{ form.address_line1.errors.0 }}</p>{% endif %}
+                    {% if form.address_line1.errors %}<p class="text-xs text-salmon-600">{{ form.address_line1.errors.0 }}</p>{% endif %}
                 </div>
 
                 <div class="sm:col-span-2 space-y-1">
-                    <label for="id_address_line2" class="block text-xs font-bold text-slate-700">Address Line 2 (Optional)</label>
+                    <label for="id_address_line2" class="block text-xs font-bold text-pista-900">Address Line 2 (Optional)</label>
                     {{ form.address_line2 }}
-                    {% if form.address_line2.errors %}<p class="text-xs text-red-600">{{ form.address_line2.errors.0 }}</p>{% endif %}
+                    {% if form.address_line2.errors %}<p class="text-xs text-salmon-600">{{ form.address_line2.errors.0 }}</p>{% endif %}
                 </div>
 
                 <div class="space-y-1">
-                    <label for="id_city" class="block text-xs font-bold text-slate-700">City *</label>
+                    <label for="id_city" class="block text-xs font-bold text-pista-900">City *</label>
                     {{ form.city }}
-                    {% if form.city.errors %}<p class="text-xs text-red-600">{{ form.city.errors.0 }}</p>{% endif %}
+                    {% if form.city.errors %}<p class="text-xs text-salmon-600">{{ form.city.errors.0 }}</p>{% endif %}
                 </div>
 
                 <div class="space-y-1">
-                    <label for="id_state" class="block text-xs font-bold text-slate-700">State *</label>
+                    <label for="id_state" class="block text-xs font-bold text-pista-900">State *</label>
                     {{ form.state }}
-                    {% if form.state.errors %}<p class="text-xs text-red-600">{{ form.state.errors.0 }}</p>{% endif %}
+                    {% if form.state.errors %}<p class="text-xs text-salmon-600">{{ form.state.errors.0 }}</p>{% endif %}
                 </div>
 
                 <div class="space-y-1">
-                    <label for="id_postal_code" class="block text-xs font-bold text-slate-700">Postal / PIN Code *</label>
+                    <label for="id_postal_code" class="block text-xs font-bold text-pista-900">Postal / PIN Code *</label>
                     {{ form.postal_code }}
-                    {% if form.postal_code.errors %}<p class="text-xs text-red-600">{{ form.postal_code.errors.0 }}</p>{% endif %}
+                    {% if form.postal_code.errors %}<p class="text-xs text-salmon-600">{{ form.postal_code.errors.0 }}</p>{% endif %}
                 </div>
             </div>
         </div>
 
         <!-- Section: Geolocation Coordinates -->
         <div>
-            <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500 mb-4 pb-2 border-b border-slate-100">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-pista-800/80 mb-2 pb-2 border-b border-ivory-200 flex items-center gap-2">
+                <i class="fa-solid fa-map-pin text-salmon-500"></i>
                 Geolocation Coordinates (Optional)
             </h2>
-            <p class="text-xs text-slate-500 mb-3">GPS coordinates enable accurate logistics dispatch for surplus pickups and meal routing.</p>
+            <p class="text-xs text-pista-700/80 mb-3">GPS coordinates enable accurate logistics dispatch for surplus pickups and meal routing.</p>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div class="space-y-1">
-                    <label for="id_latitude" class="block text-xs font-bold text-slate-700">Latitude (-90.0 to +90.0)</label>
+                    <label for="id_latitude" class="block text-xs font-bold text-pista-900">Latitude (-90.0 to +90.0)</label>
                     {{ form.latitude }}
-                    {% if form.latitude.errors %}<p class="text-xs text-red-600">{{ form.latitude.errors.0 }}</p>{% endif %}
+                    {% if form.latitude.errors %}<p class="text-xs text-salmon-600">{{ form.latitude.errors.0 }}</p>{% endif %}
                 </div>
 
                 <div class="space-y-1">
-                    <label for="id_longitude" class="block text-xs font-bold text-slate-700">Longitude (-180.0 to +180.0)</label>
+                    <label for="id_longitude" class="block text-xs font-bold text-pista-900">Longitude (-180.0 to +180.0)</label>
                     {{ form.longitude }}
-                    {% if form.longitude.errors %}<p class="text-xs text-red-600">{{ form.longitude.errors.0 }}</p>{% endif %}
+                    {% if form.longitude.errors %}<p class="text-xs text-salmon-600">{{ form.longitude.errors.0 }}</p>{% endif %}
                 </div>
             </div>
         </div>
 
         <!-- Form Submission Button -->
-        <div class="pt-4 flex items-center justify-end gap-3 border-t border-slate-100">
-            <button type="submit" id="btn-save-organization" class="px-6 py-2.5 rounded-xl bg-primary-700 hover:bg-primary-900 text-white font-bold text-sm shadow transition-all">
-                {% if is_create %}Save & Continue to Documents &rarr;{% else %}Save Profile Changes{% endif %}
+        <div class="pt-4 flex items-center justify-end gap-3 border-t border-ivory-200">
+            <button type="submit" id="btn-save-organization" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-pista-700 hover:bg-pista-800 text-ivory-50 font-bold text-sm shadow-sm transition-all">
+                <span>{% if is_create %}Save & Continue to Documents{% else %}Save Profile Changes{% endif %}</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
             </button>
         </div>
     </form>

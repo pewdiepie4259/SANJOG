@@ -1,26 +1,26 @@
 {% extends "base.html" %}
 
-{% block title %}Review {{ organization.name }} — Admin Desk — SANJOG{% endblock %}
+{% block title %}Review {{ organization.name }} — Admin Desk — Sanjog{% endblock %}
 
 {% block content %}
 <div class="max-w-6xl mx-auto space-y-6">
     <!-- Header with Breadcrumbs & Action Summary -->
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-            <div class="flex items-center gap-2 text-xs text-slate-500 mb-1">
-                <a href="{% url 'admin_verification_queue' %}" class="hover:underline">&larr; Back to Queue</a>
+            <div class="flex items-center gap-2 text-xs text-ivory-600 mb-1">
+                <a href="{% url 'admin_verification_queue' %}" class="hover:text-pista-800 transition-colors">&larr; Back to Queue</a>
                 <span>&bull;</span>
-                <span class="font-mono text-slate-400">ID: {{ organization.id }}</span>
+                <span class="font-mono text-ivory-500">ID: {{ organization.id }}</span>
             </div>
             <div class="flex items-center gap-3 flex-wrap">
-                <h1 class="text-2xl sm:text-3xl font-black text-slate-900">{{ organization.name }}</h1>
+                <h1 class="font-serif text-2xl sm:text-3xl font-black text-pista-950">{{ organization.name }}</h1>
                 {% include "organizations/partials/status_badge.html" with status=organization.verification_status %}
             </div>
         </div>
 
         <div class="flex items-center gap-2">
-            <span class="text-xs text-slate-500">
-                Registered by: <span class="font-bold text-slate-700">{{ organization.user.username }}</span> ({{ organization.user.email }})
+            <span class="text-xs text-ivory-700 bg-ivory-100 px-3 py-1.5 rounded-xl border border-ivory-200">
+                Registered by: <span class="font-bold text-pista-900">{{ organization.user.username }}</span> ({{ organization.user.email }})
             </span>
         </div>
     </div>
@@ -28,18 +28,18 @@
     <!-- Eligibility Gate 2 Warning Banner -->
     {% if organization.verification_status == 'PENDING' %}
         {% if can_approve %}
-            <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 flex items-center gap-3">
-                <svg class="w-5 h-5 text-emerald-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                <div class="text-xs text-emerald-800">
-                    <strong>All Mandatory Documents Approved:</strong> This organization qualifies for final administrative certification.
+            <div class="bg-pista-50 border border-pista-300 rounded-2xl p-4 flex items-center gap-3">
+                <i class="fa-solid fa-circle-check text-pista-600 text-lg shrink-0"></i>
+                <div class="text-xs text-pista-900">
+                    <strong>All Mandatory Documents Approved:</strong> This entity satisfies FSSAI and trust requirements for live rescue matching.
                 </div>
             </div>
         {% else %}
-            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex items-start gap-3">
-                <svg class="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-                <div class="text-xs text-amber-800 space-y-1">
-                    <p><strong>Gate 2 Approval Policy Enforced:</strong> Organization cannot be approved yet. The following mandatory document categories lack an approved document:</p>
-                    <ul class="list-disc list-inside font-semibold text-amber-900">
+            <div class="bg-salmon-50 border border-salmon-200 rounded-2xl p-4 flex items-start gap-3">
+                <i class="fa-solid fa-triangle-exclamation text-salmon-600 text-lg shrink-0 mt-0.5"></i>
+                <div class="text-xs text-salmon-900 space-y-1">
+                    <p><strong>Gate 2 Approval Policy Enforced:</strong> Organization cannot be certified yet. The following mandatory document categories lack an approved document:</p>
+                    <ul class="list-disc list-inside font-semibold text-salmon-950">
                         {% for item in missing_or_unapproved %}
                             <li>{{ item }}</li>
                         {% endfor %}
@@ -52,47 +52,37 @@
     <!-- Main 2-Column Inspection Grid -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <!-- Left Column: Entity Credentials -->
-        <div class="lg:col-span-1 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-            <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500 pb-2 border-b border-slate-100">
+        <div class="lg:col-span-1 bg-white rounded-3xl p-6 border border-ivory-300 shadow-soft space-y-4">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-pista-800 pb-2 border-b border-ivory-200">
                 Entity Legal Record
             </h2>
             <dl class="space-y-3 text-xs">
                 <div>
-                    <dt class="font-bold text-slate-500">Legal Name:</dt>
-                    <dd class="text-slate-900 font-semibold mt-0.5">{{ organization.name }}</dd>
+                    <dt class="font-bold text-ivory-600">Legal Name:</dt>
+                    <dd class="text-pista-950 font-bold mt-0.5">{{ organization.name }}</dd>
                 </div>
                 <div>
-                    <dt class="font-bold text-slate-500">Classification:</dt>
-                    <dd class="text-slate-800 mt-0.5">{{ organization.get_org_type_display }}</dd>
+                    <dt class="font-bold text-ivory-600">Classification:</dt>
+                    <dd class="text-ivory-900 font-semibold mt-0.5">{{ organization.get_org_type_display }}</dd>
                 </div>
                 <div>
-                    <dt class="font-bold text-slate-500">Registration / FSSAI / 80G:</dt>
-                    <dd class="text-slate-800 font-mono mt-0.5">{{ organization.registration_number|default:"None provided" }}</dd>
+                    <dt class="font-bold text-ivory-600">Registration / FSSAI / 80G:</dt>
+                    <dd class="text-ivory-900 font-mono font-bold mt-0.5">{{ organization.registration_number|default:"None provided" }}</dd>
                 </div>
                 <div>
-                    <dt class="font-bold text-slate-500">Primary Contact:</dt>
-                    <dd class="text-slate-800 mt-0.5">{{ organization.contact_person }}</dd>
+                    <dt class="font-bold text-ivory-600">Primary Contact:</dt>
+                    <dd class="text-ivory-900 font-semibold mt-0.5">{{ organization.contact_person }}</dd>
                 </div>
                 <div>
-                    <dt class="font-bold text-slate-500">Email & Phone:</dt>
-                    <dd class="text-slate-800 font-mono mt-0.5">{{ organization.contact_email }}<br>{{ organization.contact_phone }}</dd>
+                    <dt class="font-bold text-ivory-600">Email &amp; Phone:</dt>
+                    <dd class="text-ivory-800 font-mono mt-0.5">{{ organization.contact_email }}<br>{{ organization.contact_phone }}</dd>
                 </div>
                 <div>
-                    <dt class="font-bold text-slate-500">Address:</dt>
-                    <dd class="text-slate-800 mt-0.5">
+                    <dt class="font-bold text-ivory-600">Address:</dt>
+                    <dd class="text-ivory-800 mt-0.5">
                         {{ organization.address_line1 }}
                         {% if organization.address_line2 %}, {{ organization.address_line2 }}{% endif %}<br>
-                        {{ organization.city }}, {{ organization.state }} {{ organization.postal_code }} &bull; {{ organization.country }}
-                    </dd>
-                </div>
-                <div>
-                    <dt class="font-bold text-slate-500">GPS Coordinates:</dt>
-                    <dd class="text-slate-800 font-mono mt-0.5">
-                        {% if organization.latitude and organization.longitude %}
-                            {{ organization.latitude }}, {{ organization.longitude }}
-                        {% else %}
-                            <span class="text-slate-400">None specified</span>
-                        {% endif %}
+                        {{ organization.city }}, {{ organization.state }} {{ organization.postal_code }}
                     </dd>
                 </div>
             </dl>
@@ -101,61 +91,60 @@
         <!-- Right Column (2 cols wide): Document Review & History -->
         <div class="lg:col-span-2 space-y-6">
             <!-- Documents Review Section -->
-            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-                <div class="p-6 border-b border-slate-100 flex items-center justify-between">
-                    <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500">
-                        Uploaded Accreditations & Documents
+            <div class="bg-white rounded-3xl border border-ivory-300 shadow-soft overflow-hidden">
+                <div class="p-6 border-b border-ivory-200 flex items-center justify-between">
+                    <h2 class="text-xs font-bold uppercase tracking-wider text-pista-800">
+                        Uploaded Accreditations &amp; Documents
                     </h2>
-                    <span class="text-xs text-slate-400 font-mono">{{ documents.count }} Total Documents</span>
+                    <span class="text-xs text-ivory-600 font-mono">{{ documents.count }} Total Documents</span>
                 </div>
 
                 {% if documents %}
-                    <div class="divide-y divide-slate-100">
+                    <div class="divide-y divide-ivory-200">
                         {% for doc in documents %}
-                            <div class="p-6 space-y-4 hover:bg-slate-50/50 transition-colors">
+                            <div class="p-6 space-y-4 hover:bg-ivory-50/50 transition-colors">
                                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                                     <div>
                                         <div class="flex items-center gap-2">
-                                            <span class="font-bold text-slate-900 text-sm">{{ doc.original_filename }}</span>
+                                            <span class="font-bold text-pista-950 text-sm">{{ doc.original_filename }}</span>
                                             {% if doc.review_status == 'APPROVED' %}
-                                                <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold">Approved</span>
+                                                <span class="px-2 py-0.5 rounded-full bg-pista-100 text-pista-800 text-[11px] font-bold">Approved</span>
                                             {% elif doc.review_status == 'PENDING' %}
-                                                <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[11px] font-bold">Pending Review</span>
+                                                <span class="px-2 py-0.5 rounded-full bg-salmon-50 text-salmon-800 text-[11px] font-bold">Pending Review</span>
                                             {% elif doc.review_status == 'REJECTED' %}
-                                                <span class="px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 text-[11px] font-bold">Rejected</span>
+                                                <span class="px-2 py-0.5 rounded-full bg-salmon-100 text-salmon-900 text-[11px] font-bold">Rejected</span>
                                             {% endif %}
                                         </div>
-                                        <p class="text-xs text-slate-500 mt-1">
-                                            <span class="font-semibold text-slate-700">{{ doc.get_document_type_display }}</span> &bull;
+                                        <p class="text-xs text-ivory-600 mt-1">
+                                            <span class="font-semibold text-ivory-800">{{ doc.get_document_type_display }}</span> &bull;
                                             {{ doc.file_size_bytes|filesizeformat }} &bull;
                                             Uploaded {{ doc.uploaded_at|date:"M d, Y H:i" }}
-                                            {% if doc.reviewed_by %} &bull; Reviewed by {{ doc.reviewed_by.username }}{% endif %}
                                         </p>
                                     </div>
 
-                                    <a href="{% url 'organization_document_download' doc.id %}" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-white shadow-sm transition-all whitespace-nowrap self-start sm:self-auto">
-                                        <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                                    <a href="{% url 'organization_document_download' doc.id %}" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-ivory-300 text-xs font-semibold text-ivory-800 hover:bg-white shadow-xs transition-all whitespace-nowrap self-start sm:self-auto">
+                                        <i class="fa-solid fa-file-pdf text-salmon-500"></i>
                                         Inspect Document
                                     </a>
                                 </div>
 
                                 {% if doc.rejection_reason %}
-                                    <p class="text-xs text-rose-700 bg-rose-50 p-2.5 rounded-lg border border-rose-100 font-mono">
+                                    <p class="text-xs text-salmon-800 bg-salmon-50 p-2.5 rounded-xl border border-salmon-200 font-mono">
                                         Rejection Note: {{ doc.rejection_reason }}
                                     </p>
                                 {% endif %}
 
                                 <!-- Document Review Action Controls -->
-                                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 space-y-3">
-                                    <span class="text-xs font-bold text-slate-600 block">Record Document Determination:</span>
+                                <div class="bg-ivory-50 p-4 rounded-2xl border border-ivory-300 space-y-3">
+                                    <span class="text-xs font-bold text-ivory-700 block">Record Document Determination:</span>
                                     
                                     <div class="flex items-center gap-3 flex-wrap">
                                         <!-- Approve Document Form -->
                                         <form method="post" action="{% url 'admin_document_review_action' organization.id doc.id %}">
                                             {% csrf_token %}
                                             <input type="hidden" name="decision" value="APPROVED">
-                                            <button type="submit" class="px-4 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-sm transition-all">
-                                                &check; Approve Document
+                                            <button type="submit" class="px-4 py-2 rounded-xl bg-pista-600 hover:bg-pista-700 text-white font-bold text-xs shadow-pista transition-all flex items-center gap-1.5">
+                                                <i class="fa-solid fa-check"></i> Approve Document
                                             </button>
                                         </form>
 
@@ -163,9 +152,9 @@
                                         <form method="post" action="{% url 'admin_document_review_action' organization.id doc.id %}" class="flex items-center gap-2 flex-grow">
                                             {% csrf_token %}
                                             <input type="hidden" name="decision" value="REJECTED">
-                                            <input type="text" name="rejection_reason" placeholder="Mandatory rejection note..." required class="px-3 py-1.5 rounded-lg border border-slate-300 text-xs flex-grow focus:ring-1 focus:ring-rose-500 focus:outline-none">
-                                            <button type="submit" class="px-4 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs shadow-sm transition-all whitespace-nowrap">
-                                                &times; Reject Document
+                                            <input type="text" name="rejection_reason" placeholder="Mandatory rejection note..." required class="px-3 py-2 rounded-xl border border-ivory-300 text-xs flex-grow focus:ring-1 focus:ring-salmon-500 outline-none">
+                                            <button type="submit" class="px-4 py-2 rounded-xl bg-salmon-500 hover:bg-salmon-600 text-white font-bold text-xs shadow-salmon transition-all whitespace-nowrap">
+                                                <i class="fa-solid fa-xmark mr-1"></i> Reject
                                             </button>
                                         </form>
                                     </div>
@@ -174,7 +163,7 @@
                         {% endfor %}
                     </div>
                 {% else %}
-                    <div class="p-8 text-center text-slate-400 text-xs">
+                    <div class="p-8 text-center text-ivory-500 text-xs">
                         No documents uploaded for this organization.
                     </div>
                 {% endif %}
@@ -182,8 +171,8 @@
 
             <!-- Organization Decision Action Bar -->
             {% if organization.verification_status == 'PENDING' %}
-                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-                    <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500 pb-2 border-b border-slate-100">
+                <div class="bg-white rounded-3xl p-6 border border-ivory-300 shadow-soft space-y-4">
+                    <h2 class="text-xs font-bold uppercase tracking-wider text-pista-800 pb-2 border-b border-ivory-200">
                         Final Organization Certification
                     </h2>
 
@@ -191,7 +180,7 @@
                         <!-- Organization Approve Form -->
                         <form method="post" action="{% url 'admin_organization_approve_action' organization.id %}" class="w-full sm:w-auto">
                             {% csrf_token %}
-                            <button type="submit" id="btn-admin-approve-org" {% if not can_approve %}disabled{% endif %} class="w-full sm:w-auto px-6 py-2.5 rounded-xl text-white font-bold text-xs shadow transition-all {% if can_approve %}bg-emerald-600 hover:bg-emerald-700 cursor-pointer{% else %}bg-slate-300 cursor-not-allowed{% endif %}">
+                            <button type="submit" id="btn-admin-approve-org" {% if not can_approve %}disabled{% endif %} class="w-full sm:w-auto px-6 py-2.5 rounded-xl text-white font-bold text-xs shadow transition-all {% if can_approve %}bg-pista-600 hover:bg-pista-700 cursor-pointer shadow-pista{% else %}bg-ivory-300 text-ivory-500 cursor-not-allowed{% endif %}">
                                 Approve Organization
                             </button>
                         </form>
@@ -199,8 +188,8 @@
                         <!-- Organization Reject Form -->
                         <form method="post" action="{% url 'admin_organization_reject_action' organization.id %}" class="w-full flex-grow flex items-center gap-2">
                             {% csrf_token %}
-                            <input type="text" name="rejection_reason" placeholder="Mandatory reason for rejecting organization..." required class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-rose-500 focus:outline-none">
-                            <button type="submit" id="btn-admin-reject-org" class="px-5 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs shadow transition-all whitespace-nowrap">
+                            <input type="text" name="rejection_reason" placeholder="Mandatory reason for rejecting organization..." required class="w-full px-3 py-2 rounded-xl border border-ivory-300 text-xs focus:ring-2 focus:ring-salmon-500 outline-none">
+                            <button type="submit" id="btn-admin-reject-org" class="px-5 py-2 rounded-xl bg-salmon-500 hover:bg-salmon-600 text-white font-bold text-xs shadow-salmon transition-all whitespace-nowrap">
                                 Reject Organization
                             </button>
                         </form>
@@ -210,23 +199,23 @@
 
             <!-- Audit History Timeline -->
             {% if events %}
-                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-                    <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500 pb-2 border-b border-slate-100">
-                        Audit Trail & Event Log
+                <div class="bg-white rounded-3xl p-6 border border-ivory-300 shadow-soft space-y-4">
+                    <h2 class="text-xs font-bold uppercase tracking-wider text-pista-800 pb-2 border-b border-ivory-200">
+                        Audit Trail &amp; Event Log
                     </h2>
                     <div class="space-y-3">
                         {% for event in events %}
-                            <div class="p-3 rounded-xl bg-slate-50 border border-slate-100 text-xs space-y-1">
+                            <div class="p-3.5 rounded-2xl bg-ivory-50 border border-ivory-200 text-xs space-y-1">
                                 <div class="flex items-center justify-between">
-                                    <span class="font-bold text-slate-800">{{ event.get_event_type_display }}</span>
-                                    <span class="text-slate-400 font-mono text-[11px]">{{ event.created_at|date:"M d, Y H:i" }}</span>
+                                    <span class="font-bold text-pista-950">{{ event.get_event_type_display }}</span>
+                                    <span class="text-ivory-600 font-mono text-[11px]">{{ event.created_at|date:"M d, Y H:i" }}</span>
                                 </div>
-                                <p class="text-slate-600">
-                                    Status: <span class="font-mono text-slate-800">{{ event.previous_status }} &rarr; {{ event.new_status }}</span>
-                                    {% if event.actor %} &bull; Actor: <span class="font-medium text-slate-700">{{ event.actor.username }}</span>{% endif %}
+                                <p class="text-ivory-700">
+                                    Status: <span class="font-mono text-pista-900 font-bold">{{ event.previous_status }} &rarr; {{ event.new_status }}</span>
+                                    {% if event.actor %} &bull; Actor: <span class="font-semibold text-ivory-900">{{ event.actor.username }}</span>{% endif %}
                                 </p>
                                 {% if event.notes %}
-                                    <p class="text-slate-700 bg-white p-2 rounded border border-slate-200 font-mono text-[11px]">{{ event.notes }}</p>
+                                    <p class="text-ivory-800 bg-white p-2 rounded-xl border border-ivory-200 font-mono text-[11px]">{{ event.notes }}</p>
                                 {% endif %}
                             </div>
                         {% endfor %}

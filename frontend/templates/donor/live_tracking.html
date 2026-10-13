@@ -1,0 +1,222 @@
+{% extends "base.html" %}
+
+{% block title %}Live Rescue Tracking — Sanjog Donor Portal{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+
+    <!-- MVP HIERARCHY NAVIGATION -->
+    {% include "components/section_nav.html" with section="donor" page="live_tracking" %}
+
+    <!-- ROLE SWITCHER -->
+    {% include "components/role_switcher.html" %}
+
+    <!-- TRACKING HEADER -->
+    <div class="bg-white p-6 rounded-3xl border border-ivory-300 shadow-soft flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div class="space-y-1">
+            <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-salmon-500 animate-ping"></span>
+                <span class="text-xs font-bold uppercase tracking-wider text-salmon-700">Live Active Mission #RS-941</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-pista-100 text-pista-800 text-[10px] font-bold">Driver Approaching Kitchen</span>
+            </div>
+            <h1 class="font-serif text-2xl font-black text-pista-950">
+                Live Delivery Tracking
+            </h1>
+            <p class="text-xs text-ivory-700">
+                Annapurna Grand (Indiranagar) &rarr; Hope Community Shelter (St. Marks Road)
+            </p>
+        </div>
+
+        <div class="flex items-center gap-3">
+            <div class="text-right">
+                <span class="text-[10px] uppercase font-bold text-ivory-600 block">Driver Arrival ETA</span>
+                <span class="font-serif text-2xl font-black text-salmon-600 block leading-tight">8 Mins</span>
+            </div>
+            <a href="/map/" class="px-4 py-2.5 bg-pista-600 hover:bg-pista-700 text-white font-bold text-xs rounded-xl shadow-pista transition-all flex items-center gap-1.5">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <span>Open Full Map</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- TRACKING GRID: MAP SIMULATION & TIMELINE -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Left 2 Cols: Visual Live Map Simulation -->
+        <div class="lg:col-span-2 space-y-4">
+            <div class="bg-ivory-200/90 rounded-3xl border border-ivory-300 shadow-soft overflow-hidden relative min-h-[380px] flex flex-col justify-between p-6">
+                
+                <!-- Map Background Elements & Grid Lines -->
+                <div class="absolute inset-0 bg-[radial-gradient(#cbe5bd_1px,transparent_1px)] [background-size:16px_16px] opacity-60"></div>
+                
+                <!-- Live Simulated Route Vector Graphic -->
+                <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 600 350">
+                    <!-- Route Line -->
+                    <path d="M 120 220 Q 280 180 460 100" fill="none" stroke="#75A856" stroke-width="6" stroke-linecap="round" stroke-dasharray="8 6" class="animate-pulse" />
+                    <!-- Driver position marker on route -->
+                    <circle cx="260" cy="180" r="14" fill="#FA705C" stroke="#FFFFFF" stroke-width="3" />
+                </svg>
+
+                <!-- Floating Card 1: Donor Pin -->
+                <div class="relative z-10 self-start bg-white/95 backdrop-blur-md p-3.5 rounded-2xl border border-ivory-300 shadow-soft max-w-xs flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-pista-100 text-pista-800 flex items-center justify-center font-bold text-sm shrink-0">
+                        <i class="fa-solid fa-utensils"></i>
+                    </div>
+                    <div>
+                        <div class="text-[10px] text-ivory-600 uppercase font-bold">Pickup Location (Donor)</div>
+                        <div class="font-bold text-xs text-pista-950">Annapurna Grand</div>
+                        <div class="text-[11px] text-ivory-700">100ft Road, Indiranagar</div>
+                    </div>
+                </div>
+
+                <!-- Floating Card 2: Moving Driver Indicator -->
+                <div class="relative z-10 self-center bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-salmon-300 shadow-salmon flex items-center gap-3 animate-bounce">
+                    <div class="w-8 h-8 rounded-full bg-salmon-500 text-white flex items-center justify-center text-xs">
+                        <i class="fa-solid fa-bicycle"></i>
+                    </div>
+                    <div>
+                        <span class="text-[10px] uppercase font-bold text-salmon-700 block">Driver: Aniket Kumar</span>
+                        <span class="text-xs font-bold text-ivory-900">400m from your kitchen &bull; Speed: 24 km/h</span>
+                    </div>
+                </div>
+
+                <!-- Floating Card 3: Destination Pin -->
+                <div class="relative z-10 self-end bg-white/95 backdrop-blur-md p-3.5 rounded-2xl border border-ivory-300 shadow-soft max-w-xs flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-salmon-100 text-salmon-700 flex items-center justify-center font-bold text-sm shrink-0">
+                        <i class="fa-solid fa-hands-holding-child"></i>
+                    </div>
+                    <div>
+                        <div class="text-[10px] text-ivory-600 uppercase font-bold">Delivery Dropoff (NGO)</div>
+                        <div class="font-bold text-xs text-pista-950">Hope Community Shelter</div>
+                        <div class="text-[11px] text-ivory-700">St. Marks Road &bull; 80 Beneficiaries</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Route Stats Bar -->
+            <div class="grid grid-cols-3 gap-3">
+                <div class="bg-white p-3.5 rounded-2xl border border-ivory-300 shadow-soft text-center">
+                    <span class="text-[10px] text-ivory-600 uppercase font-bold block">Total Distance</span>
+                    <span class="font-bold text-sm text-pista-900 mt-0.5 block">3.8 km</span>
+                </div>
+                <div class="bg-white p-3.5 rounded-2xl border border-ivory-300 shadow-soft text-center">
+                    <span class="text-[10px] text-ivory-600 uppercase font-bold block">Transit Temp</span>
+                    <span class="font-bold text-sm text-pista-900 mt-0.5 block">68°C (Insulated Box)</span>
+                </div>
+                <div class="bg-white p-3.5 rounded-2xl border border-ivory-300 shadow-soft text-center">
+                    <span class="text-[10px] text-ivory-600 uppercase font-bold block">Est. Arrival at Shelter</span>
+                    <span class="font-bold text-sm text-salmon-600 mt-0.5 block">8:42 PM</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right 1 Col: Milestone Steps & Driver Contact -->
+        <div class="space-y-4">
+            
+            <!-- Driver Contact Card -->
+            <div class="bg-white p-5 rounded-3xl border border-ivory-300 shadow-soft space-y-3">
+                <div class="text-xs font-bold uppercase tracking-wider text-pista-900">
+                    Assigned Volunteer Driver
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-2xl bg-pista-100 text-pista-800 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-motorcycle text-pista-700"></i>
+                    </div>
+                    <div>
+                        <div class="font-bold text-sm text-pista-950">Aniket Kumar</div>
+                        <div class="text-xs text-ivory-700">EV Scooter &bull; KA-03-HA-8192</div>
+                        <div class="text-[11px] text-pista-700 font-semibold mt-0.5">
+                            <i class="fa-solid fa-star text-amber-500 mr-1"></i> 4.9 Rating (42 rescues)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-3 border-t border-ivory-200 flex gap-2">
+                    <a href="tel:+919845067890" class="flex-1 text-center py-2 bg-pista-600 hover:bg-pista-700 text-white font-bold text-xs rounded-xl shadow-pista transition-colors flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-phone"></i> Call Driver
+                    </a>
+                    <a href="/qr-scanner/" class="px-3.5 py-2 bg-ivory-100 hover:bg-ivory-200 text-ivory-800 font-bold text-xs rounded-xl border border-ivory-300 transition-colors" title="Scan QR">
+                        <i class="fa-solid fa-qrcode"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- OTP Card -->
+            <div class="bg-gradient-to-br from-salmon-50 to-white p-5 rounded-3xl border border-salmon-200 shadow-soft space-y-2">
+                <span class="text-[10px] uppercase font-bold text-salmon-700 tracking-wider block">
+                    Kitchen Handover PIN
+                </span>
+                <div class="bg-white border-2 border-salmon-300 rounded-2xl py-2.5 text-center">
+                    <span class="font-mono text-2xl font-black text-salmon-600 tracking-widest">7492</span>
+                </div>
+                <p class="text-[11px] text-ivory-600 text-center">
+                    Give this OTP to Aniket when he arrives at your pickup dock.
+                </p>
+            </div>
+
+            <!-- Milestone Tracker -->
+            <div class="bg-white p-5 rounded-3xl border border-ivory-300 shadow-soft space-y-3">
+                <div class="text-xs font-bold uppercase tracking-wider text-pista-900 pb-1 border-b border-ivory-200">
+                    Rescue Milestones
+                </div>
+
+                <div class="space-y-3 text-xs">
+                    <div class="flex items-center gap-3">
+                        <div class="w-6 h-6 rounded-full bg-pista-600 text-white flex items-center justify-center text-[10px]">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                        <div>
+                            <span class="font-bold text-pista-950 block">Surplus Logged</span>
+                            <span class="text-[11px] text-ivory-600">7:45 PM &bull; 60 meals</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <div class="w-6 h-6 rounded-full bg-pista-600 text-white flex items-center justify-center text-[10px]">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                        <div>
+                            <span class="font-bold text-pista-950 block">Matched to Hope Shelter</span>
+                            <span class="text-[11px] text-ivory-600">7:50 PM &bull; 96% AI score</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <div class="w-6 h-6 rounded-full bg-salmon-500 text-white flex items-center justify-center text-[10px] animate-pulse">
+                            <i class="fa-solid fa-bicycle"></i>
+                        </div>
+                        <div>
+                            <span class="font-bold text-salmon-700 block">Driver En Route to Donor</span>
+                            <span class="text-[11px] text-salmon-600">Current status &bull; ETA 8m</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 opacity-50">
+                        <div class="w-6 h-6 rounded-full bg-ivory-300 text-ivory-700 flex items-center justify-center text-[10px]">
+                            <i class="fa-solid fa-qrcode"></i>
+                        </div>
+                        <div>
+                            <span class="font-bold text-ivory-800 block">Food Handover &amp; OTP</span>
+                            <span class="text-[11px] text-ivory-600">Pending pickup</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 opacity-50">
+                        <div class="w-6 h-6 rounded-full bg-ivory-300 text-ivory-700 flex items-center justify-center text-[10px]">
+                            <i class="fa-solid fa-flag-checkered"></i>
+                        </div>
+                        <div>
+                            <span class="font-bold text-ivory-800 block">Delivered to Shelter</span>
+                            <span class="text-[11px] text-ivory-600">Pending final delivery</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

@@ -1,193 +1,264 @@
 {% extends "base.html" %}
 
-{% block title %}Food Donor Operating Portal — SANJOG{% endblock %}
+{% block title %}Donor Dashboard — Sanjog Community Food Network{% endblock %}
 
 {% block content %}
 <div class="space-y-6">
 
-    <!-- FAST ROLE SWITCHER -->
+    <!-- MVP HIERARCHY NAVIGATION -->
+    {% include "components/section_nav.html" with section="donor" page="dashboard" %}
+
+    <!-- ROLE SWITCHER -->
     {% include "components/role_switcher.html" %}
 
-    <!-- DONOR HEADER -->
-    <div class="bg-gradient-to-r from-emerald-900 via-emerald-800 to-slate-900 text-white p-6 sm:p-8 rounded-3xl shadow-lg border border-emerald-800 relative overflow-hidden">
+    <!-- DONOR HERO BANNER (PISTA GREEN, IVORY, SALMON PINK) -->
+    <div class="bg-gradient-to-r from-pista-800 via-pista-900 to-pista-950 text-white p-6 sm:p-8 rounded-3xl shadow-soft border border-pista-700 relative overflow-hidden">
+        <div class="absolute -right-10 -bottom-10 w-60 h-60 bg-salmon-500/20 rounded-full blur-3xl pointer-events-none"></div>
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
             <div class="space-y-2">
                 <div class="flex items-center gap-2">
-                    <span class="px-3 py-1 bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 rounded-full text-xs font-mono font-bold uppercase">
-                        DONOR OPERATING PORTAL
+                    <span class="px-3 py-1 bg-pista-700/80 text-pista-100 border border-pista-600 rounded-full text-xs font-bold flex items-center gap-1.5">
+                        <i class="fa-solid fa-kitchen-set text-salmon-300"></i>
+                        Kitchen Operations Hub
                     </span>
-                    <span class="px-2.5 py-0.5 bg-emerald-950 text-emerald-200 rounded text-xs font-mono">Role: DONOR</span>
+                    <span class="text-xs text-pista-200">Indiranagar Cluster</span>
                 </div>
-                <h1 class="text-3xl font-black text-white tracking-tight">
-                    Food Donor Operations & Surplus Dispatch
+                <h1 class="font-serif text-2xl sm:text-3xl font-black text-white tracking-tight">
+                    Food Donor Dashboard
                 </h1>
-                <p class="text-emerald-100/80 text-xs sm:text-sm max-w-2xl">
-                    Manage surplus food listings, monitor rescue pick-up dispatches, verify food safety compliance, and track your environmental impact.
+                <p class="text-pista-100/90 text-xs sm:text-sm max-w-2xl leading-relaxed">
+                    Log surplus dishes from your kitchen, manage live pickups with nearby volunteer drivers, and ensure zero good food goes to waste.
                 </p>
             </div>
 
-            <!-- Profile Summary Pill -->
-            <div class="bg-emerald-950/60 border border-emerald-700/60 p-4 rounded-2xl min-w-[240px]">
-                <div class="text-xs text-emerald-300/80">Active Donor Account</div>
-                <div class="font-bold text-white text-base">{{ user.username }}</div>
-                <div class="text-xs text-emerald-400 font-mono mt-0.5">
-                    {% if org_profile %}{{ org_profile.name }}{% else %}No Organization Linked{% endif %}
-                </div>
+            <!-- Quick Action CTA -->
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+                <a href="/donor/report-surplus/" class="px-5 py-3 bg-salmon-500 hover:bg-salmon-600 text-white text-xs font-bold rounded-2xl shadow-salmon transition-all flex items-center justify-center gap-2 hover:scale-[1.02]">
+                    <i class="fa-solid fa-plus-circle"></i>
+                    <span>Report Surplus Food</span>
+                </a>
+                <a href="/donor/ai-match/" class="px-4 py-3 bg-white/10 hover:bg-white/20 text-white text-xs font-bold rounded-2xl border border-white/20 transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-brain text-pista-300"></i>
+                    <span>AI Matches</span>
+                </a>
             </div>
         </div>
     </div>
 
-    <!-- ORGANIZATION ACCREDITATION CARD -->
-    {% if org_profile %}
-        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
-                <div class="space-y-1">
-                    <div class="flex items-center gap-2">
-                        <span class="font-black text-slate-900 text-lg">{{ org_profile.name }}</span>
-                        {% include "organizations/partials/status_badge.html" with status=org_profile.verification_status %}
-                    </div>
-                    <p class="text-xs text-slate-500">
-                        Type: <span class="font-bold text-slate-700">{{ org_profile.get_org_type_display }}</span> &bull; 
-                        Registration / FSSAI: <span class="font-mono font-bold text-slate-800">{{ org_profile.registration_number|default:"Pending Upload" }}</span> &bull; 
-                        City: <span class="font-medium text-slate-700">{{ org_profile.city }}, {{ org_profile.state }}</span>
-                    </p>
-                </div>
-                <div class="flex items-center gap-2">
-                    <a href="{% url 'organization_documents' %}" class="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold rounded-xl transition-all shadow-sm">
-                        Manage Documents &rarr;
-                    </a>
-                    <a href="{% url 'organization_profile' %}" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold rounded-xl transition-all">
-                        Edit Profile
-                    </a>
-                </div>
-            </div>
-
-            {% if not org_profile.is_verified %}
-                <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-center gap-3">
-                    <span class="text-xl">⚠️</span>
-                    <div class="text-xs text-amber-800">
-                        <span class="font-bold">Verification Notice:</span> 
-                        Your organization status is currently <strong>{{ org_profile.get_verification_status_display }}</strong>. 
-                        Once an administrator approves your uploaded FSSAI License, your listings will be directly broadcast to nearby receivers.
-                    </div>
-                </div>
-            {% endif %}
-        </div>
-    {% else %}
-        <div class="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 p-6 rounded-2xl shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div class="space-y-1">
-                <h3 class="text-base font-bold text-amber-900">Organization Onboarding Required</h3>
-                <p class="text-xs text-amber-700 max-w-xl">
-                    Register your restaurant, hotel, mess, or catering company to upload FSSAI credentials and unlock surplus food donations.
-                </p>
-            </div>
-            <a href="{% url 'organization_onboarding' %}" class="px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold transition-all shadow-sm">
-                Start Onboarding &rarr;
-            </a>
-        </div>
-    {% endif %}
-
-    <!-- DONOR STATS GRID -->
-    <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center">
-            <span class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Active Surplus Posts</span>
-            <div class="text-3xl font-black text-emerald-600 mt-2">2</div>
-            <span class="text-[10px] text-emerald-700 font-medium">Ready for Rescue</span>
-        </div>
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center">
-            <span class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Total Servings Rescued</span>
-            <div class="text-3xl font-black text-slate-900 mt-2">485</div>
-            <span class="text-[10px] text-slate-500">Meals redistributed</span>
-        </div>
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center">
-            <span class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Food Weight Rescued</span>
-            <div class="text-3xl font-black text-blue-600 mt-2">194 kg</div>
-            <span class="text-[10px] text-blue-700 font-medium">Kept from landfills</span>
-        </div>
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center">
-            <span class="text-xs text-slate-500 font-semibold uppercase tracking-wider">CO2 Offset</span>
-            <div class="text-3xl font-black text-primary-700 mt-2">485 kg</div>
-            <span class="text-[10px] text-emerald-700 font-medium">Verified GHG offset</span>
-        </div>
-    </div>
-
-    <!-- SURPLUS FOOD INVENTORY WORKSPACE (Phase 4 Prototype Preview) -->
-    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-5">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
-            <div>
-                <h2 class="text-lg font-black text-slate-900">Current Surplus Food Listings</h2>
-                <p class="text-xs text-slate-500">Active prepared food batches submitted with food safety SOP evaluation</p>
-            </div>
-            <div class="flex items-center gap-2">
-                <span class="text-xs px-2.5 py-1 bg-primary-100 text-primary-800 font-bold rounded-lg border border-primary-200">
-                    Phase 4 Feature
+    <!-- STATS OVERVIEW -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white p-5 rounded-3xl border border-ivory-300 shadow-soft">
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600">Active Listings</span>
+                <span class="w-8 h-8 rounded-xl bg-pista-100 text-pista-700 flex items-center justify-center text-xs">
+                    <i class="fa-solid fa-bowl-food"></i>
                 </span>
             </div>
+            <div class="text-3xl font-serif font-black text-pista-950">2</div>
+            <div class="text-[11px] text-pista-700 font-semibold mt-1">Ready for pickup &bull; 180 servings</div>
         </div>
 
-        <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs">
-                <thead>
-                    <tr class="bg-slate-50 text-slate-600 uppercase tracking-wider font-semibold border-b border-slate-200">
-                        <th class="p-3">Batch Title</th>
-                        <th class="p-3">Category</th>
-                        <th class="p-3">Type</th>
-                        <th class="p-3">Servings</th>
-                        <th class="p-3">Safety Status</th>
-                        <th class="p-3">SLA Expiry Tier</th>
-                        <th class="p-3">Listing Status</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-100 font-medium">
-                    <tr class="hover:bg-slate-50 transition-colors">
-                        <td class="p-3 font-bold text-slate-900">Royal Veg Biryani &amp; Dal Makhani (50 portions)</td>
-                        <td class="p-3 text-slate-600">Cooked Meal</td>
-                        <td class="p-3"><span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded font-bold">VEG</span></td>
-                        <td class="p-3 font-bold text-slate-800">50 Portions (22 kg)</td>
-                        <td class="p-3"><span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded font-bold">ELIGIBLE</span></td>
-                        <td class="p-3"><span class="px-2 py-0.5 bg-amber-100 text-amber-800 rounded font-mono font-bold">URGENT (85m left)</span></td>
-                        <td class="p-3"><span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded font-bold">AVAILABLE</span></td>
-                    </tr>
-                    <tr class="hover:bg-slate-50 transition-colors">
-                        <td class="p-3 font-bold text-slate-900">Paneer Butter Masala &amp; Roti (30 portions)</td>
-                        <td class="p-3 text-slate-600">Cooked Meal</td>
-                        <td class="p-3"><span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded font-bold">VEG</span></td>
-                        <td class="p-3 font-bold text-slate-800">30 Portions (14 kg)</td>
-                        <td class="p-3"><span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded font-bold">ELIGIBLE</span></td>
-                        <td class="p-3"><span class="px-2 py-0.5 bg-blue-100 text-blue-800 rounded font-mono font-bold">NORMAL (3.5h left)</span></td>
-                        <td class="p-3"><span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded font-bold">AVAILABLE</span></td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="bg-white p-5 rounded-3xl border border-ivory-300 shadow-soft">
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600">Dispatched Today</span>
+                <span class="w-8 h-8 rounded-xl bg-salmon-100 text-salmon-600 flex items-center justify-center text-xs">
+                    <i class="fa-solid fa-truck-ramp-box"></i>
+                </span>
+            </div>
+            <div class="text-3xl font-serif font-black text-salmon-600">1</div>
+            <div class="text-[11px] text-salmon-700 font-semibold mt-1">En route to Hope Shelter</div>
+        </div>
+
+        <div class="bg-white p-5 rounded-3xl border border-ivory-300 shadow-soft">
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600">Total Servings Rescued</span>
+                <span class="w-8 h-8 rounded-xl bg-pista-100 text-pista-700 flex items-center justify-center text-xs">
+                    <i class="fa-solid fa-heart"></i>
+                </span>
+            </div>
+            <div class="text-3xl font-serif font-black text-pista-900">480</div>
+            <div class="text-[11px] text-ivory-700 font-medium mt-1">Across 8 local shelters</div>
+        </div>
+
+        <div class="bg-white p-5 rounded-3xl border border-ivory-300 shadow-soft">
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600">CO₂ Avoided</span>
+                <span class="w-8 h-8 rounded-xl bg-pista-100 text-pista-700 flex items-center justify-center text-xs">
+                    <i class="fa-solid fa-leaf"></i>
+                </span>
+            </div>
+            <div class="text-3xl font-serif font-black text-pista-900">288 <span class="text-xs font-sans font-normal text-ivory-600">kg</span></div>
+            <div class="text-[11px] text-pista-700 font-semibold mt-1">Landfill diversion certified</div>
         </div>
     </div>
 
-    <!-- CSR CERTIFICATES & AUDIT TRAILS -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
-            <div class="flex items-center justify-between">
-                <span class="text-xs font-bold text-slate-800 uppercase tracking-wider">CSR Tax Receipts (80G)</span>
-                <span class="text-xs font-mono text-primary-700 font-bold">Phase 15</span>
+    <!-- MAIN DONOR WORKSPACE TABS -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Left 2 Cols: Active Surplus Listings -->
+        <div class="lg:col-span-2 space-y-4">
+            <div class="bg-white p-6 rounded-3xl border border-ivory-300 shadow-soft">
+                <div class="flex items-center justify-between pb-4 border-b border-ivory-200">
+                    <div>
+                        <h3 class="font-serif text-lg font-bold text-pista-950 flex items-center gap-2">
+                            <i class="fa-solid fa-fire-burner text-salmon-500"></i>
+                            Your Live Surplus Posts
+                        </h3>
+                        <p class="text-xs text-ivory-700">Dishes ready in your kitchen awaiting volunteer driver pickup</p>
+                    </div>
+                    <a href="/donor/report-surplus/" class="px-3.5 py-1.5 bg-pista-100 hover:bg-pista-200 text-pista-900 font-bold text-xs rounded-xl border border-pista-300 transition-colors">
+                        + New Post
+                    </a>
+                </div>
+
+                <div class="divide-y divide-ivory-200 pt-3">
+                    
+                    <!-- Item 1 -->
+                    <div class="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold text-sm text-ivory-950">Fresh North Indian Buffet Thalis</span>
+                                <span class="px-2 py-0.5 rounded-full bg-pista-100 text-pista-800 text-[10px] font-bold border border-pista-300">
+                                    Vegetarian
+                                </span>
+                                <span class="px-2 py-0.5 rounded-full bg-salmon-50 text-salmon-700 text-[10px] font-bold border border-salmon-200">
+                                    Cooked Meals
+                                </span>
+                            </div>
+                            <p class="text-xs text-ivory-700">
+                                60 Servings &bull; Prepared 35 mins ago &bull; Temperature logged: 68°C &bull; Shelf life: 2h 15m remaining
+                            </p>
+                            <div class="text-[11px] text-pista-800 flex items-center gap-1.5 font-medium pt-1">
+                                <i class="fa-solid fa-circle-check text-pista-600"></i>
+                                FSSAI Safety Verified &bull; Matched to <strong>Hope Community Shelter</strong>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2 shrink-0">
+                            <a href="/donor/live-tracking/" class="px-3.5 py-2 bg-salmon-500 hover:bg-salmon-600 text-white font-bold text-xs rounded-xl shadow-salmon transition-all flex items-center gap-1.5">
+                                <i class="fa-solid fa-location-arrow"></i>
+                                Track Driver (12m)
+                            </a>
+                            <a href="/qr-scanner/" class="px-3 py-2 bg-ivory-100 hover:bg-ivory-200 text-ivory-800 font-bold text-xs rounded-xl border border-ivory-300 transition-colors" title="Generate Handover QR">
+                                <i class="fa-solid fa-qrcode"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold text-sm text-ivory-950">Continental Sandwiches &amp; Fruit Platters</span>
+                                <span class="px-2 py-0.5 rounded-full bg-pista-100 text-pista-800 text-[10px] font-bold border border-pista-300">
+                                    Veg &amp; Fruit
+                                </span>
+                            </div>
+                            <p class="text-xs text-ivory-700">
+                                25 Servings &bull; Packed 50 mins ago &bull; Chilled storage &bull; Shelf life: 3h 30m remaining
+                            </p>
+                            <div class="text-[11px] text-ivory-600 flex items-center gap-1.5 font-medium pt-1">
+                                <i class="fa-solid fa-clock text-salmon-500"></i>
+                                Searching nearby volunteer drivers in Indiranagar / Ulsoor
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2 shrink-0">
+                            <a href="/donor/ai-match/" class="px-3.5 py-2 bg-pista-600 hover:bg-pista-700 text-white font-bold text-xs rounded-xl shadow-pista transition-all flex items-center gap-1.5">
+                                <i class="fa-solid fa-brain"></i>
+                                View AI Matches
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-            <p class="text-xs text-slate-500">
-                Automated monthly CSR donation impact certificates generated via WeasyPrint PDF with digital SHA-256 validation.
-            </p>
-            <div class="pt-2">
-                <button class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-lg transition-colors cursor-not-allowed">
-                    Download Latest Certificate (Phase 15)
-                </button>
+
+            <!-- Quick Links to other MVP Donor Subpages -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <a href="/donor/report-surplus/" class="p-4 rounded-2xl bg-white border border-ivory-300 hover:border-salmon-300 shadow-soft transition-all group">
+                    <div class="w-8 h-8 rounded-xl bg-salmon-50 text-salmon-600 flex items-center justify-center text-sm mb-2 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-plus"></i>
+                    </div>
+                    <div class="text-xs font-bold text-ivory-900 group-hover:text-salmon-700">Report Surplus</div>
+                    <div class="text-[11px] text-ivory-600 mt-0.5">Post new meal batch</div>
+                </a>
+                <a href="/donor/ai-match/" class="p-4 rounded-2xl bg-white border border-ivory-300 hover:border-pista-300 shadow-soft transition-all group">
+                    <div class="w-8 h-8 rounded-xl bg-pista-100 text-pista-700 flex items-center justify-center text-sm mb-2 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <div class="text-xs font-bold text-ivory-900 group-hover:text-pista-800">AI Match Engine</div>
+                    <div class="text-[11px] text-ivory-600 mt-0.5">Automated shelter pairing</div>
+                </a>
+                <a href="/donor/history/" class="p-4 rounded-2xl bg-white border border-ivory-300 hover:border-pista-300 shadow-soft transition-all group">
+                    <div class="w-8 h-8 rounded-xl bg-ivory-200 text-ivory-800 flex items-center justify-center text-sm mb-2 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                    </div>
+                    <div class="text-xs font-bold text-ivory-900 group-hover:text-pista-800">Donation History</div>
+                    <div class="text-[11px] text-ivory-600 mt-0.5">Logbook &amp; Tax 80G</div>
+                </a>
             </div>
         </div>
 
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
-            <div class="flex items-center justify-between">
-                <span class="text-xs font-bold text-slate-800 uppercase tracking-wider">Food Safety SOP Protocol</span>
-                <span class="text-xs font-mono text-emerald-700 font-bold">FSSAI Compliant</span>
+        <!-- Right 1 Col: Kitchen Accreditation & Handover Verification -->
+        <div class="space-y-4">
+            
+            <!-- Kitchen Profile Card -->
+            <div class="bg-white p-5 rounded-3xl border border-ivory-300 shadow-soft space-y-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-2xl bg-pista-100 border border-pista-300 flex items-center justify-center text-pista-800 text-lg">
+                        <i class="fa-solid fa-utensils text-pista-700"></i>
+                    </div>
+                    <div>
+                        <div class="font-bold text-sm text-pista-950">Annapurna Grand</div>
+                        <div class="text-xs text-ivory-700">Indiranagar 100ft Road, Bengaluru</div>
+                        <span class="inline-block px-2 py-0.5 rounded-full bg-pista-100 text-pista-800 font-bold text-[10px] mt-1">
+                            <i class="fa-solid fa-check-circle text-pista-600 mr-1"></i> FSSAI Verified
+                        </span>
+                    </div>
+                </div>
+
+                <div class="pt-3 border-t border-ivory-200 text-xs space-y-2 text-ivory-800">
+                    <div class="flex justify-between">
+                        <span class="text-ivory-600">License No:</span>
+                        <span class="font-mono font-bold text-ivory-900">11223344009812</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-ivory-600">Kitchen Head:</span>
+                        <span class="font-bold text-ivory-900">Chef Rajesh Kumar</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-ivory-600">Rescue Contact:</span>
+                        <span class="font-bold text-ivory-900">+91 98450 12345</span>
+                    </div>
+                </div>
+
+                <a href="/profile/" class="block text-center py-2 px-3 bg-ivory-100 hover:bg-pista-100 text-pista-900 font-bold text-xs rounded-xl border border-ivory-300 transition-colors">
+                    Manage Kitchen Accreditation &rarr;
+                </a>
             </div>
-            <p class="text-xs text-slate-500">
-                All surplus listings are evaluated against 4-hour room temperature limits, temperature monitoring (>60°C or &lt;5°C), and food-grade packaging standards.
-            </p>
+
+            <!-- Handover OTP Box -->
+            <div class="bg-gradient-to-br from-salmon-50 to-white p-5 rounded-3xl border border-salmon-200 shadow-soft space-y-3">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-salmon-500 animate-pulse"></span>
+                    <h4 class="font-bold text-xs uppercase tracking-wider text-salmon-900">
+                        Live Pickup Handover OTP
+                    </h4>
+                </div>
+                <p class="text-xs text-ivory-700">
+                    Share this 4-digit code with volunteer driver <strong>Aniket Kumar</strong> when he collects the food at your back door:
+                </p>
+                <div class="bg-white border-2 border-salmon-300 rounded-2xl py-3 text-center">
+                    <span class="font-mono text-2xl font-black text-salmon-600 tracking-widest">7492</span>
+                </div>
+                <div class="text-[11px] text-ivory-600 text-center">
+                    Vehicle: TVS iQube (KA-03-HA-8192) &bull; ETA 12 mins
+                </div>
+            </div>
+
         </div>
+
     </div>
 
 </div>

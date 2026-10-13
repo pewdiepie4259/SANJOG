@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}Rescue Operations Monitoring — Sanjog Admin Portal{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+
+    <!-- MVP HIERARCHY NAVIGATION -->
+    {% include "components/section_nav.html" with section="admin" page="rescue_monitoring" %}
+
+    <!-- ROLE SWITCHER -->
+    {% include "components/role_switcher.html" %}
+
+    <!-- MONITORING HEADER -->
+    <div class="bg-gradient-to-r from-ivory-950 via-pista-950 to-ivory-900 text-white p-6 sm:p-8 rounded-3xl shadow-soft border border-ivory-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <span class="px-3 py-1 bg-salmon-500 text-white rounded-full text-xs font-bold inline-flex items-center gap-1.5 mb-2">
+                <span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
+                City Telemetry Live Stream
+            </span>
+            <h1 class="font-serif text-2xl font-black text-white">
+                Live Rescue Mission Monitoring
+            </h1>
+            <p class="text-xs text-ivory-300 mt-1">
+                Real-time tracking of volunteer couriers, cold chain integrity, and SLA decay thresholds across Bengaluru.
+            </p>
+        </div>
+
+        <div class="flex items-center gap-3">
+            <a href="/map/" class="px-4 py-2.5 bg-pista-600 hover:bg-pista-700 text-white font-bold text-xs rounded-xl shadow-pista transition-all flex items-center gap-1.5">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <span>Open Full Map Screen</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- ACTIVE CORRIDORS -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- CORRIDOR 1 -->
+        <div class="bg-white p-6 rounded-3xl border-2 border-pista-400 shadow-soft space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-ivory-200">
+                <div class="flex items-center gap-2">
+                    <span class="font-mono font-bold text-xs bg-pista-100 text-pista-900 px-2 py-0.5 rounded-lg">#RS-941</span>
+                    <h3 class="font-serif text-base font-bold text-pista-950">Indiranagar &rarr; St. Marks Road</h3>
+                </div>
+                <span class="px-2.5 py-0.5 rounded-full bg-salmon-500 text-white font-bold text-[10px]">
+                    ON SCHEDULE &bull; ETA 12M
+                </span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 text-xs">
+                <div class="p-3 bg-ivory-50 rounded-2xl">
+                    <span class="text-[10px] text-ivory-600 block">Food Cargo</span>
+                    <span class="font-bold text-pista-950">60 North Indian Meals (Hot)</span>
+                </div>
+                <div class="p-3 bg-ivory-50 rounded-2xl">
+                    <span class="text-[10px] text-ivory-600 block">Volunteer Courier</span>
+                    <span class="font-bold text-ivory-900">Aniket Kumar (TVS iQube)</span>
+                </div>
+                <div class="p-3 bg-ivory-50 rounded-2xl">
+                    <span class="text-[10px] text-ivory-600 block">Thermal Sensor</span>
+                    <span class="font-bold text-pista-800">68°C (Safe Bain-marie)</span>
+                </div>
+                <div class="p-3 bg-ivory-50 rounded-2xl">
+                    <span class="text-[10px] text-ivory-600 block">SLA Expiry Margin</span>
+                    <span class="font-bold text-pista-800">2h 15m safety cushion</span>
+                </div>
+            </div>
+
+            <div class="pt-2 flex items-center justify-between text-xs text-ivory-600">
+                <span>Donor OTP: <strong>7492</strong> &bull; Receiver OTP: <strong>3180</strong></span>
+                <a href="/donor/live-tracking/" class="text-pista-700 hover:underline font-bold">Inspect Telemetry &rarr;</a>
+            </div>
+        </div>
+
+        <!-- CORRIDOR 2 -->
+        <div class="bg-white p-6 rounded-3xl border-2 border-salmon-300 shadow-soft space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-ivory-200">
+                <div class="flex items-center gap-2">
+                    <span class="font-mono font-bold text-xs bg-salmon-100 text-salmon-900 px-2 py-0.5 rounded-lg">#RS-939</span>
+                    <h3 class="font-serif text-base font-bold text-pista-950">Koramangala &rarr; Shivajinagar</h3>
+                </div>
+                <span class="px-2.5 py-0.5 rounded-full bg-salmon-500 text-white font-bold text-[10px] animate-pulse">
+                    URGENT &bull; 45M MARGIN
+                </span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 text-xs">
+                <div class="p-3 bg-ivory-50 rounded-2xl">
+                    <span class="text-[10px] text-ivory-600 block">Food Cargo</span>
+                    <span class="font-bold text-pista-950">120 Continental Lunch Boxes</span>
+                </div>
+                <div class="p-3 bg-ivory-50 rounded-2xl">
+                    <span class="text-[10px] text-ivory-600 block">Volunteer Courier</span>
+                    <span class="font-bold text-ivory-900">Sneha Rao (Tata Ace EV)</span>
+                </div>
+                <div class="p-3 bg-ivory-50 rounded-2xl">
+                    <span class="text-[10px] text-ivory-600 block">Distance</span>
+                    <span class="font-bold text-ivory-900">6.2 km (18 mins in transit)</span>
+                </div>
+                <div class="p-3 bg-ivory-50 rounded-2xl">
+                    <span class="text-[10px] text-ivory-600 block">Destination</span>
+                    <span class="font-bold text-salmon-700">Karuna Senior Care Home</span>
+                </div>
+            </div>
+
+            <div class="pt-2 flex items-center justify-between text-xs text-ivory-600">
+                <span>Donor OTP: <strong>5193</strong> &bull; Receiver OTP: <strong>8821</strong></span>
+                <a href="/donor/live-tracking/" class="text-salmon-600 hover:underline font-bold">Inspect Telemetry &rarr;</a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

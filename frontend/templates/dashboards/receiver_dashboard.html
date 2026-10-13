@@ -1,173 +1,225 @@
 {% extends "base.html" %}
 
-{% block title %}Food Receiver Operating Portal — SANJOG{% endblock %}
+{% block title %}NGO &amp; Shelter Operations Portal — Sanjog{% endblock %}
 
 {% block content %}
 <div class="space-y-6">
 
-    <!-- FAST ROLE SWITCHER -->
+    <!-- MVP HIERARCHY NAVIGATION -->
+    {% include "components/section_nav.html" with section="ngo" page="dashboard" %}
+
+    <!-- ROLE SWITCHER -->
     {% include "components/role_switcher.html" %}
 
-    <!-- RECEIVER HEADER -->
-    <div class="bg-gradient-to-r from-blue-900 via-blue-800 to-slate-900 text-white p-6 sm:p-8 rounded-3xl shadow-lg border border-blue-800 relative overflow-hidden">
+    <!-- NGO HERO BANNER (SALMON PINK, IVORY, PISTA GREEN) -->
+    <div class="bg-gradient-to-r from-salmon-600 via-salmon-700 to-salmon-800 text-white p-6 sm:p-8 rounded-3xl shadow-soft border border-salmon-500 relative overflow-hidden">
+        <div class="absolute -right-10 -bottom-10 w-60 h-60 bg-pista-400/20 rounded-full blur-3xl pointer-events-none"></div>
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
             <div class="space-y-2">
                 <div class="flex items-center gap-2">
-                    <span class="px-3 py-1 bg-blue-500/20 text-blue-300 border border-blue-500/30 rounded-full text-xs font-mono font-bold uppercase">
-                        RECEIVER DEMAND PORTAL
+                    <span class="px-3 py-1 bg-salmon-800/80 text-white border border-salmon-400 rounded-full text-xs font-bold flex items-center gap-1.5">
+                        <i class="fa-solid fa-hands-holding-child"></i>
+                        Shelter Meal Logistics
                     </span>
-                    <span class="px-2.5 py-0.5 bg-blue-950 text-blue-200 rounded text-xs font-mono">Role: RECEIVER</span>
+                    <span class="text-xs text-salmon-200">St. Marks Road Hub</span>
                 </div>
-                <h1 class="text-3xl font-black text-white tracking-tight">
-                    NGO &amp; Community Shelter Meal Logistics
+                <h1 class="font-serif text-2xl sm:text-3xl font-black text-white tracking-tight">
+                    NGO Shelter Operations Dashboard
                 </h1>
-                <p class="text-blue-100/80 text-xs sm:text-sm max-w-2xl">
-                    Register active meal demands, review incoming surplus allocations, track volunteer delivery dispatches, and coordinate distribution to verified beneficiaries.
+                <p class="text-salmon-100 text-xs sm:text-sm max-w-2xl leading-relaxed">
+                    Broadcast daily feeding requirements for your shelter, claim incoming surplus food from nearby hotel kitchens, and verify volunteer deliveries.
                 </p>
             </div>
 
-            <!-- Profile Summary Pill -->
-            <div class="bg-blue-950/60 border border-blue-700/60 p-4 rounded-2xl min-w-[240px]">
-                <div class="text-xs text-blue-300/80">Active Receiver Account</div>
-                <div class="font-bold text-white text-base">{{ user.username }}</div>
-                <div class="text-xs text-blue-400 font-mono mt-0.5">
-                    {% if org_profile %}{{ org_profile.name }}{% else %}No Organization Linked{% endif %}
-                </div>
+            <!-- Quick Action CTA -->
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+                <a href="/ngo/request-food/" class="px-5 py-3 bg-white hover:bg-ivory-100 text-salmon-700 text-xs font-bold rounded-2xl shadow-soft transition-all flex items-center justify-center gap-2 hover:scale-[1.02]">
+                    <i class="fa-solid fa-utensils"></i>
+                    <span>Post Daily Meal Need</span>
+                </a>
+                <a href="/ngo/nearby-food/" class="px-4 py-3 bg-salmon-800/80 hover:bg-salmon-800 text-white text-xs font-bold rounded-2xl border border-salmon-400 transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-compass"></i>
+                    <span>Nearby Food</span>
+                </a>
             </div>
         </div>
     </div>
 
-    <!-- ORGANIZATION ACCREDITATION CARD -->
-    {% if org_profile %}
-        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
-                <div class="space-y-1">
-                    <div class="flex items-center gap-2">
-                        <span class="font-black text-slate-900 text-lg">{{ org_profile.name }}</span>
-                        {% include "organizations/partials/status_badge.html" with status=org_profile.verification_status %}
-                    </div>
-                    <p class="text-xs text-slate-500">
-                        Type: <span class="font-bold text-slate-700">{{ org_profile.get_org_type_display }}</span> &bull; 
-                        Accreditation: <span class="font-mono font-bold text-slate-800">{{ org_profile.registration_number|default:"Pending Upload" }}</span> &bull; 
-                        City: <span class="font-medium text-slate-700">{{ org_profile.city }}, {{ org_profile.state }}</span>
-                    </p>
-                </div>
-                <div class="flex items-center gap-2">
-                    <a href="{% url 'organization_documents' %}" class="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold rounded-xl transition-all shadow-sm">
-                        Manage 80G Documents &rarr;
-                    </a>
-                    <a href="{% url 'organization_profile' %}" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold rounded-xl transition-all">
-                        Edit Profile
-                    </a>
-                </div>
-            </div>
-
-            {% if not org_profile.is_verified %}
-                <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-center gap-3">
-                    <span class="text-xl">⚠️</span>
-                    <div class="text-xs text-amber-800">
-                        <span class="font-bold">Verification Notice:</span> 
-                        Your receiver profile status is <strong>{{ org_profile.get_verification_status_display }}</strong>. 
-                        Once approved by an administrator, your shelter will be prioritized for automatic need-first food rescue matching.
-                    </div>
-                </div>
-            {% endif %}
-        </div>
-    {% else %}
-        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 p-6 rounded-2xl shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div class="space-y-1">
-                <h3 class="text-base font-bold text-blue-900">Complete Receiver Organization Onboarding</h3>
-                <p class="text-xs text-blue-700 max-w-xl">
-                    Register your shelter, orphanage, community kitchen, or charitable trust and upload your 80G or NGO Darpan certificate to request meals.
-                </p>
-            </div>
-            <a href="{% url 'organization_onboarding' %}" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-all shadow-sm">
-                Start Onboarding &rarr;
-            </a>
-        </div>
-    {% endif %}
-
-    <!-- RECEIVER METRICS GRID -->
-    <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center">
-            <span class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Active Meal Demands</span>
-            <div class="text-3xl font-black text-blue-600 mt-2">2</div>
-            <span class="text-[10px] text-blue-700 font-medium">Awaiting matching</span>
-        </div>
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center">
-            <span class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Incoming Rescues</span>
-            <div class="text-3xl font-black text-amber-600 mt-2">1</div>
-            <span class="text-[10px] text-amber-700 font-medium">Volunteer en route</span>
-        </div>
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center">
-            <span class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Total Servings Received</span>
-            <div class="text-3xl font-black text-slate-900 mt-2">1,240</div>
-            <span class="text-[10px] text-slate-500">Meals distributed</span>
-        </div>
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center">
-            <span class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Shelter Beneficiaries</span>
-            <div class="text-3xl font-black text-emerald-600 mt-2">85</div>
-            <span class="text-[10px] text-emerald-700 font-medium">People supported daily</span>
-        </div>
-    </div>
-
-    <!-- ACTIVE DEMAND & ALLOCATION QUEUE (Phase 5 Prototype Preview) -->
-    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-5">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
-            <div>
-                <h2 class="text-lg font-black text-slate-900">Active Meal Demands &amp; Claims</h2>
-                <p class="text-xs text-slate-500">Requirements logged for dinner service and youth shelter programs</p>
-            </div>
-            <div class="flex items-center gap-2">
-                <span class="text-xs px-2.5 py-1 bg-blue-100 text-blue-800 font-bold rounded-lg border border-blue-200">
-                    Phase 5 Feature
+    <!-- STATS OVERVIEW -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white p-5 rounded-3xl border border-ivory-300 shadow-soft">
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600">Daily Meals Needed</span>
+                <span class="w-8 h-8 rounded-xl bg-salmon-100 text-salmon-600 flex items-center justify-center text-xs">
+                    <i class="fa-solid fa-bell"></i>
                 </span>
             </div>
+            <div class="text-3xl font-serif font-black text-salmon-600">80</div>
+            <div class="text-[11px] text-salmon-700 font-semibold mt-1">Evening supper requirement</div>
         </div>
 
-        <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs">
-                <thead>
-                    <tr class="bg-slate-50 text-slate-600 uppercase tracking-wider font-semibold border-b border-slate-200">
-                        <th class="p-3">Demand Request</th>
-                        <th class="p-3">Target Meal</th>
-                        <th class="p-3">Dietary Need</th>
-                        <th class="p-3">Required Servings</th>
-                        <th class="p-3">Matched Donor Surplus</th>
-                        <th class="p-3">Delivery Status</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-100 font-medium">
-                    <tr class="hover:bg-slate-50 transition-colors">
-                        <td class="p-3 font-bold text-slate-900">Dinner Service for 50 Children</td>
-                        <td class="p-3 text-slate-600">Dinner (7:30 PM)</td>
-                        <td class="p-3"><span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded font-bold">VEG</span></td>
-                        <td class="p-3 font-bold text-slate-800">50 Portions</td>
-                        <td class="p-3 text-emerald-700 font-bold">Royal Veg Biryani (Matched)</td>
-                        <td class="p-3"><span class="px-2 py-0.5 bg-amber-100 text-amber-800 rounded font-mono font-bold">PICKUP IN PROGRESS</span></td>
-                    </tr>
-                    <tr class="hover:bg-slate-50 transition-colors">
-                        <td class="p-3 font-bold text-slate-900">Breakfast Bread &amp; Staples</td>
-                        <td class="p-3 text-slate-600">Breakfast (Tomorrow)</td>
-                        <td class="p-3"><span class="px-2 py-0.5 bg-slate-100 text-slate-800 rounded font-bold">ANY</span></td>
-                        <td class="p-3 font-bold text-slate-800">30 Portions</td>
-                        <td class="p-3 text-slate-400">Searching matching donors...</td>
-                        <td class="p-3"><span class="px-2 py-0.5 bg-blue-100 text-blue-800 rounded font-bold">PENDING MATCH</span></td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="bg-white p-5 rounded-3xl border border-ivory-300 shadow-soft">
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600">Meals Incoming</span>
+                <span class="w-8 h-8 rounded-xl bg-pista-100 text-pista-700 flex items-center justify-center text-xs">
+                    <i class="fa-solid fa-truck-fast"></i>
+                </span>
+            </div>
+            <div class="text-3xl font-serif font-black text-pista-900">60</div>
+            <div class="text-[11px] text-pista-700 font-semibold mt-1">From Annapurna Grand (ETA 12m)</div>
+        </div>
+
+        <div class="bg-white p-5 rounded-3xl border border-ivory-300 shadow-soft">
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600">Total Received</span>
+                <span class="w-8 h-8 rounded-xl bg-pista-100 text-pista-700 flex items-center justify-center text-xs">
+                    <i class="fa-solid fa-circle-check"></i>
+                </span>
+            </div>
+            <div class="text-3xl font-serif font-black text-pista-900">1,240</div>
+            <div class="text-[11px] text-ivory-700 font-medium mt-1">Meals served this month</div>
+        </div>
+
+        <div class="bg-white p-5 rounded-3xl border border-ivory-300 shadow-soft">
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600">Shelter Capacity</span>
+                <span class="w-8 h-8 rounded-xl bg-ivory-200 text-ivory-800 flex items-center justify-center text-xs">
+                    <i class="fa-solid fa-people-roof"></i>
+                </span>
+            </div>
+            <div class="text-3xl font-serif font-black text-ivory-900">95</div>
+            <div class="text-[11px] text-ivory-700 font-medium mt-1">Residents registered</div>
         </div>
     </div>
 
-    <!-- DUAL OTP DELIVERY VERIFICATION WORKFLOW -->
-    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-        <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-slate-800 uppercase tracking-wider">Dual OTP Safe Delivery Protocol</span>
-            <span class="text-xs font-mono text-blue-700 font-bold">Phase 10 Architecture</span>
+    <!-- MAIN NGO WORKSPACE -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Left 2 Cols: Incoming Deliveries & Active Requests -->
+        <div class="lg:col-span-2 space-y-4">
+            
+            <!-- Incoming Rescue Alert Box -->
+            <div class="bg-gradient-to-r from-pista-50 via-white to-salmon-50 p-6 rounded-3xl border-2 border-pista-400 shadow-soft space-y-4">
+                <div class="flex items-center justify-between pb-3 border-b border-ivory-200">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-3 h-3 rounded-full bg-salmon-500 animate-ping"></span>
+                        <h3 class="font-serif text-lg font-bold text-pista-950">
+                            Incoming Volunteer Delivery En Route
+                        </h3>
+                    </div>
+                    <span class="px-2.5 py-1 rounded-full bg-salmon-500 text-white font-bold text-[10px]">
+                        ETA 12 MINS
+                    </span>
+                </div>
+
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div class="space-y-1">
+                        <div class="font-bold text-base text-ivory-950">60 Servings: Fresh North Indian Buffet Thalis</div>
+                        <p class="text-xs text-ivory-700">
+                            Donated by <strong>Annapurna Grand (Indiranagar)</strong> &bull; Temperature logged at 68°C
+                        </p>
+                        <div class="text-xs text-pista-800 font-semibold pt-1 flex items-center gap-2">
+                            <span><i class="fa-solid fa-motorcycle mr-1"></i> Volunteer Driver: Aniket Kumar (TVS iQube)</span>
+                            <span>&bull;</span>
+                            <span><i class="fa-solid fa-shield mr-1"></i> FSSAI Safe Cleared</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2 shrink-0">
+                        <a href="/qr-scanner/" class="px-4 py-2.5 bg-salmon-500 hover:bg-salmon-600 text-white font-bold text-xs rounded-xl shadow-salmon transition-all flex items-center gap-1.5">
+                            <i class="fa-solid fa-qrcode"></i> Scan Delivery QR
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Receiver Confirmation OTP Card -->
+                <div class="bg-white p-4 rounded-2xl border border-ivory-300 flex items-center justify-between gap-4">
+                    <div>
+                        <span class="text-[10px] uppercase font-bold text-salmon-700 block">Your Receiver Confirmation OTP</span>
+                        <p class="text-xs text-ivory-700">Give this OTP to driver Aniket when he hands over the food containers at your door:</p>
+                    </div>
+                    <div class="px-4 py-2 bg-salmon-100 border border-salmon-300 rounded-xl text-center shrink-0">
+                        <span class="font-mono text-xl font-black text-salmon-800 tracking-wider">3180</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Links to other MVP NGO Pages -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <a href="/ngo/nearby-food/" class="p-4 rounded-2xl bg-white border border-ivory-300 hover:border-pista-300 shadow-soft transition-all group">
+                    <div class="w-8 h-8 rounded-xl bg-pista-100 text-pista-700 flex items-center justify-center text-sm mb-2 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-compass"></i>
+                    </div>
+                    <div class="text-xs font-bold text-ivory-900 group-hover:text-pista-800">Nearby Surplus Food</div>
+                    <div class="text-[11px] text-ivory-600 mt-0.5">Explore available batches</div>
+                </a>
+                <a href="/ngo/request-food/" class="p-4 rounded-2xl bg-white border border-ivory-300 hover:border-salmon-300 shadow-soft transition-all group">
+                    <div class="w-8 h-8 rounded-xl bg-salmon-100 text-salmon-600 flex items-center justify-center text-sm mb-2 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-utensils"></i>
+                    </div>
+                    <div class="text-xs font-bold text-ivory-900 group-hover:text-salmon-700">Post Meal Need</div>
+                    <div class="text-[11px] text-ivory-600 mt-0.5">Broadcast shelter capacity</div>
+                </a>
+                <a href="/ngo/accepted-donations/" class="p-4 rounded-2xl bg-white border border-ivory-300 hover:border-pista-300 shadow-soft transition-all group">
+                    <div class="w-8 h-8 rounded-xl bg-pista-100 text-pista-700 flex items-center justify-center text-sm mb-2 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <div class="text-xs font-bold text-ivory-900 group-hover:text-pista-800">Accepted Donations</div>
+                    <div class="text-[11px] text-ivory-600 mt-0.5">Verification receipts</div>
+                </a>
+            </div>
+
         </div>
-        <p class="text-xs text-slate-600">
-            When a volunteer arrives with rescued food, they will ask for your 4-digit Delivery OTP. Once entered and confirmed, the chain of custody completes, generating an immutable audit entry in the Food Passport.
-        </p>
+
+        <!-- Right 1 Col: Shelter Accreditation & Darpan -->
+        <div class="space-y-4">
+            
+            <div class="bg-white p-5 rounded-3xl border border-ivory-300 shadow-soft space-y-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-2xl bg-salmon-100 border border-salmon-200 flex items-center justify-center text-salmon-700 text-lg">
+                        <i class="fa-solid fa-handshake-angle text-salmon-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-bold text-sm text-pista-950">Hope Community Shelter</div>
+                        <div class="text-xs text-ivory-700">St. Marks Road, Bengaluru</div>
+                        <span class="inline-block px-2 py-0.5 rounded-full bg-pista-100 text-pista-800 font-bold text-[10px] mt-1">
+                            <i class="fa-solid fa-check-circle text-pista-600 mr-1"></i> NGO Darpan Verified
+                        </span>
+                    </div>
+                </div>
+
+                <div class="pt-3 border-t border-ivory-200 text-xs space-y-2 text-ivory-800">
+                    <div class="flex justify-between">
+                        <span class="text-ivory-600">Darpan ID:</span>
+                        <span class="font-mono font-bold text-ivory-900">KA/2021/008129</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-ivory-600">Shelter Lead:</span>
+                        <span class="font-bold text-ivory-900">Sister Maria</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-ivory-600">Storage Facilities:</span>
+                        <span class="font-bold text-ivory-900">Commercial Cold Room</span>
+                    </div>
+                </div>
+
+                <a href="/profile/" class="block text-center py-2 px-3 bg-ivory-100 hover:bg-pista-100 text-pista-900 font-bold text-xs rounded-xl border border-ivory-300 transition-colors">
+                    Manage Shelter Documents &rarr;
+                </a>
+            </div>
+
+            <!-- Feeding Guidelines Notice -->
+            <div class="bg-pista-50/80 p-5 rounded-3xl border border-pista-200 text-xs space-y-2 text-pista-900">
+                <div class="font-bold flex items-center gap-1.5 text-pista-950">
+                    <i class="fa-solid fa-leaf text-pista-700"></i> FSSAI Zero-Waste Protocol
+                </div>
+                <p class="text-ivory-800 leading-relaxed text-[11px]">
+                    All warm meals received must be served to beneficiaries within 2 hours of arrival or transferred immediately to cold storage at &le; 4°C.
+                </p>
+            </div>
+
+        </div>
+
     </div>
 
 </div>

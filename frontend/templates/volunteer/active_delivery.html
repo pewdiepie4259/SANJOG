@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+
+{% block title %}Active Delivery Route — Sanjog Volunteer Portal{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+
+    <!-- MVP HIERARCHY NAVIGATION -->
+    {% include "components/section_nav.html" with section="volunteer" page="active_delivery" %}
+
+    <!-- ROLE SWITCHER -->
+    {% include "components/role_switcher.html" %}
+
+    <!-- ACTIVE DISPATCH HEADER -->
+    <div class="bg-gradient-to-r from-pista-900 via-pista-800 to-ivory-950 text-white p-6 sm:p-8 rounded-3xl shadow-soft border border-pista-700 relative overflow-hidden">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+            <div class="space-y-2">
+                <span class="px-3 py-1 bg-salmon-500 text-white rounded-full text-xs font-bold inline-flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
+                    Live Rescue Mission #RS-941
+                </span>
+                <h1 class="font-serif text-2xl sm:text-3xl font-black text-white tracking-tight">
+                    Active Delivery &amp; OTP Handover
+                </h1>
+                <p class="text-pista-100 text-xs sm:text-sm max-w-2xl leading-relaxed">
+                    Transporting 60 meals from Annapurna Grand (Indiranagar) to Hope Community Shelter (St. Marks Road).
+                </p>
+            </div>
+
+            <!-- Route Stats Box -->
+            <div class="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-2xl flex items-center gap-4 text-center">
+                <div>
+                    <span class="text-[10px] text-pista-200 uppercase font-bold block">Distance Left</span>
+                    <span class="font-bold text-lg text-white mt-0.5 block">2.1 km</span>
+                </div>
+                <div class="h-8 w-px bg-white/20"></div>
+                <div>
+                    <span class="text-[10px] text-pista-200 uppercase font-bold block">Est. Dropoff</span>
+                    <span class="font-bold text-lg text-salmon-400 mt-0.5 block">12 Mins</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DUAL OTP VERIFICATION WORKFLOW -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- STEP 1: DONOR PICKUP VERIFICATION -->
+        <div class="bg-white p-6 rounded-3xl border-2 border-pista-300 shadow-soft space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-ivory-200">
+                <div class="flex items-center gap-2">
+                    <span class="w-7 h-7 rounded-xl bg-pista-100 text-pista-800 font-bold text-xs flex items-center justify-center">1</span>
+                    <h3 class="font-serif text-base font-bold text-pista-950">Pickup Verification (Donor Dock)</h3>
+                </div>
+                <span id="pickup-badge" class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-bold text-[10px]">
+                    PENDING OTP
+                </span>
+            </div>
+
+            <div class="space-y-1.5 text-xs text-ivory-800">
+                <div class="font-bold text-sm text-ivory-950">Annapurna Grand &bull; 100ft Road Indiranagar</div>
+                <p class="text-ivory-600">Sous Chef Suresh &bull; 60 North Indian Buffet Thalis</p>
+                <div class="p-2.5 bg-pista-50 rounded-xl text-pista-900 text-[11px] font-medium">
+                    <i class="fa-solid fa-circle-info mr-1 text-pista-700"></i> Ask Chef Suresh for the 4-digit pickup code shown on his kitchen screen (Demo PIN: <strong>7492</strong>).
+                </div>
+            </div>
+
+            <div class="space-y-2 pt-2">
+                <label class="block text-xs font-bold text-ivory-900">Enter Donor OTP</label>
+                <div class="flex gap-2">
+                    <input type="text" id="donor-otp-input" placeholder="Enter 4-digit OTP (7492)" maxlength="4"
+                           class="flex-1 px-4 py-2.5 rounded-xl border border-ivory-300 text-center font-mono text-lg font-bold tracking-widest outline-none focus:border-pista-600">
+                    <button onclick="verifyPickupOTP()" class="px-4 py-2.5 bg-pista-600 hover:bg-pista-700 text-white font-bold text-xs rounded-xl shadow-pista transition-all">
+                        Verify Pickup
+                    </button>
+                </div>
+                <div id="pickup-success-msg" class="hidden text-xs font-bold text-pista-700 flex items-center gap-1.5 pt-1">
+                    <i class="fa-solid fa-circle-check"></i> Pickup Verified! Food custody transferred to your transport bag.
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 2: RECEIVER DELIVERY VERIFICATION -->
+        <div class="bg-white p-6 rounded-3xl border-2 border-salmon-300 shadow-soft space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-ivory-200">
+                <div class="flex items-center gap-2">
+                    <span class="w-7 h-7 rounded-xl bg-salmon-100 text-salmon-700 font-bold text-xs flex items-center justify-center">2</span>
+                    <h3 class="font-serif text-base font-bold text-salmon-950">Delivery Verification (Shelter Door)</h3>
+                </div>
+                <span id="delivery-badge" class="px-2 py-0.5 rounded-full bg-ivory-200 text-ivory-700 font-bold text-[10px]">
+                    LOCKED
+                </span>
+            </div>
+
+            <div class="space-y-1.5 text-xs text-ivory-800">
+                <div class="font-bold text-sm text-ivory-950">Hope Community Shelter &bull; St. Marks Road</div>
+                <p class="text-ivory-600">Sister Maria (+91 98450 31802) &bull; 80 Beneficiaries</p>
+                <div class="p-2.5 bg-salmon-50 rounded-xl text-salmon-900 text-[11px] font-medium">
+                    <i class="fa-solid fa-circle-info mr-1 text-salmon-600"></i> Ask Sister Maria for the 4-digit dropoff code shown on her shelter screen (Demo PIN: <strong>3180</strong>).
+                </div>
+            </div>
+
+            <div class="space-y-2 pt-2">
+                <label class="block text-xs font-bold text-ivory-900">Enter Receiver OTP</label>
+                <div class="flex gap-2">
+                    <input type="text" id="receiver-otp-input" placeholder="Enter 4-digit OTP (3180)" maxlength="4"
+                           class="flex-1 px-4 py-2.5 rounded-xl border border-ivory-300 text-center font-mono text-lg font-bold tracking-widest outline-none focus:border-salmon-500">
+                    <button onclick="verifyDeliveryOTP()" class="px-4 py-2.5 bg-salmon-500 hover:bg-salmon-600 text-white font-bold text-xs rounded-xl shadow-salmon transition-all">
+                        Complete Delivery
+                    </button>
+                </div>
+                <div id="delivery-success-msg" class="hidden text-xs font-bold text-pista-700 flex items-center gap-1.5 pt-1">
+                    <i class="fa-solid fa-circle-check"></i> Rescue Completed Successfully! Digital certificate generated.
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MAP INTERACTION BANNER -->
+    <div class="bg-white p-5 rounded-3xl border border-ivory-300 shadow-soft flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-2xl bg-pista-100 text-pista-700 flex items-center justify-center text-lg">
+                <i class="fa-solid fa-map-location-dot"></i>
+            </div>
+            <div>
+                <div class="font-bold text-xs text-pista-950">Need GPS Turn-by-Turn Navigation?</div>
+                <div class="text-[11px] text-ivory-600">Open interactive route in full map or camera QR scanner</div>
+            </div>
+        </div>
+        <div class="flex items-center gap-2">
+            <a href="/map/" class="px-4 py-2.5 bg-pista-600 hover:bg-pista-700 text-white font-bold text-xs rounded-xl shadow-pista transition-all flex items-center gap-1.5">
+                <i class="fa-solid fa-diamond-turn-right"></i> Open Navigation Map
+            </a>
+            <a href="/qr-scanner/" class="px-4 py-2.5 bg-ivory-100 hover:bg-ivory-200 text-ivory-900 font-bold text-xs rounded-xl border border-ivory-300 transition-colors flex items-center gap-1.5">
+                <i class="fa-solid fa-qrcode"></i> QR Scanner
+            </a>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function verifyPickupOTP() {
+        const val = document.getElementById('donor-otp-input').value.trim();
+        if (val === '7492' || val.length === 4) {
+            document.getElementById('pickup-badge').className = 'px-2 py-0.5 rounded-full bg-pista-100 text-pista-800 font-bold text-[10px]';
+            document.getElementById('pickup-badge').innerText = 'PICKUP VERIFIED';
+            document.getElementById('pickup-success-msg').classList.remove('hidden');
+            document.getElementById('delivery-badge').className = 'px-2 py-0.5 rounded-full bg-salmon-100 text-salmon-800 font-bold text-[10px]';
+            document.getElementById('delivery-badge').innerText = 'READY FOR DELIVERY';
+        } else {
+            alert('Please enter the 4-digit demo PIN: 7492');
+        }
+    }
+
+    function verifyDeliveryOTP() {
+        const val = document.getElementById('receiver-otp-input').value.trim();
+        if (val === '3180' || val.length === 4) {
+            document.getElementById('delivery-badge').className = 'px-2 py-0.5 rounded-full bg-pista-100 text-pista-800 font-bold text-[10px]';
+            document.getElementById('delivery-badge').innerText = 'DELIVERED & VERIFIED';
+            document.getElementById('delivery-success-msg').classList.remove('hidden');
+            setTimeout(() => {
+                alert('Mission #RS-941 Successfully Completed! 60 meals delivered to Hope Shelter. Generating Food Passport...');
+                window.location.href = '/food-passport/';
+            }, 1000);
+        } else {
+            alert('Please enter the 4-digit demo PIN: 3180');
+        }
+    }
+</script>
+{% endblock %}

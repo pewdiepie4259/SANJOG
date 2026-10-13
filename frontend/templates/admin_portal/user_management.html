@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% block title %}User Management — Sanjog Admin Portal{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+
+    <!-- MVP HIERARCHY NAVIGATION -->
+    {% include "components/section_nav.html" with section="admin" page="user_management" %}
+
+    <!-- ROLE SWITCHER -->
+    {% include "components/role_switcher.html" %}
+
+    <!-- HEADER -->
+    <div class="bg-white p-6 rounded-3xl border border-ivory-300 shadow-soft flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <span class="px-3 py-1 bg-salmon-50 text-salmon-700 rounded-full text-xs font-bold inline-flex items-center gap-1.5 mb-2">
+                <i class="fa-solid fa-users-gear text-salmon-500"></i>
+                Access Control &amp; Membership
+            </span>
+            <h1 class="font-serif text-2xl font-black text-pista-950">
+                User Management &amp; RBAC Directory
+            </h1>
+            <p class="text-xs text-ivory-700 mt-1">
+                Manage registered restaurant chefs, shelter directors, volunteer delivery drivers, and platform coordinators.
+            </p>
+        </div>
+
+        <div class="flex items-center gap-2">
+            <a href="/register/" class="px-4 py-2.5 bg-salmon-500 hover:bg-salmon-600 text-white font-bold text-xs rounded-xl shadow-salmon transition-all flex items-center gap-1.5">
+                <i class="fa-solid fa-user-plus"></i>
+                <span>Invite New Partner</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- USERS DIRECTORY TABLE -->
+    <div class="bg-white rounded-3xl border border-ivory-300 shadow-soft overflow-hidden">
+        <div class="p-5 border-b border-ivory-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <h3 class="font-serif text-base font-bold text-pista-950 flex items-center gap-2">
+                <i class="fa-solid fa-users text-pista-600"></i> Active Member Accounts
+            </h3>
+            <div class="flex items-center gap-2">
+                <input type="text" placeholder="Search by name, username or email..." 
+                       class="px-3.5 py-1.5 text-xs rounded-xl border border-ivory-300 outline-none focus:border-pista-500">
+            </div>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-xs">
+                <thead>
+                    <tr class="bg-ivory-50 text-ivory-800 border-b border-ivory-200">
+                        <th class="py-3 px-4 font-bold">User / Persona</th>
+                        <th class="py-3 px-4 font-bold">Role</th>
+                        <th class="py-3 px-4 font-bold">Linked Organization</th>
+                        <th class="py-3 px-4 font-bold">Contact</th>
+                        <th class="py-3 px-4 font-bold">Trust Tier</th>
+                        <th class="py-3 px-4 font-bold">Status</th>
+                        <th class="py-3 px-4 font-bold text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-ivory-200 text-ivory-900">
+                    
+                    <!-- USER 1 -->
+                    <tr class="hover:bg-ivory-50/70 transition-colors">
+                        <td class="py-3.5 px-4">
+                            <div class="font-bold text-pista-950">Chef Rajesh Kumar</div>
+                            <div class="text-[11px] text-ivory-600">@testdonor</div>
+                        </td>
+                        <td class="py-3.5 px-4">
+                            <span class="px-2.5 py-0.5 rounded-full bg-pista-100 text-pista-800 font-bold text-[10px]">
+                                FOOD DONOR
+                            </span>
+                        </td>
+                        <td class="py-3.5 px-4 font-medium">Annapurna Grand</td>
+                        <td class="py-3.5 px-4 text-ivory-600">rajesh@annapurna.local</td>
+                        <td class="py-3.5 px-4 font-bold text-pista-700">Tier 1 (FSSAI Verified)</td>
+                        <td class="py-3.5 px-4">
+                            <span class="w-2 h-2 rounded-full bg-pista-500 inline-block mr-1"></span> Active
+                        </td>
+                        <td class="py-3.5 px-4 text-right">
+                            <a href="{% url 'quick_switch' 'testdonor' %}" class="text-pista-700 hover:underline font-bold">Switch &rarr;</a>
+                        </td>
+                    </tr>
+
+                    <!-- USER 2 -->
+                    <tr class="hover:bg-ivory-50/70 transition-colors">
+                        <td class="py-3.5 px-4">
+                            <div class="font-bold text-pista-950">Sister Maria</div>
+                            <div class="text-[11px] text-ivory-600">@testreceiver</div>
+                        </td>
+                        <td class="py-3.5 px-4">
+                            <span class="px-2.5 py-0.5 rounded-full bg-salmon-100 text-salmon-800 font-bold text-[10px]">
+                                FOOD RECEIVER (NGO)
+                            </span>
+                        </td>
+                        <td class="py-3.5 px-4 font-medium">Hope Community Shelter</td>
+                        <td class="py-3.5 px-4 text-ivory-600">maria@hope.local</td>
+                        <td class="py-3.5 px-4 font-bold text-pista-700">Tier 1 (Darpan Verified)</td>
+                        <td class="py-3.5 px-4">
+                            <span class="w-2 h-2 rounded-full bg-pista-500 inline-block mr-1"></span> Active
+                        </td>
+                        <td class="py-3.5 px-4 text-right">
+                            <a href="{% url 'quick_switch' 'testreceiver' %}" class="text-salmon-600 hover:underline font-bold">Switch &rarr;</a>
+                        </td>
+                    </tr>
+
+                    <!-- USER 3 -->
+                    <tr class="hover:bg-ivory-50/70 transition-colors">
+                        <td class="py-3.5 px-4">
+                            <div class="font-bold text-pista-950">Aniket Kumar</div>
+                            <div class="text-[11px] text-ivory-600">@testvolunteer</div>
+                        </td>
+                        <td class="py-3.5 px-4">
+                            <span class="px-2.5 py-0.5 rounded-full bg-pista-100 text-pista-800 font-bold text-[10px]">
+                                RESCUE VOLUNTEER
+                            </span>
+                        </td>
+                        <td class="py-3.5 px-4 text-ivory-600">Independent Volunteer</td>
+                        <td class="py-3.5 px-4 text-ivory-600">aniket@riders.local</td>
+                        <td class="py-3.5 px-4 font-bold text-pista-700">Gold (42 Rescues)</td>
+                        <td class="py-3.5 px-4">
+                            <span class="w-2 h-2 rounded-full bg-pista-500 inline-block mr-1"></span> On Duty
+                        </td>
+                        <td class="py-3.5 px-4 text-right">
+                            <a href="{% url 'quick_switch' 'testvolunteer' %}" class="text-pista-700 hover:underline font-bold">Switch &rarr;</a>
+                        </td>
+                    </tr>
+
+                    <!-- USER 4 -->
+                    <tr class="hover:bg-ivory-50/70 transition-colors">
+                        <td class="py-3.5 px-4">
+                            <div class="font-bold text-pista-950">Platform Administrator</div>
+                            <div class="text-[11px] text-ivory-600">@admin</div>
+                        </td>
+                        <td class="py-3.5 px-4">
+                            <span class="px-2.5 py-0.5 rounded-full bg-ivory-300 text-ivory-950 font-bold text-[10px]">
+                                PLATFORM ADMIN
+                            </span>
+                        </td>
+                        <td class="py-3.5 px-4 text-ivory-600">Sanjog Core Foundation</td>
+                        <td class="py-3.5 px-4 text-ivory-600">admin@sanjog.local</td>
+                        <td class="py-3.5 px-4 font-bold text-ivory-900">Root / Superuser</td>
+                        <td class="py-3.5 px-4">
+                            <span class="w-2 h-2 rounded-full bg-pista-500 inline-block mr-1"></span> Active
+                        </td>
+                        <td class="py-3.5 px-4 text-right">
+                            <a href="{% url 'quick_switch' 'admin' %}" class="text-ivory-900 hover:underline font-bold">Switch &rarr;</a>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

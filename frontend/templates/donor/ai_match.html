@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block title %}AI Match Engine — Sanjog Donor Portal{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+
+    <!-- MVP HIERARCHY NAVIGATION -->
+    {% include "components/section_nav.html" with section="donor" page="ai_match" %}
+
+    <!-- ROLE SWITCHER -->
+    {% include "components/role_switcher.html" %}
+
+    <!-- AI MATCH ENGINE BANNER -->
+    <div class="bg-gradient-to-r from-pista-900 via-pista-800 to-ivory-900 text-white p-6 sm:p-8 rounded-3xl shadow-soft border border-pista-700 relative overflow-hidden">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+            <div class="space-y-2">
+                <span class="px-3 py-1 bg-salmon-500/90 text-white rounded-full text-xs font-bold inline-flex items-center gap-1.5">
+                    <i class="fa-solid fa-brain"></i>
+                    Multivariable Need-First Matching
+                </span>
+                <h1 class="font-serif text-2xl sm:text-3xl font-black text-white tracking-tight">
+                    Smart AI Match Engine
+                </h1>
+                <p class="text-pista-100/90 text-xs sm:text-sm max-w-2xl leading-relaxed">
+                    Evaluates dietary alignment, real-time road traffic, shelter beneficiary capacity, and safety expiry windows to calculate optimal rescue pairings.
+                </p>
+            </div>
+
+            <!-- Match Metric Gauge -->
+            <div class="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-2xl text-center min-w-[180px]">
+                <div class="text-[10px] uppercase font-bold text-pista-200 tracking-wider">Top Match Confidence</div>
+                <div class="font-serif text-3xl font-black text-salmon-400 mt-1">96.4%</div>
+                <div class="text-[11px] text-pista-200 mt-0.5">High Urgency &bull; Optimal Route</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ACTIVE BATCH BEING MATCHED -->
+    <div class="bg-white p-5 rounded-3xl border border-ivory-300 shadow-soft flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-2xl bg-salmon-100 text-salmon-600 flex items-center justify-center text-xl shrink-0">
+                <i class="fa-solid fa-bowl-food"></i>
+            </div>
+            <div>
+                <span class="text-[10px] uppercase tracking-wider font-bold text-salmon-600 block">Current Batch for Matching</span>
+                <div class="font-bold text-base text-pista-950">60 Servings: Fresh North Indian Buffet Thalis</div>
+                <div class="text-xs text-ivory-700">Annapurna Grand &bull; Indiranagar &bull; Prepared 35 mins ago &bull; Hot Bain-marie</div>
+            </div>
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="px-3 py-1.5 rounded-xl bg-pista-100 text-pista-900 font-bold text-xs border border-pista-300 flex items-center gap-1.5">
+                <i class="fa-solid fa-route text-pista-700"></i> SLA: 2h 15m remaining
+            </span>
+        </div>
+    </div>
+
+    <!-- AI MATCH CARDS LIST -->
+    <div class="space-y-4">
+        <div class="flex items-center justify-between">
+            <h3 class="font-serif text-lg font-bold text-pista-950 flex items-center gap-2">
+                <i class="fa-solid fa-list-check text-pista-700"></i>
+                Recommended Community Shelters
+            </h3>
+            <span class="text-xs text-ivory-600">Ranked by urgency, distance &amp; capacity fit</span>
+        </div>
+
+        <!-- MATCH 1: 96% BEST FIT -->
+        <div class="bg-white p-6 rounded-3xl border-2 border-pista-400 shadow-soft space-y-4 relative overflow-hidden">
+            <div class="absolute top-0 right-0 bg-pista-600 text-white text-[10px] font-bold uppercase tracking-wider px-4 py-1 rounded-bl-2xl flex items-center gap-1">
+                <i class="fa-solid fa-star"></i> #1 Best Fit
+            </div>
+
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-5 pt-1">
+                <div class="space-y-2">
+                    <div class="flex items-center gap-3">
+                        <h4 class="font-serif text-xl font-bold text-pista-950">Hope Community Shelter &amp; Care Home</h4>
+                        <span class="px-2.5 py-0.5 rounded-full bg-pista-100 text-pista-800 font-bold text-xs border border-pista-300">
+                            96% Match Score
+                        </span>
+                        <span class="px-2 py-0.5 rounded-full bg-salmon-50 text-salmon-700 font-bold text-[10px] border border-salmon-200">
+                            CRITICAL NEED
+                        </span>
+                    </div>
+                    <p class="text-xs text-ivory-800 leading-relaxed max-w-2xl">
+                        Shelter currently houses 80 women and children awaiting dinner. Refrigeration available. Distance is 3.8 km (12 mins driving via Old Airport Rd).
+                    </p>
+                    <div class="flex flex-wrap items-center gap-3 text-xs text-ivory-700 pt-1">
+                        <span class="flex items-center gap-1"><i class="fa-solid fa-location-dot text-salmon-500"></i> St. Marks Road (3.8 km)</span>
+                        <span class="flex items-center gap-1"><i class="fa-solid fa-id-badge text-pista-700"></i> NGO Darpan: KA/2021/0081</span>
+                        <span class="flex items-center gap-1"><i class="fa-solid fa-user-check text-pista-700"></i> Contact: Sister Maria</span>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 shrink-0">
+                    <a href="/donor/live-tracking/" class="px-5 py-3 bg-salmon-500 hover:bg-salmon-600 text-white font-bold text-xs rounded-2xl shadow-salmon transition-all flex items-center justify-center gap-2 hover:scale-[1.02]">
+                        <i class="fa-solid fa-handshake"></i>
+                        <span>Confirm Match &amp; Dispatch Driver</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Algorithm Factor Breakdown -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-3 border-t border-ivory-200 text-xs">
+                <div class="p-2.5 bg-ivory-50 rounded-xl">
+                    <span class="text-[10px] text-ivory-600 block">Distance Score</span>
+                    <span class="font-bold text-pista-900">98 / 100 (3.8 km)</span>
+                </div>
+                <div class="p-2.5 bg-ivory-50 rounded-xl">
+                    <span class="text-[10px] text-ivory-600 block">Dietary Fit</span>
+                    <span class="font-bold text-pista-900">100% (Veg Compatible)</span>
+                </div>
+                <div class="p-2.5 bg-ivory-50 rounded-xl">
+                    <span class="text-[10px] text-ivory-600 block">Urgency Weight</span>
+                    <span class="font-bold text-salmon-600">High (Dinner window)</span>
+                </div>
+                <div class="p-2.5 bg-ivory-50 rounded-xl">
+                    <span class="text-[10px] text-ivory-600 block">Driver Proximity</span>
+                    <span class="font-bold text-pista-900">Driver 400m away</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- MATCH 2: 89% FIT -->
+        <div class="bg-white p-6 rounded-3xl border border-ivory-300 shadow-soft space-y-4">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
+                <div class="space-y-2">
+                    <div class="flex items-center gap-3">
+                        <h4 class="font-serif text-lg font-bold text-ivory-950">Ashraya Orphanage Trust</h4>
+                        <span class="px-2.5 py-0.5 rounded-full bg-ivory-200 text-ivory-800 font-bold text-xs">
+                            89% Match Score
+                        </span>
+                        <span class="px-2 py-0.5 rounded-full bg-pista-100 text-pista-800 font-bold text-[10px]">
+                            35 Meals Needed
+                        </span>
+                    </div>
+                    <p class="text-xs text-ivory-700 leading-relaxed max-w-2xl">
+                        Children's shelter requiring 35 vegetarian meals for evening supper. Wilson Garden location (5.2 km away &bull; 19 mins).
+                    </p>
+                    <div class="flex flex-wrap items-center gap-3 text-xs text-ivory-600">
+                        <span><i class="fa-solid fa-location-dot text-salmon-500 mr-1"></i> Wilson Garden (5.2 km)</span>
+                        <span><i class="fa-solid fa-shield mr-1 text-pista-700"></i> FSSAI Partner Verified</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2.5 shrink-0">
+                    <a href="/donor/live-tracking/" class="px-4 py-2.5 bg-pista-600 hover:bg-pista-700 text-white font-bold text-xs rounded-xl shadow-pista transition-all flex items-center gap-2">
+                        <span>Select Alternate</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

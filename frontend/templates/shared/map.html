@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block title %}Live Food Rescue Map — Bengaluru Network — Sanjog{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+
+    <!-- MVP HIERARCHY NAVIGATION -->
+    {% include "components/section_nav.html" with section="shared" page="map" %}
+
+    <!-- ROLE SWITCHER -->
+    {% include "components/role_switcher.html" %}
+
+    <!-- MAP HEADER -->
+    <div class="bg-white p-6 rounded-3xl border border-ivory-300 shadow-soft flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <span class="px-3 py-1 bg-pista-100 text-pista-800 rounded-full text-xs font-bold inline-flex items-center gap-1.5 mb-2">
+                <i class="fa-solid fa-map-location-dot text-pista-600"></i>
+                Real-Time Bengaluru Spatial Grid
+            </span>
+            <h1 class="font-serif text-2xl font-black text-pista-950">
+                Live Community Food Rescue Map
+            </h1>
+            <p class="text-xs text-ivory-700 mt-1">
+                Visualizing active donor kitchens, verified community shelters, and moving volunteer drivers across Bengaluru.
+            </p>
+        </div>
+
+        <!-- Filter Toggles -->
+        <div class="flex flex-wrap items-center gap-2">
+            <button onclick="togglePinLayer('donors')" id="btn-filter-donors" 
+                    class="px-3 py-1.5 rounded-xl bg-pista-600 text-white font-bold text-xs shadow-soft flex items-center gap-1.5">
+                <i class="fa-solid fa-utensils"></i> Kitchen Donors (3)
+            </button>
+            <button onclick="togglePinLayer('shelters')" id="btn-filter-shelters" 
+                    class="px-3 py-1.5 rounded-xl bg-salmon-500 text-white font-bold text-xs shadow-salmon flex items-center gap-1.5">
+                <i class="fa-solid fa-hands-holding-child"></i> Shelters (3)
+            </button>
+            <button onclick="togglePinLayer('drivers')" id="btn-filter-drivers" 
+                    class="px-3 py-1.5 rounded-xl bg-ivory-200 text-ivory-900 font-bold text-xs border border-ivory-400 flex items-center gap-1.5">
+                <i class="fa-solid fa-bicycle"></i> Couriers (2)
+            </button>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE MAP CANVAS -->
+    <div class="bg-ivory-100 rounded-3xl border-2 border-ivory-300 shadow-soft overflow-hidden relative min-h-[520px] flex flex-col justify-between p-6">
+        
+        <!-- Subtle Map Roads Vector & Pattern -->
+        <div class="absolute inset-0 bg-[radial-gradient(#cbe5bd_1.5px,transparent_1.5px)] [background-size:24px_24px] opacity-70"></div>
+        
+        <!-- Road Vector Paths -->
+        <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 900 500">
+            <!-- Major arteries -->
+            <path d="M 50 150 L 850 180" stroke="#EAE2D2" stroke-width="8" stroke-linecap="round" />
+            <path d="M 200 40 L 300 460" stroke="#EAE2D2" stroke-width="8" stroke-linecap="round" />
+            <path d="M 600 50 L 550 450" stroke="#EAE2D2" stroke-width="8" stroke-linecap="round" />
+            <path d="M 150 350 L 750 320" stroke="#EAE2D2" stroke-width="6" stroke-linecap="round" />
+            
+            <!-- Live Active Corridor 1: Indiranagar to St Marks -->
+            <path d="M 260 220 Q 420 180 580 260" fill="none" stroke="#75A856" stroke-width="6" stroke-linecap="round" stroke-dasharray="10 6" class="animate-pulse" />
+            
+            <!-- Live Active Corridor 2: Koramangala to Shivajinagar -->
+            <path d="M 400 380 Q 520 300 680 180" fill="none" stroke="#FA705C" stroke-width="5" stroke-linecap="round" stroke-dasharray="8 6" />
+        </svg>
+
+        <!-- MAP CONTROLS & HUD -->
+        <div class="relative z-10 flex flex-wrap items-center justify-between gap-3">
+            <div class="bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-2xl border border-ivory-300 shadow-soft flex items-center gap-3 text-xs">
+                <span class="flex items-center gap-1.5 font-bold text-pista-900">
+                    <span class="w-2.5 h-2.5 rounded-full bg-pista-500"></span> Donor Kitchens
+                </span>
+                <span class="text-ivory-300">&bull;</span>
+                <span class="flex items-center gap-1.5 font-bold text-salmon-700">
+                    <span class="w-2.5 h-2.5 rounded-full bg-salmon-500"></span> Shelters &amp; NGOs
+                </span>
+                <span class="text-ivory-300">&bull;</span>
+                <span class="flex items-center gap-1.5 font-bold text-ivory-800">
+                    <span class="w-2.5 h-2.5 rounded-full bg-ivory-900 animate-ping"></span> Live Couriers
+                </span>
+            </div>
+
+            <div class="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-2xl border border-ivory-300 shadow-soft text-xs text-ivory-700 font-semibold">
+                Bengaluru Central Grid &bull; Lat 12.9716° N, Long 77.5946° E
+            </div>
+        </div>
+
+        <!-- INTERACTIVE PIN 1: Annapurna Grand (Donor) -->
+        <div class="relative z-10 self-start mt-12 ml-16 bg-white/95 backdrop-blur-md p-3.5 rounded-2xl border-2 border-pista-500 shadow-pista max-w-xs cursor-pointer hover:scale-105 transition-transform"
+             onclick="showPinDetail('Annapurna Grand', 'Indiranagar', '60 Buffet Meals Available', 'Donor')">
+            <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-xl bg-pista-100 text-pista-800 flex items-center justify-center font-bold text-xs shrink-0">
+                    <i class="fa-solid fa-utensils"></i>
+                </div>
+                <div>
+                    <span class="text-[9px] uppercase font-bold text-pista-800 block">Donor Kitchen</span>
+                    <div class="font-bold text-xs text-pista-950">Annapurna Grand</div>
+                    <div class="text-[10px] text-ivory-600">Indiranagar 100ft Road &bull; 60 Meals</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- INTERACTIVE PIN 2: Hope Community Shelter (NGO) -->
+        <div class="relative z-10 self-center mr-20 bg-white/95 backdrop-blur-md p-3.5 rounded-2xl border-2 border-salmon-400 shadow-salmon max-w-xs cursor-pointer hover:scale-105 transition-transform"
+             onclick="showPinDetail('Hope Community Shelter', 'St. Marks Road', 'Needs 80 Dinners &bull; 60 Incoming', 'NGO')">
+            <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-xl bg-salmon-100 text-salmon-700 flex items-center justify-center font-bold text-xs shrink-0">
+                    <i class="fa-solid fa-hands-holding-child"></i>
+                </div>
+                <div>
+                    <span class="text-[9px] uppercase font-bold text-salmon-700 block">Community Shelter</span>
+                    <div class="font-bold text-xs text-pista-950">Hope Shelter</div>
+                    <div class="text-[10px] text-ivory-600">St. Marks Road &bull; 80 Beneficiaries</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- INTERACTIVE PIN 3: Aniket Kumar (Volunteer Courier) -->
+        <div class="relative z-10 self-center ml-48 bg-white/95 backdrop-blur-md px-3 py-2 rounded-2xl border-2 border-ivory-900 shadow-soft cursor-pointer hover:scale-105 transition-transform animate-pulse"
+             onclick="showPinDetail('Aniket Kumar (Driver)', 'En Route', 'Transporting 60 meals from Indiranagar to St. Marks', 'Courier')">
+            <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-full bg-ivory-900 text-white flex items-center justify-center text-[10px]">
+                    <i class="fa-solid fa-bicycle"></i>
+                </div>
+                <div>
+                    <div class="font-bold text-[11px] text-ivory-950">Courier: Aniket (TVS iQube)</div>
+                    <div class="text-[9px] text-salmon-600 font-bold">Speed: 24 km/h &bull; ETA 12m</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER BAR -->
+        <div class="relative z-10 flex flex-wrap items-center justify-between gap-3 pt-4">
+            <div id="pin-detail-box" class="bg-white/95 backdrop-blur-md p-3 rounded-2xl border border-ivory-300 shadow-soft text-xs text-ivory-800 flex items-center gap-3">
+                <i class="fa-solid fa-info-circle text-pista-700 text-sm"></i>
+                <span>Click any pin to inspect food listings, pickup contacts, or dispatch milestones.</span>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <a href="/donor/live-tracking/" class="px-4 py-2 bg-salmon-500 hover:bg-salmon-600 text-white font-bold text-xs rounded-xl shadow-salmon transition-all">
+                    Track Active Corridor &rarr;
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    function showPinDetail(name, loc, info, type) {
+        const box = document.getElementById('pin-detail-box');
+        if (box) {
+            box.innerHTML = `<span class="font-bold text-pista-950">${name} (${type})</span> &bull; <span class="text-ivory-700">${loc}</span> &bull; <span class="text-salmon-700 font-semibold">${info}</span>`;
+        }
+    }
+
+    function togglePinLayer(layer) {
+        alert('Filtering layer: ' + layer);
+    }
+</script>
+{% endblock %}

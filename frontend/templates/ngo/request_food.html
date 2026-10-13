@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}Request Meals for Shelter — Sanjog NGO Portal{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+
+    <!-- MVP HIERARCHY NAVIGATION -->
+    {% include "components/section_nav.html" with section="ngo" page="request_food" %}
+
+    <!-- ROLE SWITCHER -->
+    {% include "components/role_switcher.html" %}
+
+    <div class="max-w-3xl mx-auto bg-white p-6 sm:p-9 rounded-3xl border border-ivory-300 shadow-soft space-y-6">
+        
+        <!-- Header -->
+        <div class="flex items-start justify-between gap-4 pb-5 border-b border-ivory-200">
+            <div>
+                <span class="px-3 py-1 bg-salmon-50 text-salmon-700 border border-salmon-200 rounded-full text-xs font-bold inline-flex items-center gap-1.5 mb-2">
+                    <i class="fa-solid fa-utensils text-salmon-500"></i>
+                    Shelter Feeding Demand
+                </span>
+                <h1 class="font-serif text-2xl sm:text-3xl font-black text-pista-950">
+                    Broadcast Daily Meal Need
+                </h1>
+                <p class="text-xs sm:text-sm text-ivory-700 mt-1">
+                    Let local restaurants and catering kitchens know how many individuals need food at your facility today.
+                </p>
+            </div>
+            <a href="/ngo/dashboard/" class="text-xs font-bold text-ivory-600 hover:text-salmon-700 transition-colors flex items-center gap-1 shrink-0">
+                <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+
+        <!-- Verified Shelter Badge -->
+        <div class="bg-salmon-50/70 border border-salmon-200 rounded-2xl p-4 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-salmon-100 text-salmon-700 flex items-center justify-center font-bold text-sm">
+                    <i class="fa-solid fa-house-chimney-user"></i>
+                </div>
+                <div>
+                    <div class="font-bold text-xs text-salmon-950">Posting as: Hope Community Shelter &amp; Kitchen</div>
+                    <div class="text-[11px] text-salmon-800">St. Marks Road &bull; NGO Darpan #KA/2021/008129</div>
+                </div>
+            </div>
+            <span class="px-2.5 py-1 rounded-full bg-pista-100 text-pista-800 font-bold text-[10px]">
+                <i class="fa-solid fa-check-double mr-1"></i> 80G Certified
+            </span>
+        </div>
+
+        <!-- The Meal Request Form -->
+        <form method="post" action="/ngo/dashboard/" class="space-y-5">
+            {% csrf_token %}
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold text-ivory-900 mb-1.5">
+                        <i class="fa-solid fa-users text-salmon-600 mr-1"></i> Number of Meals Needed
+                    </label>
+                    <input type="number" name="meals_needed" value="80" min="10" max="500"
+                           class="w-full px-3.5 py-2.5 text-xs rounded-xl border border-ivory-300 focus:border-salmon-500 focus:ring-2 focus:ring-salmon-100 outline-none transition-all" required>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-ivory-900 mb-1.5">
+                        <i class="fa-solid fa-clock text-salmon-600 mr-1"></i> Meal Target Window
+                    </label>
+                    <select name="target_time" class="w-full px-3.5 py-2.5 text-xs rounded-xl border border-ivory-300 focus:border-salmon-500 focus:ring-2 focus:ring-salmon-100 outline-none transition-all">
+                        <option value="dinner_tonight" selected>Tonight's Supper (Before 9:00 PM)</option>
+                        <option value="lunch_tomorrow">Tomorrow's Lunch (12:00 PM - 2:00 PM)</option>
+                        <option value="breakfast_tomorrow">Tomorrow's Breakfast (7:00 AM - 9:00 AM)</option>
+                        <option value="immediate">Immediate Emergency Dispatch</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Beneficiaries & Dietary Preference -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold text-ivory-900 mb-1.5">
+                        <i class="fa-solid fa-children text-pista-700 mr-1"></i> Beneficiary Group
+                    </label>
+                    <input type="text" name="beneficiaries" value="Homeless mothers, young children &amp; daily wage seniors" 
+                           class="w-full px-3.5 py-2.5 text-xs rounded-xl border border-ivory-300 focus:border-pista-600 focus:ring-2 focus:ring-pista-200 outline-none transition-all" required>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-ivory-900 mb-1.5">
+                        <i class="fa-solid fa-leaf text-pista-700 mr-1"></i> Dietary Requirements
+                    </label>
+                    <select name="dietary_preference" class="w-full px-3.5 py-2.5 text-xs rounded-xl border border-ivory-300 focus:border-pista-600 focus:ring-2 focus:ring-pista-200 outline-none transition-all">
+                        <option value="any" selected>Any Wholesome Food (Veg or Mixed)</option>
+                        <option value="veg_only">Strict Vegetarian Only</option>
+                        <option value="soft_elderly">Mild / Soft Meals (Elderly care)</option>
+                        <option value="dry_ration">Dry Grains / Uncooked Raw Rations</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Storage on Premises -->
+            <div class="p-4 bg-ivory-50 border border-ivory-300 rounded-2xl space-y-3">
+                <div class="text-xs font-bold text-pista-950 uppercase tracking-wider flex items-center gap-1.5">
+                    <i class="fa-solid fa-snowflake text-pista-600"></i> Shelter On-Premises Equipment
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                    <label class="flex items-center gap-2 p-2.5 bg-white rounded-xl border border-ivory-300 cursor-pointer hover:border-salmon-500">
+                        <input type="checkbox" name="has_fridge" checked class="w-4 h-4 text-salmon-500 rounded">
+                        <span class="text-ivory-900">Commercial Cold Room / Refrigerator Available</span>
+                    </label>
+                    <label class="flex items-center gap-2 p-2.5 bg-white rounded-xl border border-ivory-300 cursor-pointer hover:border-salmon-500">
+                        <input type="checkbox" name="has_warmer" checked class="w-4 h-4 text-salmon-500 rounded">
+                        <span class="text-ivory-900">Steam Table / Hot Holding Warmers Ready</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Gate Contact & Delivery Instructions -->
+            <div>
+                <label class="block text-xs font-bold text-ivory-900 mb-1.5">
+                    <i class="fa-solid fa-truck-ramp-box text-salmon-600 mr-1"></i> Unloading Point &amp; Volunteer Gate Instructions
+                </label>
+                <textarea rows="2" name="instructions" class="w-full px-3.5 py-2.5 text-xs rounded-xl border border-ivory-300 focus:border-salmon-500 focus:ring-2 focus:ring-salmon-100 outline-none transition-all">Gate 2 on Church Street side. Ask for Sister Maria or Volunteer Coordinator George. Hand trolley available for heavy containers.</textarea>
+            </div>
+
+            <!-- Submit Buttons -->
+            <div class="pt-3 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-ivory-200">
+                <div class="text-[11px] text-ivory-600">
+                    <i class="fa-solid fa-circle-info text-pista-700 mr-1"></i>
+                    Broadcast will be active for 4 hours across Indiranagar, MG Road &amp; CBD kitchens.
+                </div>
+
+                <div class="flex items-center gap-2.5 w-full sm:w-auto">
+                    <a href="/ngo/dashboard/" class="w-full sm:w-auto px-4 py-2.5 rounded-xl text-xs font-bold text-ivory-700 bg-ivory-100 hover:bg-ivory-200 text-center transition-colors">
+                        Cancel
+                    </a>
+                    <button type="submit" class="w-full sm:w-auto px-6 py-3 bg-salmon-500 hover:bg-salmon-600 text-white text-xs font-bold rounded-2xl shadow-salmon transition-all flex items-center justify-center gap-2 hover:scale-[1.02]">
+                        <i class="fa-solid fa-bullhorn"></i>
+                        <span>Publish Meal Need to Network &rarr;</span>
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Notifications &amp; Activity — Sanjog Food Network{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+
+    <!-- MVP HIERARCHY NAVIGATION -->
+    {% include "components/section_nav.html" with section="shared" page="notifications" %}
+
+    <!-- ROLE SWITCHER -->
+    {% include "components/role_switcher.html" %}
+
+    <!-- NOTIFICATIONS HEADER -->
+    <div class="bg-white p-6 rounded-3xl border border-ivory-300 shadow-soft flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <span class="px-3 py-1 bg-salmon-50 text-salmon-700 rounded-full text-xs font-bold inline-flex items-center gap-1.5 mb-2">
+                <i class="fa-solid fa-bell text-salmon-500"></i>
+                Live Community Dispatch Stream
+            </span>
+            <h1 class="font-serif text-2xl font-black text-pista-950">
+                Notifications &amp; Rescue Alerts
+            </h1>
+            <p class="text-xs text-ivory-700 mt-1">
+                Real-time updates regarding surplus food matching, driver pickups, and shelter acknowledgements.
+            </p>
+        </div>
+
+        <div class="flex items-center gap-2">
+            <button onclick="alert('All notifications marked as read.')" class="px-4 py-2 bg-ivory-100 hover:bg-ivory-200 text-ivory-800 font-bold text-xs rounded-xl border border-ivory-300 transition-colors">
+                Mark All Read
+            </button>
+        </div>
+    </div>
+
+    <!-- NOTIFICATION ITEMS -->
+    <div class="space-y-3">
+        
+        <!-- ALERT 1: CRITICAL / URGENT (SALMON PINK) -->
+        <div class="bg-white p-5 rounded-3xl border-2 border-salmon-300 shadow-soft flex items-start gap-4">
+            <div class="w-10 h-10 rounded-2xl bg-salmon-100 text-salmon-600 flex items-center justify-center text-base shrink-0 mt-0.5">
+                <i class="fa-solid fa-truck-fast"></i>
+            </div>
+            <div class="flex-1 space-y-1">
+                <div class="flex items-center justify-between">
+                    <span class="font-bold text-xs text-salmon-800 uppercase tracking-wider">Driver En Route</span>
+                    <span class="text-[11px] text-ivory-600">3 mins ago</span>
+                </div>
+                <div class="font-bold text-sm text-ivory-950">Volunteer Driver Aniket is 400m from your kitchen</div>
+                <p class="text-xs text-ivory-700 leading-relaxed">
+                    Preparing to collect 60 North Indian Thalis at Annapurna Grand dock. Please have donor PIN <strong>7492</strong> ready for verification.
+                </p>
+                <div class="pt-2 flex items-center gap-2">
+                    <a href="/donor/live-tracking/" class="px-3.5 py-1.5 bg-salmon-500 hover:bg-salmon-600 text-white font-bold text-xs rounded-xl shadow-salmon transition-all">
+                        Track Delivery &rarr;
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ALERT 2: PISTA GREEN SUCCESS -->
+        <div class="bg-white p-5 rounded-3xl border border-ivory-300 shadow-soft flex items-start gap-4">
+            <div class="w-10 h-10 rounded-2xl bg-pista-100 text-pista-700 flex items-center justify-center text-base shrink-0 mt-0.5">
+                <i class="fa-solid fa-handshake"></i>
+            </div>
+            <div class="flex-1 space-y-1">
+                <div class="flex items-center justify-between">
+                    <span class="font-bold text-xs text-pista-800 uppercase tracking-wider">AI Pairing Confirmed</span>
+                    <span class="text-[11px] text-ivory-600">18 mins ago</span>
+                </div>
+                <div class="font-bold text-sm text-ivory-950">Hope Community Shelter accepted surplus broadcast</div>
+                <p class="text-xs text-ivory-700 leading-relaxed">
+                    Match score 96.4% &bull; St. Marks Road shelter verified 80 evening dinner recipients.
+                </p>
+                <div class="pt-2 flex items-center gap-2">
+                    <a href="/food-passport/" class="text-pista-700 hover:underline text-xs font-bold">
+                        View Food Passport &rarr;
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ALERT 3: TRUST / COMPLIANCE -->
+        <div class="bg-white p-5 rounded-3xl border border-ivory-300 shadow-soft flex items-start gap-4">
+            <div class="w-10 h-10 rounded-2xl bg-ivory-200 text-ivory-800 flex items-center justify-center text-base shrink-0 mt-0.5">
+                <i class="fa-solid fa-shield-check"></i>
+            </div>
+            <div class="flex-1 space-y-1">
+                <div class="flex items-center justify-between">
+                    <span class="font-bold text-xs text-ivory-700 uppercase tracking-wider">Accreditation Active</span>
+                    <span class="text-[11px] text-ivory-600">Yesterday</span>
+                </div>
+                <div class="font-bold text-sm text-ivory-950">FSSAI Annual Hygiene Certification Logged</div>
+                <p class="text-xs text-ivory-700 leading-relaxed">
+                    License #11223344009812 cleared for zero-waste community distribution.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

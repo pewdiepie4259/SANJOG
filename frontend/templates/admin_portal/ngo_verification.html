@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}NGO &amp; Kitchen Verification Queue — Sanjog Admin Portal{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+
+    <!-- MVP HIERARCHY NAVIGATION -->
+    {% include "components/section_nav.html" with section="admin" page="ngo_verification" %}
+
+    <!-- ROLE SWITCHER -->
+    {% include "components/role_switcher.html" %}
+
+    <!-- HEADER -->
+    <div class="bg-white p-6 rounded-3xl border border-ivory-300 shadow-soft flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <span class="px-3 py-1 bg-pista-100 text-pista-800 rounded-full text-xs font-bold inline-flex items-center gap-1.5 mb-2">
+                <i class="fa-solid fa-file-circle-check text-pista-600"></i>
+                Compliance &amp; Trust Audit
+            </span>
+            <h1 class="font-serif text-2xl font-black text-pista-950">
+                NGO &amp; Donor Verification Queue
+            </h1>
+            <p class="text-xs text-ivory-700 mt-1">
+                Audit uploaded legal documents (FSSAI licenses, 80G tax registration, NGO Darpan IDs) to authorize partners for live food rescues.
+            </p>
+        </div>
+
+        <div class="flex items-center gap-2">
+            <span class="px-3 py-1.5 rounded-xl bg-salmon-50 text-salmon-700 font-bold text-xs border border-salmon-200">
+                2 Pending Review
+            </span>
+        </div>
+    </div>
+
+    <!-- VERIFICATION QUEUE ITEMS -->
+    <div class="space-y-4">
+        
+        <!-- PENDING ITEM 1 -->
+        <div class="bg-white p-6 rounded-3xl border-2 border-salmon-300 shadow-soft space-y-4">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-ivory-200">
+                <div class="space-y-1">
+                    <div class="flex items-center gap-2.5">
+                        <span class="px-2.5 py-0.5 rounded-full bg-salmon-500 text-white font-bold text-[10px]">
+                            PENDING AUDIT
+                        </span>
+                        <h3 class="font-serif text-lg font-bold text-pista-950">Karuna Care Home for Elderly</h3>
+                        <span class="text-xs text-ivory-600">&bull; Shivajinagar, Bengaluru</span>
+                    </div>
+                    <p class="text-xs text-ivory-700">
+                        Registered Non-Profit Trust providing assisted living &amp; food for 45 elderly residents.
+                    </p>
+                </div>
+
+                <div class="flex items-center gap-2 shrink-0">
+                    <button onclick="alert('Organization Karuna Care Home approved! Status updated to APPROVED.')" 
+                            class="px-4 py-2.5 bg-pista-600 hover:bg-pista-700 text-white font-bold text-xs rounded-xl shadow-pista transition-all flex items-center gap-1.5">
+                        <i class="fa-solid fa-check"></i>
+                        <span>Approve Organization</span>
+                    </button>
+                    <button onclick="alert('Organization flagged for revision.')" 
+                            class="px-3.5 py-2.5 bg-salmon-50 hover:bg-salmon-100 text-salmon-700 font-bold text-xs rounded-xl border border-salmon-200 transition-colors flex items-center gap-1.5">
+                        <i class="fa-solid fa-xmark"></i>
+                        <span>Request Info</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Documents Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                <div class="p-3 bg-ivory-50 rounded-2xl border border-ivory-300 flex items-center justify-between">
+                    <div>
+                        <span class="text-[10px] text-ivory-600 uppercase font-bold block">Section 80G Certificate</span>
+                        <span class="font-bold text-pista-950">80G-DEL-2022-901</span>
+                    </div>
+                    <span class="text-pista-700 font-bold"><i class="fa-solid fa-check-circle"></i> Verified</span>
+                </div>
+                <div class="p-3 bg-ivory-50 rounded-2xl border border-ivory-300 flex items-center justify-between">
+                    <div>
+                        <span class="text-[10px] text-ivory-600 uppercase font-bold block">NGO Darpan Unique ID</span>
+                        <span class="font-bold text-pista-950">KA/2022/019821</span>
+                    </div>
+                    <span class="text-pista-700 font-bold"><i class="fa-solid fa-check-circle"></i> Active</span>
+                </div>
+                <div class="p-3 bg-ivory-50 rounded-2xl border border-ivory-300 flex items-center justify-between">
+                    <div>
+                        <span class="text-[10px] text-ivory-600 uppercase font-bold block">Kitchen Hygiene Declaration</span>
+                        <span class="font-bold text-pista-950">Self-attested 2026</span>
+                    </div>
+                    <span class="text-salmon-600 font-bold"><i class="fa-solid fa-file-pdf"></i> View PDF</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- APPROVED ITEM 2 -->
+        <div class="bg-white p-6 rounded-3xl border border-ivory-300 shadow-soft space-y-4">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-ivory-200">
+                <div class="space-y-1">
+                    <div class="flex items-center gap-2.5">
+                        <span class="px-2.5 py-0.5 rounded-full bg-pista-100 text-pista-800 font-bold text-[10px]">
+                            ACTIVE &bull; APPROVED
+                        </span>
+                        <h3 class="font-serif text-lg font-bold text-pista-950">Hope Community Shelter &amp; Kitchen</h3>
+                        <span class="text-xs text-ivory-600">&bull; St. Marks Road</span>
+                    </div>
+                    <p class="text-xs text-ivory-700">
+                        80 beneficiaries &bull; Darpan #KA/2021/008129 &bull; Verified by Admin Coordinator on Oct 01, 2026.
+                    </p>
+                </div>
+
+                <div class="flex items-center gap-2 shrink-0">
+                    <span class="text-xs font-bold text-pista-700 flex items-center gap-1.5 bg-pista-50 px-3 py-1.5 rounded-xl border border-pista-200">
+                        <i class="fa-solid fa-shield-check"></i> Accreditation Valid until Dec 2027
+                    </span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

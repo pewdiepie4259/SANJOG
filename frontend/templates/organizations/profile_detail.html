@@ -1,33 +1,36 @@
 {% extends "base.html" %}
 
-{% block title %}{{ organization.name }} — Organization Profile — SANJOG{% endblock %}
+{% block title %}{{ organization.name }} — Organization Profile — Sanjog{% endblock %}
 
 {% block content %}
 <div class="max-w-5xl mx-auto space-y-6">
     <!-- Top Card: Name, Category, Verification Status Badge -->
-    <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <div class="bg-ivory-50 rounded-2xl p-6 sm:p-8 border border-ivory-300/80 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div class="space-y-2">
             <div class="flex items-center gap-3 flex-wrap">
-                <h1 class="text-2xl sm:text-3xl font-black text-slate-900">{{ organization.name }}</h1>
+                <h1 class="text-2xl sm:text-3xl font-serif font-bold text-pista-950">{{ organization.name }}</h1>
                 {% include "organizations/partials/status_badge.html" with status=organization.verification_status %}
             </div>
-            <p class="text-xs text-slate-500">
-                <span class="font-bold text-slate-700">{{ organization.get_org_type_display }}</span> &bull;
+            <p class="text-xs text-pista-700/80">
+                <span class="font-bold text-pista-900">{{ organization.get_org_type_display }}</span> &bull;
                 Registered {{ organization.created_at|date:"M d, Y" }} &bull;
-                Managed by <span class="font-medium text-primary-700">{{ organization.user.username }}</span>
+                Managed by <span class="font-semibold text-pista-800">@{{ organization.user.username }}</span>
             </p>
         </div>
 
         <div class="flex items-center gap-2 flex-wrap">
             {% if organization.verification_status != 'PENDING' %}
-                <a href="{% url 'organization_profile_edit' %}" class="px-4 py-2 rounded-xl border border-slate-300 text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors shadow-sm">
-                    Edit Profile
+                <a href="{% url 'organization_profile_edit' %}" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl border border-ivory-300 text-xs font-bold text-pista-800 hover:bg-ivory-100 transition-colors shadow-sm bg-white/70">
+                    <i class="fa-solid fa-pen-to-square text-xs"></i>
+                    <span>Edit Profile</span>
                 </a>
-                <a href="{% url 'organization_documents' %}" class="px-4 py-2 rounded-xl bg-primary-700 hover:bg-primary-900 text-white text-xs font-bold transition-all shadow-sm">
-                    Manage Documents
+                <a href="{% url 'organization_documents' %}" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-pista-700 hover:bg-pista-800 text-ivory-50 text-xs font-bold transition-all shadow-sm">
+                    <i class="fa-solid fa-folder-open text-xs"></i>
+                    <span>Manage Documents</span>
                 </a>
             {% else %}
-                <span class="px-3 py-1.5 rounded-xl bg-amber-50 text-amber-800 border border-amber-200 text-xs font-medium">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 text-amber-800 border border-amber-200 text-xs font-medium">
+                    <i class="fa-solid fa-lock text-xs"></i>
                     Profile Locked During Review
                 </span>
             {% endif %}
@@ -36,21 +39,21 @@
 
     <!-- Status Alert Banners -->
     {% if organization.verification_status == 'REJECTED' %}
-        <div class="bg-rose-50 border border-rose-200 rounded-2xl p-6 space-y-3">
-            <div class="flex items-center gap-2 text-rose-800 font-bold text-sm">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+        <div class="bg-salmon-50 border border-salmon-200 rounded-2xl p-6 space-y-3">
+            <div class="flex items-center gap-2 text-salmon-800 font-bold text-sm">
+                <i class="fa-solid fa-triangle-exclamation text-salmon-600"></i>
                 Verification Rejected by Administrator
             </div>
-            <p class="text-xs text-rose-700 bg-white/70 p-3 rounded-lg border border-rose-100 font-mono">
+            <p class="text-xs text-salmon-700 bg-white/80 p-3 rounded-lg border border-salmon-100 font-mono">
                 Reason: {{ organization.rejection_reason }}
             </p>
-            <p class="text-xs text-slate-600">
+            <p class="text-xs text-pista-800/80">
                 Please upload updated or replacement documents resolving the reviewer feedback, then resubmit your profile below.
             </p>
         </div>
     {% elif organization.verification_status == 'PENDING' %}
         <div class="bg-amber-50 border border-amber-200 rounded-2xl p-6 flex items-start gap-3">
-            <svg class="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <i class="fa-solid fa-hourglass-half text-amber-600 mt-0.5 flex-shrink-0"></i>
             <div class="space-y-1">
                 <h4 class="text-sm font-bold text-amber-900">Application Under Compliance Review</h4>
                 <p class="text-xs text-amber-700">
@@ -59,12 +62,12 @@
             </div>
         </div>
     {% elif organization.verification_status == 'APPROVED' %}
-        <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-6 flex items-start gap-3">
-            <svg class="w-5 h-5 text-emerald-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <div class="bg-pista-100 border border-pista-300 rounded-2xl p-6 flex items-start gap-3">
+            <i class="fa-solid fa-circle-check text-pista-700 mt-0.5 flex-shrink-0 text-lg"></i>
             <div class="space-y-1">
-                <h4 class="text-sm font-bold text-emerald-900">Fully Verified Organization</h4>
-                <p class="text-xs text-emerald-700">
-                    Your organization is verified and accredited. Surplus food donation and meal claim operations are fully unlocked across SANJOG.
+                <h4 class="text-sm font-serif font-bold text-pista-950">Fully Verified Organization</h4>
+                <p class="text-xs text-pista-800">
+                    Your organization is verified and accredited. Surplus food donation and meal claim operations are fully unlocked across Sanjog.
                 </p>
             </div>
         </div>
@@ -73,41 +76,57 @@
     <!-- 2-Column Grid: Details & Document Checklist -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Column 1: Organization Details -->
-        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-            <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500 pb-2 border-b border-slate-100">
+        <div class="bg-ivory-50 rounded-2xl p-6 border border-ivory-300/80 shadow-sm space-y-4">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-pista-800/80 pb-2 border-b border-ivory-200 flex items-center gap-2">
+                <i class="fa-solid fa-building text-pista-600"></i>
                 Entity Details & Contact
             </h2>
             <dl class="space-y-3 text-xs">
                 <div>
-                    <dt class="font-bold text-slate-500">Registration / FSSAI / 80G:</dt>
-                    <dd class="text-slate-800 font-mono mt-0.5">{{ organization.registration_number|default:"Not Provided" }}</dd>
+                    <dt class="font-bold text-pista-700/80">Registration / FSSAI / 80G:</dt>
+                    <dd class="text-pista-950 font-mono mt-0.5 font-semibold">{{ organization.registration_number|default:"Not Provided" }}</dd>
                 </div>
                 <div>
-                    <dt class="font-bold text-slate-500">Contact Representative:</dt>
-                    <dd class="text-slate-800 mt-0.5">{{ organization.contact_person }}</dd>
-                </div>
-                <div>
-                    <dt class="font-bold text-slate-500">Operational Email:</dt>
-                    <dd class="text-slate-800 font-mono mt-0.5">{{ organization.contact_email }}</dd>
-                </div>
-                <div>
-                    <dt class="font-bold text-slate-500">Operational Phone:</dt>
-                    <dd class="text-slate-800 font-mono mt-0.5">{{ organization.contact_phone }}</dd>
-                </div>
-                <div>
-                    <dt class="font-bold text-slate-500">Physical Address:</dt>
-                    <dd class="text-slate-800 mt-0.5">
-                        {{ organization.address_line1 }}{% if organization.address_line2 %}, {{ organization.address_line2 }}{% endif %}<br>
-                        {{ organization.city }}, {{ organization.state }} {{ organization.postal_code }} &bull; {{ organization.country }}
+                    <dt class="font-bold text-pista-700/80">Contact Representative:</dt>
+                    <dd class="text-pista-900 font-medium mt-0.5 flex items-center gap-1.5">
+                        <i class="fa-solid fa-user text-pista-500 text-[11px]"></i>
+                        {{ organization.contact_person }}
                     </dd>
                 </div>
                 <div>
-                    <dt class="font-bold text-slate-500">GPS Coordinates:</dt>
-                    <dd class="text-slate-800 font-mono mt-0.5">
+                    <dt class="font-bold text-pista-700/80">Operational Email:</dt>
+                    <dd class="text-pista-900 font-mono mt-0.5 flex items-center gap-1.5">
+                        <i class="fa-solid fa-envelope text-salmon-500 text-[11px]"></i>
+                        {{ organization.contact_email }}
+                    </dd>
+                </div>
+                <div>
+                    <dt class="font-bold text-pista-700/80">Operational Phone:</dt>
+                    <dd class="text-pista-900 font-mono mt-0.5 flex items-center gap-1.5">
+                        <i class="fa-solid fa-phone text-pista-600 text-[11px]"></i>
+                        {{ organization.contact_phone }}
+                    </dd>
+                </div>
+                <div>
+                    <dt class="font-bold text-pista-700/80">Physical Address:</dt>
+                    <dd class="text-pista-900 mt-0.5 flex items-start gap-1.5 leading-relaxed">
+                        <i class="fa-solid fa-location-dot text-salmon-600 text-[11px] mt-0.5"></i>
+                        <span>
+                            {{ organization.address_line1 }}{% if organization.address_line2 %}, {{ organization.address_line2 }}{% endif %}<br>
+                            {{ organization.city }}, {{ organization.state }} {{ organization.postal_code }} &bull; {{ organization.country }}
+                        </span>
+                    </dd>
+                </div>
+                <div>
+                    <dt class="font-bold text-pista-700/80">GPS Coordinates:</dt>
+                    <dd class="text-pista-900 font-mono mt-0.5">
                         {% if organization.latitude and organization.longitude %}
-                            {{ organization.latitude }}, {{ organization.longitude }}
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-pista-100 text-pista-800 text-[11px] font-bold">
+                                <i class="fa-solid fa-crosshairs text-pista-600"></i>
+                                {{ organization.latitude }}, {{ organization.longitude }}
+                            </span>
                         {% else %}
-                            <span class="text-slate-400">Not configured</span>
+                            <span class="text-pista-400 italic">Not configured</span>
                         {% endif %}
                     </dd>
                 </div>
@@ -115,47 +134,61 @@
         </div>
 
         <!-- Column 2: Document Compliance Checklist -->
-        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4 flex flex-col justify-between">
+        <div class="bg-ivory-50 rounded-2xl p-6 border border-ivory-300/80 shadow-sm space-y-4 flex flex-col justify-between">
             <div class="space-y-4">
-                <div class="flex items-center justify-between pb-2 border-b border-slate-100">
-                    <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500">
-                        Mandatory Accreditation Checklist
+                <div class="flex items-center justify-between pb-2 border-b border-ivory-200">
+                    <h2 class="text-xs font-bold uppercase tracking-wider text-pista-800/80 flex items-center gap-2">
+                        <i class="fa-solid fa-shield-halved text-pista-600"></i>
+                        Accreditation Checklist
                     </h2>
-                    <a href="{% url 'organization_documents' %}" class="text-xs text-primary-700 hover:underline font-bold">
-                        Upload Files &rarr;
+                    <a href="{% url 'organization_documents' %}" class="inline-flex items-center gap-1 text-xs text-pista-700 hover:text-pista-900 font-bold hover:underline">
+                        <span>Upload Files</span>
+                        <i class="fa-solid fa-arrow-right text-[11px]"></i>
                     </a>
                 </div>
 
                 <div class="space-y-2">
                     {% for item in checklist %}
-                        <div class="p-3 rounded-xl border border-slate-100 bg-slate-50 flex items-center justify-between text-xs">
-                            <span class="font-semibold text-slate-800">{{ item.label }}</span>
+                        <div class="p-3 rounded-xl border border-ivory-200 bg-white/70 flex items-center justify-between text-xs">
+                            <span class="font-semibold text-pista-950 flex items-center gap-2">
+                                <i class="fa-regular fa-file text-pista-500"></i>
+                                {{ item.label }}
+                            </span>
                             {% if item.status == 'APPROVED' %}
-                                <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold">Approved</span>
+                                <span class="px-2.5 py-0.5 rounded-full bg-pista-100 text-pista-800 text-[11px] font-bold border border-pista-200 flex items-center gap-1">
+                                    <i class="fa-solid fa-check text-[10px]"></i> Approved
+                                </span>
                             {% elif item.status == 'PENDING' %}
-                                <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[11px] font-bold">Pending Review</span>
+                                <span class="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[11px] font-bold border border-amber-200 flex items-center gap-1">
+                                    <i class="fa-solid fa-clock text-[10px]"></i> Pending Review
+                                </span>
                             {% elif item.status == 'REJECTED' %}
-                                <span class="px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 text-[11px] font-bold">Rejected</span>
+                                <span class="px-2.5 py-0.5 rounded-full bg-salmon-100 text-salmon-800 text-[11px] font-bold border border-salmon-200 flex items-center gap-1">
+                                    <i class="fa-solid fa-xmark text-[10px]"></i> Rejected
+                                </span>
                             {% else %}
-                                <span class="px-2 py-0.5 rounded-full bg-slate-200 text-slate-700 text-[11px] font-bold">Missing</span>
+                                <span class="px-2.5 py-0.5 rounded-full bg-ivory-200 text-pista-700 text-[11px] font-bold border border-ivory-300 flex items-center gap-1">
+                                    <i class="fa-regular fa-circle text-[10px]"></i> Missing
+                                </span>
                             {% endif %}
                         </div>
                     {% empty %}
-                        <p class="text-xs text-slate-500 italic">No mandatory documents defined for this organization category.</p>
+                        <p class="text-xs text-pista-600/70 italic">No mandatory documents defined for this organization category.</p>
                     {% endfor %}
                 </div>
             </div>
 
             <!-- Submission Action Section -->
             {% if organization.verification_status != 'APPROVED' and organization.verification_status != 'PENDING' %}
-                <div class="pt-4 border-t border-slate-100 space-y-2">
+                <div class="pt-4 border-t border-ivory-200 space-y-2">
                     <form method="post" action="{% url 'organization_submit' %}">
                         {% csrf_token %}
-                        <button type="submit" id="btn-submit-verification" class="w-full py-2.5 rounded-xl bg-primary-700 hover:bg-primary-900 text-white font-bold text-xs shadow transition-all flex items-center justify-center gap-2">
-                            <span>Submit for Admin Verification &rarr;</span>
+                        <button type="submit" id="btn-submit-verification" class="w-full py-2.5 rounded-xl bg-pista-700 hover:bg-pista-800 text-ivory-50 font-bold text-xs shadow-sm transition-all flex items-center justify-center gap-2">
+                            <span>Submit for Admin Verification</span>
+                            <i class="fa-solid fa-paper-plane text-xs"></i>
                         </button>
                     </form>
-                    <p class="text-[11px] text-slate-400 text-center">
+                    <p class="text-[11px] text-pista-600/80 text-center">
                         All mandatory accreditations must have an active upload before submission.
                     </p>
                 </div>
@@ -165,25 +198,26 @@
 
     <!-- Verification Audit Events Timeline -->
     {% if events %}
-        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-            <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500 pb-2 border-b border-slate-100">
+        <div class="bg-ivory-50 rounded-2xl p-6 border border-ivory-300/80 shadow-sm space-y-4">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-pista-800/80 pb-2 border-b border-ivory-200 flex items-center gap-2">
+                <i class="fa-solid fa-clock-rotate-left text-pista-600"></i>
                 Verification History Timeline (Audit Log)
             </h2>
             <div class="space-y-3">
                 {% for event in events %}
-                    <div class="flex items-start gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100 text-xs">
-                        <span class="w-2 h-2 mt-1.5 rounded-full {% if event.event_type == 'APPROVED' %}bg-emerald-500{% elif event.event_type == 'REJECTED' %}bg-rose-500{% else %}bg-primary-500{% endif %}"></span>
+                    <div class="flex items-start gap-3 p-3.5 rounded-xl bg-white/70 border border-ivory-200 text-xs">
+                        <span class="w-2.5 h-2.5 mt-1 rounded-full flex-shrink-0 {% if event.event_type == 'APPROVED' %}bg-pista-600{% elif event.event_type == 'REJECTED' %}bg-salmon-600{% else %}bg-amber-500{% endif %}"></span>
                         <div class="flex-grow space-y-1">
                             <div class="flex items-center justify-between">
-                                <span class="font-bold text-slate-800">{{ event.get_event_type_display }}</span>
-                                <span class="text-slate-400 font-mono text-[11px]">{{ event.created_at|date:"M d, Y H:i" }}</span>
+                                <span class="font-bold text-pista-950">{{ event.get_event_type_display }}</span>
+                                <span class="text-pista-600 font-mono text-[11px]">{{ event.created_at|date:"M d, Y H:i" }}</span>
                             </div>
-                            <p class="text-slate-600">
-                                Transition: <span class="font-mono text-slate-800">{{ event.previous_status }} &rarr; {{ event.new_status }}</span>
-                                {% if event.actor %} &bull; Actor: {{ event.actor.username }}{% endif %}
+                            <p class="text-pista-800/80">
+                                Transition: <span class="font-mono font-bold text-pista-900">{{ event.previous_status }} &rarr; {{ event.new_status }}</span>
+                                {% if event.actor %} &bull; Actor: <span class="font-semibold text-pista-900">@{{ event.actor.username }}</span>{% endif %}
                             </p>
                             {% if event.notes %}
-                                <p class="text-slate-700 bg-white p-2 rounded border border-slate-200 font-mono text-[11px] mt-1">{{ event.notes }}</p>
+                                <p class="text-pista-900 bg-ivory-100/60 p-2.5 rounded-lg border border-ivory-200 font-mono text-[11px] mt-1">{{ event.notes }}</p>
                             {% endif %}
                         </div>
                     </div>

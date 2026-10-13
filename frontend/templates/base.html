@@ -1,39 +1,111 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-slate-50">
+<html lang="en" class="h-full bg-ivory-100">
 {% include "partials/head.html" %}
-<body class="h-full flex flex-col font-sans text-slate-900 antialiased" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+<body class="h-full flex flex-col font-sans text-ivory-900 bg-ivory-100 antialiased" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
     
     {% include "components/navbar.html" %}
 
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
         {% if messages %}
-            <div class="mb-6 space-y-2">
+            <div class="mb-6 space-y-2.5">
                 {% for message in messages %}
-                    <div class="p-4 rounded-lg text-sm font-medium {% if message.tags == 'error' %}bg-red-100 text-red-800 border border-red-200{% else %}bg-green-100 text-green-800 border border-green-200{% endif %}">
-                        {{ message }}
+                    <div class="p-4 rounded-2xl text-xs sm:text-sm font-semibold flex items-center justify-between shadow-soft {% if message.tags == 'error' %}bg-salmon-50 text-salmon-800 border border-salmon-200{% else %}bg-pista-100 text-pista-900 border border-pista-300{% endif %}">
+                        <div class="flex items-center gap-2.5">
+                            {% if message.tags == 'error' %}
+                                <svg class="w-5 h-5 text-salmon-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                </svg>
+                            {% else %}
+                                <svg class="w-5 h-5 text-pista-700 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            {% endif %}
+                            <span>{{ message }}</span>
+                        </div>
                     </div>
                 {% endfor %}
             </div>
         {% endif %}
 
         {% block content %}
-        <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 text-center space-y-4">
-            <h1 class="text-3xl font-bold text-slate-900">SANJOG Food Rescue OS Foundation Ready</h1>
-            <p class="text-slate-600 max-w-2xl mx-auto">
-                Phase 1 Technical Foundation Setup Complete. Django 5.x, DRF `/api/v1/`, PostgreSQL/PostGIS backend, Celery task broker, HTMX, and Tailwind CSS base architecture are configured.
-            </p>
-            <div class="flex justify-center gap-4 pt-4">
-                <a href="/api/v1/health/" class="inline-flex items-center gap-2 bg-primary-700 hover:bg-primary-900 text-white font-semibold px-6 py-2.5 rounded-xl transition-all shadow">
-                    Check API Health Endpoint
-                </a>
-            </div>
-        </div>
         {% endblock %}
     </main>
 
-    <footer class="bg-slate-900 text-slate-400 py-6 border-t border-slate-800 text-center text-xs">
-        <div class="max-w-7xl mx-auto px-4">
-            SANJOG — Surplus Food Redistribution & Community Connection Platform &copy; 2026. Built with Django 5.x & PostGIS.
+    <!-- ATTRACTIVE HUMANIZED COMMUNITY FOOTER -->
+    <!-- ATTRACTIVE HUMANIZED COMMUNITY FOOTER -->
+    <footer class="bg-white border-t border-ivory-300 py-12 text-xs text-ivory-700 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-8 pb-8 border-b border-ivory-200">
+                
+                <!-- Brand col -->
+                <div class="md:col-span-2 space-y-3.5">
+                    <div class="flex items-center gap-3">
+                        <img src="/static/images/sanjog_logo.png" alt="Sanjog Logo" class="h-12 w-auto object-contain">
+                    </div>
+                    <p class="text-xs text-ivory-700 max-w-sm leading-relaxed">
+                        Connecting generous restaurant kitchens, verified community shelters, and volunteer drivers across Bengaluru to ensure no fresh, edible meal is discarded.
+                    </p>
+                    <div class="flex items-center gap-2 pt-1 text-ivory-600 text-xs">
+                        <span class="w-2.5 h-2.5 rounded-full bg-pista-600 animate-pulse"></span>
+                        <span class="font-bold text-pista-900">Hyperlocal Rescue Mesh</span> &bull; <span>Bengaluru, India</span>
+                    </div>
+                </div>
+
+                <!-- Donor & NGO Links -->
+                <div class="space-y-2.5">
+                    <h5 class="font-bold text-pista-900 uppercase tracking-wider text-[11px] flex items-center gap-1.5">
+                        <i class="fa-solid fa-bowl-food text-pista-600"></i> Donor &amp; NGO
+                    </h5>
+                    <ul class="space-y-2 text-ivory-700 font-medium">
+                        <li><a href="/donor/dashboard/" class="hover:text-pista-800 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-angle-right text-[10px] text-pista-600"></i> Donor Dashboard</a></li>
+                        <li><a href="/donor/report-surplus/" class="hover:text-pista-800 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-angle-right text-[10px] text-pista-600"></i> Report Surplus</a></li>
+                        <li><a href="/donor/ai-match/" class="hover:text-pista-800 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-angle-right text-[10px] text-pista-600"></i> AI Match Engine</a></li>
+                        <li><a href="/ngo/dashboard/" class="hover:text-salmon-700 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-angle-right text-[10px] text-salmon-500"></i> NGO Dashboard</a></li>
+                        <li><a href="/ngo/request-food/" class="hover:text-salmon-700 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-angle-right text-[10px] text-salmon-500"></i> Request Food</a></li>
+                    </ul>
+                </div>
+
+                <!-- Volunteer & Admin -->
+                <div class="space-y-2.5">
+                    <h5 class="font-bold text-salmon-900 uppercase tracking-wider text-[11px] flex items-center gap-1.5">
+                        <i class="fa-solid fa-bicycle text-salmon-600"></i> Driver &amp; Trust
+                    </h5>
+                    <ul class="space-y-2 text-ivory-700 font-medium">
+                        <li><a href="/volunteer/dashboard/" class="hover:text-pista-800 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-angle-right text-[10px] text-pista-600"></i> Volunteer Hub</a></li>
+                        <li><a href="/volunteer/available-rescues/" class="hover:text-pista-800 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-angle-right text-[10px] text-pista-600"></i> Available Rescues</a></li>
+                        <li><a href="/volunteer/active-delivery/" class="hover:text-pista-800 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-angle-right text-[10px] text-pista-600"></i> Live Route OTP</a></li>
+                        <li><a href="/platform-admin/dashboard/" class="hover:text-ivory-950 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-angle-right text-[10px] text-ivory-600"></i> Platform Admin</a></li>
+                        <li><a href="/platform-admin/ngo-verification/" class="hover:text-ivory-950 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-angle-right text-[10px] text-ivory-600"></i> NGO Verification</a></li>
+                    </ul>
+                </div>
+
+                <!-- Shared Tools -->
+                <div class="space-y-2.5">
+                    <h5 class="font-bold text-ivory-900 uppercase tracking-wider text-[11px] flex items-center gap-1.5">
+                        <i class="fa-solid fa-toolbox text-pista-700"></i> Shared Tools
+                    </h5>
+                    <ul class="space-y-2 text-ivory-700 font-medium">
+                        <li><a href="/map/" class="hover:text-pista-800 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-map-location-dot text-pista-600"></i> Live Rescue Map</a></li>
+                        <li><a href="/qr-scanner/" class="hover:text-salmon-700 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-qrcode text-salmon-500"></i> QR Code Scanner</a></li>
+                        <li><a href="/food-passport/" class="hover:text-pista-800 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-passport text-pista-600"></i> Food Passport</a></li>
+                        <li><a href="/notifications/" class="hover:text-salmon-700 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-bell text-salmon-500"></i> Notifications</a></li>
+                        <li><a href="/profile/" class="hover:text-pista-800 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-id-card text-ivory-700"></i> My Profile</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-ivory-600 text-[11px]">
+                <p>&copy; 2026 Sanjog Community Food Network &bull; Pista Green &bull; Ivory &bull; Salmon Pink Theme.</p>
+                <div class="flex items-center gap-4">
+                    <span class="inline-flex items-center gap-1 text-pista-800 font-semibold">
+                        <i class="fa-solid fa-heart text-salmon-500 text-[10px]"></i>
+                        Zero Waste Mission
+                    </span>
+                    <span>&bull;</span>
+                    <a href="/api/v1/health/" class="text-pista-700 hover:underline font-mono">System Status: Operational</a>
+                </div>
+            </div>
         </div>
     </footer>
 

@@ -1,21 +1,21 @@
 {% if status == 'APPROVED' %}
-    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-300">
-        <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-emerald-600"></span>
-        Approved & Verified
+    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-pista-100 text-pista-900 border border-pista-300 shadow-xs">
+        <i class="fa-solid fa-circle-check text-pista-700 mr-1.5 text-[11px]"></i>
+        Approved &amp; Verified
     </span>
 {% elif status == 'PENDING' %}
-    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800 border border-amber-300">
-        <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-amber-600 animate-pulse"></span>
-        Pending Review
+    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-salmon-50 text-salmon-800 border border-salmon-300 shadow-xs">
+        <i class="fa-solid fa-clock text-salmon-600 mr-1.5 text-[11px] animate-pulse"></i>
+        Pending Verification
     </span>
 {% elif status == 'REJECTED' %}
-    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-100 text-rose-800 border border-rose-300">
-        <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-rose-600"></span>
-        Rejected
+    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-salmon-100 text-salmon-950 border border-salmon-300">
+        <i class="fa-solid fa-circle-xmark text-salmon-700 mr-1.5 text-[11px]"></i>
+        Rejected / Needs Info
     </span>
 {% else %}
-    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-300">
-        <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-slate-500"></span>
-        Draft / Incomplete
+    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-ivory-200 text-ivory-800 border border-ivory-300">
+        <i class="fa-solid fa-file-pen text-ivory-600 mr-1.5 text-[11px]"></i>
+        Draft Profile
     </span>
 {% endif %}
