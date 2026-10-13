@@ -172,39 +172,41 @@
         </div>
     </div>
 
-    <!-- 4. ADMIN SUB-VIEW: RESCUE MONITORING TELEMETRY -->
+    <!-- 4. ADMIN SUB-VIEW: RESCUE MONITORING TELEMETRY (ANGULAR & TYPESCRIPT POWERED) -->
     <div id="subview-admin-telemetry" class="admin-view-pane hidden space-y-6">
-        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-ivory-300 shadow-soft max-w-4xl mx-auto space-y-6">
-            <div class="flex items-center justify-between pb-4 border-b border-ivory-200">
-                <div>
-                    <span class="px-3 py-1 bg-pista-100 text-pista-900 border border-pista-300 rounded-full text-xs font-bold inline-flex items-center gap-1.5 mb-2">
-                        <i class="fa-solid fa-satellite-dish text-pista-700"></i> Citywide Mesh Telemetry
-                    </span>
-                    <h2 class="font-serif text-2xl font-black text-pista-950">Active Rescue Telemetry Monitor</h2>
-                    <p class="text-xs text-ivory-700 mt-1">Real-time status of warm food transit across Bengaluru.</p>
-                </div>
-                <button onclick="showSubView('admin', 'admin-dashboard')" class="text-xs font-bold text-ivory-600 hover:text-pista-800 transition-colors flex items-center gap-1">
-                    <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
-                </button>
-            </div>
-
-            <div class="divide-y divide-ivory-200">
-                {% for dispatch in active_dispatches %}
-                    <div class="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                        <div class="space-y-1">
-                            <div class="flex items-center gap-2">
-                                <span class="font-mono font-bold text-xs text-salmon-700 bg-salmon-50 px-2 py-0.5 rounded border border-salmon-200">{{ dispatch.mission_id }}</span>
-                                <span class="font-bold text-sm text-pista-950">{{ dispatch.donor }} &rarr; {{ dispatch.receiver }}</span>
-                            </div>
-                            <p class="text-xs text-ivory-700">
-                                Courier: <strong>{{ dispatch.volunteer_name }}</strong> &bull; Distance: {{ dispatch.distance }} &bull; ETA: {{ dispatch.eta }} &bull; {{ dispatch.servings }} Servings
-                            </p>
-                        </div>
-                        <span class="px-3 py-1 rounded-xl bg-pista-100 text-pista-800 font-bold text-xs border border-pista-200 self-start sm:self-auto">
-                            {{ dispatch.status_display }}
+        <div id="angular-telemetry-root">
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-ivory-300 shadow-soft max-w-4xl mx-auto space-y-6">
+                <div class="flex items-center justify-between pb-4 border-b border-ivory-200">
+                    <div>
+                        <span class="px-3 py-1 bg-pista-100 text-pista-900 border border-pista-300 rounded-full text-xs font-bold inline-flex items-center gap-1.5 mb-2">
+                            <i class="fa-solid fa-satellite-dish text-pista-700"></i> Citywide Mesh Telemetry
                         </span>
+                        <h2 class="font-serif text-2xl font-black text-pista-950">Active Rescue Telemetry Monitor</h2>
+                        <p class="text-xs text-ivory-700 mt-1">Real-time status of warm food transit across Bengaluru.</p>
                     </div>
-                {% endfor %}
+                    <button onclick="showSubView('admin', 'admin-dashboard')" class="text-xs font-bold text-ivory-600 hover:text-pista-800 transition-colors flex items-center gap-1">
+                        <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+                    </button>
+                </div>
+
+                <div class="divide-y divide-ivory-200">
+                    {% for dispatch in active_dispatches %}
+                        <div class="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div class="space-y-1">
+                                <div class="flex items-center gap-2">
+                                    <span class="font-mono font-bold text-xs text-salmon-700 bg-salmon-50 px-2 py-0.5 rounded border border-salmon-200">{{ dispatch.mission_id }}</span>
+                                    <span class="font-bold text-sm text-pista-950">{{ dispatch.donor }} &rarr; {{ dispatch.receiver }}</span>
+                                </div>
+                                <p class="text-xs text-ivory-700">
+                                    Courier: <strong>{{ dispatch.volunteer_name }}</strong> &bull; Distance: {{ dispatch.distance }} &bull; ETA: {{ dispatch.eta }} &bull; {{ dispatch.servings }} Servings
+                                </p>
+                            </div>
+                            <span class="px-3 py-1 rounded-xl bg-pista-100 text-pista-800 font-bold text-xs border border-pista-200 self-start sm:self-auto">
+                                {{ dispatch.status_display }}
+                            </span>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>

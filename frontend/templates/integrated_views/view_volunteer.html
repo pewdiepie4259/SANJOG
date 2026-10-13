@@ -199,80 +199,82 @@
         </div>
     </div>
 
-    <!-- 3. VOLUNTEER SUB-VIEW: ACTIVE DELIVERY & DUAL OTP -->
+    <!-- 3. VOLUNTEER SUB-VIEW: ACTIVE DELIVERY & DUAL OTP (REACT & TYPESCRIPT POWERED) -->
     <div id="subview-volunteer-delivery" class="volunteer-view-pane hidden space-y-6">
-        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-ivory-300 shadow-soft max-w-4xl mx-auto space-y-6">
-            <div class="flex items-center justify-between pb-4 border-b border-ivory-200">
-                <div>
-                    <span class="px-3 py-1 bg-pista-100 text-pista-900 border border-pista-300 rounded-full text-xs font-bold inline-flex items-center gap-1.5 mb-2">
-                        <i class="fa-solid fa-route text-pista-700"></i> Dispatch In Flight: Mission #RS-941
-                    </span>
-                    <h2 class="font-serif text-2xl font-black text-pista-950">Active Food Delivery &amp; Dual OTP</h2>
-                    <p class="text-xs text-ivory-700 mt-1">Authenticate handover at kitchen pickup and shelter drop-off.</p>
-                </div>
-                <button onclick="showSubView('volunteer', 'volunteer-dashboard')" class="text-xs font-bold text-ivory-600 hover:text-pista-800 transition-colors flex items-center gap-1">
-                    <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
-                </button>
-            </div>
-
-            <!-- Dual OTP Verification Form -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Step 1: Donor OTP -->
-                <div class="bg-ivory-50 p-6 rounded-2xl border border-ivory-300 space-y-4">
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold uppercase tracking-wider text-pista-800">Step 1: Chef Pickup</span>
-                        <span class="text-xs font-mono font-bold text-pista-800 bg-pista-100 px-2 py-0.5 rounded">Target: 7492</span>
+        <div id="react-courier-tracker-root">
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-ivory-300 shadow-soft max-w-4xl mx-auto space-y-6">
+                <div class="flex items-center justify-between pb-4 border-b border-ivory-200">
+                    <div>
+                        <span class="px-3 py-1 bg-pista-100 text-pista-900 border border-pista-300 rounded-full text-xs font-bold inline-flex items-center gap-1.5 mb-2">
+                            <i class="fa-solid fa-route text-pista-700"></i> Dispatch In Flight: Mission #RS-941
+                        </span>
+                        <h2 class="font-serif text-2xl font-black text-pista-950">Active Food Delivery &amp; Dual OTP</h2>
+                        <p class="text-xs text-ivory-700 mt-1">Authenticate handover at kitchen pickup and shelter drop-off.</p>
                     </div>
-                    <p class="text-xs text-ivory-700">Ask Chef Rajesh at Annapurna Grand for their 4-digit pickup code.</p>
-                    <div class="space-y-2">
-                        <input type="text" id="vol-input-donor-otp" placeholder="Enter Chef OTP (e.g. 7492)"
-                               class="w-full px-4 py-2.5 rounded-xl border border-ivory-300 text-center font-mono font-bold text-lg tracking-widest text-pista-900 bg-white">
-                        <button onclick="verifyVolDonorOTP()" class="w-full py-2.5 bg-pista-700 hover:bg-pista-800 text-ivory-50 font-bold text-xs rounded-xl shadow-pista transition-colors flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-check"></i> Verify Kitchen Pickup
-                        </button>
-                        <span id="vol-donor-otp-status" class="text-xs block text-center text-ivory-600">Awaiting code</span>
-                    </div>
-                </div>
-
-                <!-- Step 2: Receiver OTP -->
-                <div class="bg-ivory-50 p-6 rounded-2xl border border-ivory-300 space-y-4">
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold uppercase tracking-wider text-salmon-700">Step 2: Shelter Delivery</span>
-                        <span class="text-xs font-mono font-bold text-salmon-700 bg-salmon-50 px-2 py-0.5 rounded">Target: 3180</span>
-                    </div>
-                    <p class="text-xs text-ivory-700">Ask Sister Maria at Hope Shelter for their 4-digit receipt code.</p>
-                    <div class="space-y-2">
-                        <input type="text" id="vol-input-receiver-otp" placeholder="Enter Shelter OTP (e.g. 3180)"
-                               class="w-full px-4 py-2.5 rounded-xl border border-ivory-300 text-center font-mono font-bold text-lg tracking-widest text-salmon-700 bg-white">
-                        <button onclick="verifyVolReceiverOTP()" class="w-full py-2.5 bg-salmon-500 hover:bg-salmon-600 text-white font-bold text-xs rounded-xl shadow-salmon transition-colors flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-check"></i> Verify Shelter Handover
-                        </button>
-                        <span id="vol-receiver-otp-status" class="text-xs block text-center text-ivory-600">Awaiting code</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Complete Mission Banner -->
-            <div id="vol-mission-complete-banner" class="hidden p-5 bg-pista-100 border-2 border-pista-400 text-pista-950 rounded-2xl text-xs font-bold text-center space-y-2">
-                <div class="text-base font-serif font-black flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-circle-check text-pista-700 text-lg"></i>
-                    <span>Delivery Complete! 60 warm meals safely reached Hope Shelter.</span>
-                </div>
-                <p class="text-pista-800">Thank you for your service! Handover recorded in the food safety ledger.</p>
-                <div class="pt-2 flex justify-center gap-3">
-                    <button onclick="showSubView('tools', 'tools-passport')" class="px-4 py-2 bg-pista-700 text-ivory-50 font-bold rounded-xl text-xs">
-                        <i class="fa-solid fa-passport mr-1"></i> Inspect Food Passport
+                    <button onclick="showSubView('volunteer', 'volunteer-dashboard')" class="text-xs font-bold text-ivory-600 hover:text-pista-800 transition-colors flex items-center gap-1">
+                        <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
                     </button>
                 </div>
-            </div>
 
-            <div class="flex items-center justify-between pt-3 border-t border-ivory-200">
-                <button onclick="showSubView('tools', 'tools-map')" class="text-xs font-bold text-pista-700 hover:underline flex items-center gap-1.5">
-                    <i class="fa-solid fa-map-location-dot"></i> View Route on Map
-                </button>
-                <button onclick="showSubView('tools', 'tools-scanner')" class="text-xs font-bold text-salmon-600 hover:underline flex items-center gap-1.5">
-                    <i class="fa-solid fa-qrcode"></i> Use QR Scanner Instead
-                </button>
+                <!-- Dual OTP Verification Form -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Step 1: Donor OTP -->
+                    <div class="bg-ivory-50 p-6 rounded-2xl border border-ivory-300 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold uppercase tracking-wider text-pista-800">Step 1: Chef Pickup</span>
+                            <span class="text-xs font-mono font-bold text-pista-800 bg-pista-100 px-2 py-0.5 rounded">Target: 7492</span>
+                        </div>
+                        <p class="text-xs text-ivory-700">Ask Chef Rajesh at Annapurna Grand for their 4-digit pickup code.</p>
+                        <div class="space-y-2">
+                            <input type="text" id="vol-input-donor-otp" placeholder="Enter Chef OTP (e.g. 7492)"
+                                   class="w-full px-4 py-2.5 rounded-xl border border-ivory-300 text-center font-mono font-bold text-lg tracking-widest text-pista-900 bg-white">
+                            <button onclick="verifyVolDonorOTP()" class="w-full py-2.5 bg-pista-700 hover:bg-pista-800 text-ivory-50 font-bold text-xs rounded-xl shadow-pista transition-colors flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-check"></i> Verify Kitchen Pickup
+                            </button>
+                            <span id="vol-donor-otp-status" class="text-xs block text-center text-ivory-600">Awaiting code</span>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Receiver OTP -->
+                    <div class="bg-ivory-50 p-6 rounded-2xl border border-ivory-300 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold uppercase tracking-wider text-salmon-700">Step 2: Shelter Delivery</span>
+                            <span class="text-xs font-mono font-bold text-salmon-700 bg-salmon-50 px-2 py-0.5 rounded">Target: 3180</span>
+                        </div>
+                        <p class="text-xs text-ivory-700">Ask Sister Maria at Hope Shelter for their 4-digit receipt code.</p>
+                        <div class="space-y-2">
+                            <input type="text" id="vol-input-receiver-otp" placeholder="Enter Shelter OTP (e.g. 3180)"
+                                   class="w-full px-4 py-2.5 rounded-xl border border-ivory-300 text-center font-mono font-bold text-lg tracking-widest text-salmon-700 bg-white">
+                            <button onclick="verifyVolReceiverOTP()" class="w-full py-2.5 bg-salmon-500 hover:bg-salmon-600 text-white font-bold text-xs rounded-xl shadow-salmon transition-colors flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-check"></i> Verify Shelter Handover
+                            </button>
+                            <span id="vol-receiver-otp-status" class="text-xs block text-center text-ivory-600">Awaiting code</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Complete Mission Banner -->
+                <div id="vol-mission-complete-banner" class="hidden p-5 bg-pista-100 border-2 border-pista-400 text-pista-950 rounded-2xl text-xs font-bold text-center space-y-2">
+                    <div class="text-base font-serif font-black flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-circle-check text-pista-700 text-lg"></i>
+                        <span>Delivery Complete! 60 warm meals safely reached Hope Shelter.</span>
+                    </div>
+                    <p class="text-pista-800">Thank you for your service! Handover recorded in the food safety ledger.</p>
+                    <div class="pt-2 flex justify-center gap-3">
+                        <button onclick="showSubView('tools', 'tools-passport')" class="px-4 py-2 bg-pista-700 text-ivory-50 font-bold rounded-xl text-xs">
+                            <i class="fa-solid fa-passport mr-1"></i> Inspect Food Passport
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between pt-3 border-t border-ivory-200">
+                    <button onclick="showSubView('tools', 'tools-map')" class="text-xs font-bold text-pista-700 hover:underline flex items-center gap-1.5">
+                        <i class="fa-solid fa-map-location-dot"></i> View Route on Map
+                    </button>
+                    <button onclick="showSubView('tools', 'tools-scanner')" class="text-xs font-bold text-salmon-600 hover:underline flex items-center gap-1.5">
+                        <i class="fa-solid fa-qrcode"></i> Use QR Scanner Instead
+                    </button>
+                </div>
             </div>
         </div>
     </div>
