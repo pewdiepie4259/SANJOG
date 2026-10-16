@@ -27,7 +27,7 @@
                     </div>
                     
                     <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-pista-950 leading-[1.15]">
-                        Fresh food from local kitchens, <span class="text-salmon-500 underline decoration-salmon-300 decoration-wavy decoration-2">shared with neighbors</span> who need it.
+                        Fresh food from local kitchens, <span class="text-salmon-500">shared with neighbors</span> who need it.
                     </h1>
                     
                     <p class="text-ivory-800 text-sm sm:text-base leading-relaxed">
@@ -102,7 +102,7 @@
 
             <!-- 4 Grounded Community Metrics Tiles -->
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-6 border-t border-ivory-200">
-                <div class="bg-white p-4.5 rounded-2xl border border-ivory-300 shadow-soft flex items-center gap-3.5">
+                <div class="bg-white p-5 rounded-2xl border border-ivory-300 shadow-soft flex items-center gap-3.5">
                     <div class="w-11 h-11 rounded-xl bg-pista-100 text-pista-700 flex items-center justify-center shrink-0 text-lg">
                         <i class="fa-solid fa-bowl-food"></i>
                     </div>
@@ -112,7 +112,7 @@
                     </div>
                 </div>
 
-                <div class="bg-white p-4.5 rounded-2xl border border-ivory-300 shadow-soft flex items-center gap-3.5">
+                <div class="bg-white p-5 rounded-2xl border border-ivory-300 shadow-soft flex items-center gap-3.5">
                     <div class="w-11 h-11 rounded-xl bg-salmon-100 text-salmon-600 flex items-center justify-center shrink-0 text-lg">
                         <i class="fa-solid fa-truck-fast"></i>
                     </div>
@@ -122,7 +122,7 @@
                     </div>
                 </div>
 
-                <div class="bg-white p-4.5 rounded-2xl border border-ivory-300 shadow-soft flex items-center gap-3.5">
+                <div class="bg-white p-5 rounded-2xl border border-ivory-300 shadow-soft flex items-center gap-3.5">
                     <div class="w-11 h-11 rounded-xl bg-pista-100 text-pista-700 flex items-center justify-center shrink-0 text-lg">
                         <i class="fa-solid fa-hotel"></i>
                     </div>
@@ -132,7 +132,7 @@
                     </div>
                 </div>
 
-                <div class="bg-white p-4.5 rounded-2xl border border-ivory-300 shadow-soft flex items-center gap-3.5">
+                <div class="bg-white p-5 rounded-2xl border border-ivory-300 shadow-soft flex items-center gap-3.5">
                     <div class="w-11 h-11 rounded-xl bg-pista-100 text-pista-700 flex items-center justify-center shrink-0 text-lg">
                         <i class="fa-solid fa-leaf"></i>
                     </div>
@@ -383,6 +383,11 @@
         if (window.history && window.history.pushState) {
             const newUrl = window.location.pathname + '?view=' + subviewKey;
             window.history.pushState({ view: subviewKey }, '', newUrl);
+        }
+
+        // Auto-refresh real-time Leaflet map if opened
+        if (subviewKey === 'tools-map' && window.initOrResizeRescueMap) {
+            setTimeout(window.initOrResizeRescueMap, 150);
         }
     }
 

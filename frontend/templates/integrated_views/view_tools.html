@@ -45,72 +45,149 @@
 
     <!-- 1. TOOLS SUB-VIEW: LIVE RESCUE MAP -->
     <div id="subview-tools-map" class="tools-view-pane space-y-6">
-        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-ivory-300 shadow-soft max-w-4xl mx-auto space-y-6">
-            <div class="flex items-center justify-between pb-4 border-b border-ivory-200">
+        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-ivory-300 shadow-soft max-w-5xl mx-auto space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-ivory-200 gap-4">
                 <div>
                     <span class="px-3 py-1 bg-pista-100 text-pista-900 border border-pista-300 rounded-full text-xs font-bold inline-flex items-center gap-1.5 mb-2">
-                        <i class="fa-solid fa-map-location-dot text-pista-700"></i> Central Bengaluru Grid
+                        <i class="fa-solid fa-map-location-dot text-pista-700"></i> All India Food Rescue Grid
                     </span>
-                    <h2 class="font-serif text-2xl font-black text-pista-950">Live Food Rescue Map</h2>
-                    <p class="text-xs text-ivory-700 mt-1">Real-time geospatial visualization of kitchens, shelters, and couriers.</p>
+                    <h2 class="font-serif text-2xl font-black text-pista-950">Live Food Rescue Map &mdash; India</h2>
+                    <p class="text-xs text-ivory-700 mt-1">Real-time geospatial tracking across India powered by OpenStreetMap &bull; 100% Free Open Geospatial Mesh</p>
                 </div>
-                <div class="flex items-center gap-2">
-                    <span class="px-3 py-1.5 rounded-xl bg-pista-100 text-pista-800 font-bold text-xs border border-pista-300">
-                        <span class="w-2 h-2 rounded-full bg-pista-600 animate-ping inline-block mr-1"></span> Live GPS Feed
+                <div class="flex flex-wrap items-center gap-2">
+                    <span class="px-3 py-1.5 rounded-xl bg-pista-100 text-pista-800 font-bold text-xs border border-pista-300 flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-emerald-600 animate-ping"></span> Live GPS Feed
+                    </span>
+                    <span class="px-3 py-1.5 rounded-xl bg-white text-pista-950 font-bold text-xs border border-ivory-300 shadow-xs flex items-center gap-1.5">
+                        <i class="fa-solid fa-circle-check text-emerald-600"></i> Free OpenStreetMap (No API Key Required)
                     </span>
                 </div>
             </div>
 
-            <!-- Stylized Visual Map Board -->
-            <div class="relative bg-ivory-100 rounded-3xl p-6 border-2 border-ivory-300 overflow-hidden min-h-[360px] flex flex-col justify-between">
-                <!-- Map Background Grid Pattern -->
-                <div class="absolute inset-0 bg-[radial-gradient(#CBE5BD_1px,transparent_1px)] [background-size:16px_16px] opacity-70 pointer-events-none"></div>
+            <!-- City Hub Quick-Fly Selector -->
+            <div class="space-y-2">
+                <div class="flex items-center justify-between text-xs">
+                    <span class="font-bold text-pista-950 flex items-center gap-1.5">
+                        <i class="fa-solid fa-location-crosshairs text-salmon-600"></i> Select Region / City Hub:
+                    </span>
+                    <span id="active-region-label" class="text-ivory-700 font-semibold text-[11px]">Showing: All India Mesh</span>
+                </div>
+                <div class="flex items-center gap-2 overflow-x-auto pb-1 text-xs no-scrollbar">
+                    <button type="button" onclick="focusCity('all')" id="city-btn-all"
+                            class="px-3.5 py-1.5 rounded-xl bg-pista-800 text-white font-bold shrink-0 transition-all shadow-xs flex items-center gap-1.5 text-xs">
+                        <span>🇮🇳 All India</span>
+                    </button>
+                    <button type="button" onclick="focusCity('bengaluru')" id="city-btn-bengaluru"
+                            class="px-3 py-1.5 rounded-xl bg-white hover:bg-pista-50 text-pista-950 border border-ivory-300 font-bold shrink-0 transition-all flex items-center gap-1.5 text-xs">
+                        <span>Bengaluru (Active Corridor)</span>
+                    </button>
+                    <button type="button" onclick="focusCity('delhi')" id="city-btn-delhi"
+                            class="px-3 py-1.5 rounded-xl bg-white hover:bg-pista-50 text-pista-950 border border-ivory-300 font-bold shrink-0 transition-all flex items-center gap-1.5 text-xs">
+                        <span>Delhi NCR</span>
+                    </button>
+                    <button type="button" onclick="focusCity('mumbai')" id="city-btn-mumbai"
+                            class="px-3 py-1.5 rounded-xl bg-white hover:bg-pista-50 text-pista-950 border border-ivory-300 font-bold shrink-0 transition-all flex items-center gap-1.5 text-xs">
+                        <span>Mumbai</span>
+                    </button>
+                    <button type="button" onclick="focusCity('hyderabad')" id="city-btn-hyderabad"
+                            class="px-3 py-1.5 rounded-xl bg-white hover:bg-pista-50 text-pista-950 border border-ivory-300 font-bold shrink-0 transition-all flex items-center gap-1.5 text-xs">
+                        <span>Hyderabad</span>
+                    </button>
+                    <button type="button" onclick="focusCity('kolkata')" id="city-btn-kolkata"
+                            class="px-3 py-1.5 rounded-xl bg-white hover:bg-pista-50 text-pista-950 border border-ivory-300 font-bold shrink-0 transition-all flex items-center gap-1.5 text-xs">
+                        <span>Kolkata</span>
+                    </button>
+                    <button type="button" onclick="focusCity('chennai')" id="city-btn-chennai"
+                            class="px-3 py-1.5 rounded-xl bg-white hover:bg-pista-50 text-pista-950 border border-ivory-300 font-bold shrink-0 transition-all flex items-center gap-1.5 text-xs">
+                        <span>Chennai</span>
+                    </button>
+                    <button type="button" onclick="focusCity('pune')" id="city-btn-pune"
+                            class="px-3 py-1.5 rounded-xl bg-white hover:bg-pista-50 text-pista-950 border border-ivory-300 font-bold shrink-0 transition-all flex items-center gap-1.5 text-xs">
+                        <span>Pune</span>
+                    </button>
+                </div>
+            </div>
 
-                <!-- Map Header Overlay -->
-                <div class="relative z-10 flex flex-wrap items-center justify-between gap-3 bg-white/90 backdrop-blur-sm p-3 rounded-2xl border border-ivory-200 text-xs">
-                    <span class="font-bold text-pista-900">Coverage: Indiranagar &bull; MG Road &bull; Koramangala &bull; St. Marks</span>
-                    <div class="flex items-center gap-3">
-                        <span class="flex items-center gap-1.5 font-bold text-pista-800"><span class="w-3 h-3 rounded-full bg-pista-500 inline-block"></span> Donors (24)</span>
-                        <span class="flex items-center gap-1.5 font-bold text-salmon-700"><span class="w-3 h-3 rounded-full bg-salmon-500 inline-block"></span> Shelters (12)</span>
-                        <span class="flex items-center gap-1.5 font-bold text-indigo-700"><span class="w-3 h-3 rounded-full bg-indigo-500 inline-block"></span> EV Couriers (14)</span>
+            <!-- Real-Time Interactive Leaflet Map Container -->
+            <div class="space-y-4">
+                <!-- Map Top Controls & Filters HUD -->
+                <div class="flex flex-wrap items-center justify-between gap-3 bg-ivory-100 p-3 rounded-2xl border border-ivory-300 text-xs">
+                    <div class="flex items-center gap-1.5 font-bold text-pista-900">
+                        <i class="fa-solid fa-layer-group text-pista-600"></i>
+                        <span>Layers:</span>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <button type="button" onclick="filterMapMarkers('all')" id="map-filter-all"
+                                class="px-2.5 py-1 rounded-lg bg-pista-800 text-white font-bold text-[11px] shadow-xs transition-all">
+                            All Nodes (<span id="count-all">19</span>)
+                        </button>
+                        <button type="button" onclick="filterMapMarkers('donor')" id="map-filter-donor"
+                                class="px-2.5 py-1 rounded-lg bg-white hover:bg-pista-50 text-pista-900 border border-ivory-300 font-semibold text-[11px] transition-all flex items-center gap-1.5">
+                            <span class="w-2.5 h-2.5 rounded-full bg-pista-600"></span> Donors (<span id="count-donor">8</span>)
+                        </button>
+                        <button type="button" onclick="filterMapMarkers('shelter')" id="map-filter-shelter"
+                                class="px-2.5 py-1 rounded-lg bg-white hover:bg-salmon-50 text-salmon-900 border border-ivory-300 font-semibold text-[11px] transition-all flex items-center gap-1.5">
+                            <span class="w-2.5 h-2.5 rounded-full bg-salmon-500"></span> Shelters (<span id="count-shelter">8</span>)
+                        </button>
+                        <button type="button" onclick="filterMapMarkers('courier')" id="map-filter-courier"
+                                class="px-2.5 py-1 rounded-lg bg-white hover:bg-indigo-50 text-indigo-900 border border-ivory-300 font-semibold text-[11px] transition-all flex items-center gap-1.5">
+                            <span class="w-2.5 h-2.5 rounded-full bg-indigo-600 animate-pulse"></span> Live Couriers (<span id="count-courier">3</span>)
+                        </button>
+                    </div>
+
+                    <!-- Map Style Switcher (All Free, No API key, No 403 block) -->
+                    <div class="flex items-center gap-1 ml-auto">
+                        <span class="text-[10px] text-ivory-600 font-semibold hidden sm:inline">Tiles:</span>
+                        <select id="map-style-select" onchange="changeMapStyle(this.value)" class="text-[11px] font-semibold bg-white border border-ivory-300 rounded-lg px-2 py-1 text-pista-950 focus:outline-none focus:ring-1 focus:ring-pista-500">
+                            <option value="esri" selected>Esri Street Map (Verified &amp; Free)</option>
+                            <option value="topo">Esri Topographic (Free)</option>
+                            <option value="imagery">Satellite Imagery (Free)</option>
+                            <option value="humanitarian">Humanitarian OSM (Free)</option>
+                        </select>
+                        <button type="button" onclick="recenterRescueMap()"
+                                class="px-2.5 py-1 rounded-lg bg-white hover:bg-ivory-200 text-pista-900 border border-ivory-300 font-bold text-[11px] flex items-center gap-1 shadow-xs ml-1">
+                            <i class="fa-solid fa-crosshairs text-pista-600"></i> Recenter
+                        </button>
                     </div>
                 </div>
 
-                <!-- Simulated Location Pins on Map -->
-                <div class="relative z-10 grid grid-cols-1 sm:grid-cols-3 gap-4 my-6">
-                    <div class="bg-white/95 p-4 rounded-2xl border-2 border-pista-400 shadow-soft space-y-1">
-                        <div class="flex items-center justify-between">
-                            <span class="text-[10px] font-bold uppercase text-pista-700">Donor Kitchen</span>
-                            <span class="w-2 h-2 rounded-full bg-pista-500"></span>
-                        </div>
-                        <h4 class="font-bold text-xs text-pista-950">Annapurna Grand</h4>
-                        <p class="text-[11px] text-ivory-700">Indiranagar 100ft Rd &bull; 60 Thalis ready</p>
-                    </div>
+                <!-- Leaflet Interactive Canvas -->
+                <div class="relative rounded-3xl overflow-hidden border-2 border-ivory-300 shadow-soft">
+                    <div id="live-rescue-leaflet-map" class="w-full h-[480px] z-0"></div>
 
-                    <div class="bg-white/95 p-4 rounded-2xl border-2 border-indigo-400 shadow-soft space-y-1">
-                        <div class="flex items-center justify-between">
-                            <span class="text-[10px] font-bold uppercase text-indigo-700">Courier En Route</span>
-                            <span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
+                    <!-- Floating Real-Time Status HUD Overlay -->
+                    <div class="absolute bottom-3 left-3 right-3 z-[1000] pointer-events-none flex flex-wrap items-center justify-between gap-2">
+                        <div class="bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-2xl border border-ivory-300 shadow-soft pointer-events-auto flex items-center gap-3 text-xs">
+                            <span class="flex items-center gap-1.5 font-bold text-pista-900">
+                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                <span id="live-courier-name">Aniket Kumar (EV-402)</span>
+                            </span>
+                            <span class="text-ivory-400">&bull;</span>
+                            <span class="text-ivory-700 font-medium">Speed: <strong id="live-courier-speed" class="text-pista-900 font-bold">24 km/h</strong></span>
+                            <span class="text-ivory-400">&bull;</span>
+                            <span class="text-ivory-700 font-medium">ETA: <strong id="live-courier-eta" class="text-salmon-600 font-bold">11 mins</strong></span>
                         </div>
-                        <h4 class="font-bold text-xs text-pista-950">Aniket Kumar (EV)</h4>
-                        <p class="text-[11px] text-ivory-700">MG Road Corridor &bull; ETA 12 mins</p>
-                    </div>
 
-                    <div class="bg-white/95 p-4 rounded-2xl border-2 border-salmon-400 shadow-soft space-y-1">
-                        <div class="flex items-center justify-between">
-                            <span class="text-[10px] font-bold uppercase text-salmon-700">Recipient Shelter</span>
-                            <span class="w-2 h-2 rounded-full bg-salmon-500"></span>
+                        <div class="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-2xl border border-ivory-300 shadow-soft pointer-events-auto text-[11px] font-mono text-ivory-700">
+                            GPS: <span id="live-gps-coords" class="font-bold text-pista-900">12.9740° N, 77.6140° E</span>
                         </div>
-                        <h4 class="font-bold text-xs text-pista-950">Hope Shelter</h4>
-                        <p class="text-[11px] text-ivory-700">St. Marks Road &bull; 80 residents awaiting</p>
                     </div>
                 </div>
 
-                <!-- Footer Action -->
-                <div class="relative z-10 flex justify-between items-center text-xs text-ivory-700 pt-2 border-t border-ivory-200">
-                    <span>GPS Coordinates: Lat 12.9716&deg; N, Long 77.5946&deg; E</span>
-                    <button onclick="showSubView('donor', 'donor-tracking')" class="font-bold text-pista-800 hover:text-salmon-600">
-                        View Active Telemetry &rarr;
+                <!-- Interactive Entity Cards: Updates on Region Selection & Click to Focus -->
+                <div id="dynamic-entity-cards" class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                    <!-- Cards populated dynamically via JS based on selected city -->
+                </div>
+
+                <!-- Footer Action & Telemetry link -->
+                <div class="flex flex-wrap items-center justify-between text-xs text-ivory-700 pt-3 border-t border-ivory-200">
+                    <span class="flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        <span id="footer-region-desc">National Network Active &bull; Bengaluru &bull; Delhi NCR &bull; Mumbai &bull; Hyderabad &bull; Kolkata &bull; Chennai &bull; Pune</span>
+                    </span>
+                    <button onclick="showSubView('donor', 'donor-tracking')" class="font-bold text-pista-800 hover:text-salmon-600 transition-colors flex items-center gap-1">
+                        <span>Open Dual-OTP Delivery Monitor</span>
+                        <i class="fa-solid fa-arrow-right text-[10px]"></i>
                     </button>
                 </div>
             </div>
@@ -389,7 +466,552 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+    <!-- Real-Time Leaflet Map Script & Styles -->
+    <style>
+        .custom-map-pin {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+        }
+        .leaflet-popup-content-wrapper {
+            background: #ffffff !important;
+            border-radius: 1.25rem !important;
+            box-shadow: 0 12px 30px -4px rgba(36, 30, 19, 0.15) !important;
+            border: 1.5px solid #EAE2D2 !important;
+            padding: 0 !important;
+            overflow: hidden !important;
+        }
+        .leaflet-popup-content {
+            margin: 0 !important;
+            line-height: 1.4 !important;
+        }
+        .leaflet-popup-tip {
+            background: #ffffff !important;
+            box-shadow: none !important;
+        }
+    </style>
 
+    <script>
+    (function() {
+        let map = null;
+        let currentTileLayer = null;
+        let markers = {};
+        let routePolyline = null;
+        let courierInterval = null;
+        let currentPathIndex = 3;
+        let activeFilter = 'all';
+        let currentCity = 'all';
+
+        // 100% Free Open Geospatial Tile Providers (No API Keys Required & No 403 Access Blocks)
+        const TILE_PROVIDERS = {
+            esri: {
+                name: 'Esri World Street Map (Verified & Free)',
+                url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+                attribution: 'Tiles &copy; Esri &mdash; Street Map India',
+                maxZoom: 19
+            },
+            topo: {
+                name: 'Esri Topographic Map (Free)',
+                url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
+                attribution: 'Tiles &copy; Esri &mdash; National Geographic, DeLorme',
+                maxZoom: 19
+            },
+            imagery: {
+                name: 'Esri Satellite Imagery (Free)',
+                url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+                attribution: 'Tiles &copy; Esri &mdash; DigitalGlobe, Earthstar',
+                maxZoom: 19
+            },
+            humanitarian: {
+                name: 'Humanitarian OSM (Free)',
+                url: 'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors, Tiles by Humanitarian OSM',
+                subdomains: ['a', 'b', 'c'],
+                maxZoom: 19
+            }
+        };
+
+        // City Centers across India
+        const CITY_COORDS = {
+            all: { center: [21.8, 78.96], zoom: 5, label: "All India Mesh (8 Major City Hubs)" },
+            bengaluru: { center: [12.9740, 77.6180], zoom: 13, label: "Bengaluru Central Grid (Active Corridor)" },
+            delhi: { center: [28.6250, 77.2150], zoom: 12, label: "Delhi NCR Capital Rescue Mesh" },
+            mumbai: { center: [19.0400, 72.8450], zoom: 12, label: "Mumbai Metropolitan Corridor" },
+            hyderabad: { center: [17.4000, 78.4750], zoom: 12, label: "Hyderabad Deccan Network" },
+            kolkata: { center: [22.5600, 88.3650], zoom: 12, label: "Kolkata City of Joy Rescue Mesh" },
+            chennai: { center: [13.0400, 80.2400], zoom: 12, label: "Chennai Coastal Distribution Grid" },
+            pune: { center: [18.5204, 73.8567], zoom: 12, label: "Pune Heritage Rescue Corridor" }
+        };
+
+        // Nationwide Node Dataset
+        const DONOR_NODES = [
+            // Bengaluru
+            { id: 'annapurna', city: 'bengaluru', name: 'Annapurna Grand', lat: 12.9784, lng: 77.6408, address: 'Indiranagar 100ft Road, Bengaluru', meals: '60 Thalis Ready', details: 'Packed 11:30 AM &bull; FSSAI Gold &bull; Safe 2h Window', actionText: 'View Batch #DN-884' },
+            { id: 'udupi', city: 'bengaluru', name: 'Udupi Deluxe Express', lat: 12.9756, lng: 77.6066, address: 'MG Road Metro Boulevard, Bengaluru', meals: '35 South Indian Meals', details: 'Fresh Sambhar Rice &bull; Insulated Pack', actionText: 'View Batch #DN-885' },
+            { id: 'spice', city: 'bengaluru', name: 'Spice Garden Banquets', lat: 12.9352, lng: 77.6245, address: 'Koramangala 5th Block, Bengaluru', meals: '90 Buffet Portions', details: 'Chana Masala &amp; Rotis &bull; Hot Bain-Marie', actionText: 'View Batch #DN-886' },
+            // Delhi
+            { id: 'bangla_sahib', city: 'delhi', name: 'Gurudwara Langar Kitchen', lat: 28.6263, lng: 77.2090, address: 'Connaught Place, New Delhi', meals: '150 Fresh Dal-Roti Servings', details: 'Continuous Hygienic Community Seva', actionText: 'View Batch #DEL-101' },
+            { id: 'haveli_banquets', city: 'delhi', name: 'Haveli Banquets & Events', lat: 28.5684, lng: 77.2215, address: 'South Extension II, New Delhi', meals: '75 Catered Dinners', details: 'Paneer Gravy &amp; Naan &bull; Temperature Controlled', actionText: 'View Batch #DEL-102' },
+            // Mumbai
+            { id: 'taj_lands', city: 'mumbai', name: 'Taj Lands End Surplus Dock', lat: 19.0435, lng: 72.8197, address: 'Bandstand, Bandra West, Mumbai', meals: '110 Packed Meals', details: '5-Star Insulated Cold-Chain &bull; Fresh Salads &amp; Rice', actionText: 'View Batch #BOM-304' },
+            { id: 'shree_thaker', city: 'mumbai', name: 'Shree Thaker Bhojanalay', lat: 18.9507, lng: 72.8290, address: 'Kalbadevi Market, Mumbai', meals: '50 Gujarati Thalis', details: 'Warm Khichdi &amp; Kadhi &bull; Ready Now', actionText: 'View Batch #BOM-305' },
+            // Hyderabad
+            { id: 'paradise_food', city: 'hyderabad', name: 'Paradise Food Court', lat: 17.4411, lng: 78.4983, address: 'MG Road, Secunderabad', meals: '80 Biryani Portions', details: 'Nutritious High-Protein Meals', actionText: 'View Batch #HYD-512' },
+            // Kolkata
+            { id: 'peter_cat', city: 'kolkata', name: 'Peter Cat Heritage', lat: 22.5535, lng: 88.3534, address: 'Park Street, Kolkata', meals: '45 Dinner Sets', details: 'Hygienically Packed Stew &amp; Rice', actionText: 'View Batch #CCU-089' },
+            // Chennai
+            { id: 'saravana_bhavan', city: 'chennai', name: 'Saravana Bhavan Hub', lat: 13.0418, lng: 80.2337, address: 'T. Nagar Venkatnarayana Rd, Chennai', meals: '65 Tiffin &amp; Sambar Meals', details: 'Idlis &amp; Pongal &bull; Warm Containers', actionText: 'View Batch #MAA-221' },
+            // Pune
+            { id: 'vaishali_cafe', city: 'pune', name: 'Vaishali Caterers & Cafe', lat: 18.5246, lng: 73.8412, address: 'FC Road, Shivajinagar, Pune', meals: '40 Packed Meals', details: 'Bhavnagari Meals &amp; Chapatis', actionText: 'View Batch #PNQ-404' }
+        ];
+
+        const SHELTER_NODES = [
+            // Bengaluru
+            { id: 'hope', city: 'bengaluru', name: 'Hope Community Shelter', lat: 12.9708, lng: 77.6009, address: 'St. Marks Road, Bengaluru', demand: '80 Residents Awaiting', details: 'Urgency: High &bull; Verified Darpan NGO', actionText: 'View Delivery Queue' },
+            { id: 'karuna', city: 'bengaluru', name: 'Karuna Care Home', lat: 12.9856, lng: 77.6045, address: 'Shivajinagar, Bengaluru', demand: '45 Senior Residents', details: 'Evening Dinner Window &bull; Verified NGO', actionText: 'View Demand' },
+            { id: 'vatsalya', city: 'bengaluru', name: 'Vatsalya Children Home', lat: 12.9815, lng: 77.6250, address: 'Ulsoor Lake Road, Bengaluru', demand: '50 Children Awaiting', details: 'Dietary Safe &bull; Milk &amp; Warm Meals', actionText: 'View Demand' },
+            // Delhi
+            { id: 'kilkari_home', city: 'delhi', name: 'Kilkari Rainbow Home', lat: 28.6665, lng: 77.2285, address: 'Kashmere Gate, Old Delhi', demand: '120 Children Awaiting', details: 'Urgent Dinner Request &bull; Verified NGO', actionText: 'Coordinate Dropoff' },
+            { id: 'rain_basera', city: 'delhi', name: 'Rain Basera Night Shelter', lat: 28.5672, lng: 77.2100, address: 'AIIMS Ring Road Flyover, Delhi', demand: '70 Homeless Citizens', details: 'Daily Warm Dinner Mesh', actionText: 'View Need' },
+            // Mumbai
+            { id: 'st_catherines', city: 'mumbai', name: 'St. Catherine’s Children Home', lat: 19.1197, lng: 72.8468, address: 'Andheri West, Mumbai', demand: '95 Girls in Care', details: 'Nutritional Support Needed', actionText: 'View Demand' },
+            { id: 'salaam_baalak', city: 'mumbai', name: 'Salaam Baalak Trust Hub', lat: 18.9633, lng: 72.8170, address: 'Grant Road Station East, Mumbai', demand: '60 Beneficiaries', details: 'Evening Meal Window &bull; Verified NGO', actionText: 'View Demand' },
+            // Hyderabad
+            { id: 'ashray_akruti', city: 'hyderabad', name: 'Ashray Akruti Shelter', lat: 17.4326, lng: 78.4357, address: 'Srinagar Colony, Hyderabad', demand: '65 Special Needs Youths', details: 'Verified Darpan Shelter', actionText: 'View Need' },
+            // Kolkata
+            { id: 'daya_dan', city: 'kolkata', name: 'Missionaries of Charity (Daya Dan)', lat: 22.5410, lng: 88.3890, address: 'Topsia, Kolkata', demand: '85 Children in Care', details: 'Daily Food Bank Station', actionText: 'View Need' },
+            // Chennai
+            { id: 'udavum_karangal', city: 'chennai', name: 'Udavum Karangal Shelter', lat: 12.9863, lng: 80.2607, address: 'Thiruvanmiyur, Chennai', demand: '70 Senior Citizens', details: 'Dietary Pure Veg Meals', actionText: 'View Need' },
+            // Pune
+            { id: 'sevadham_home', city: 'pune', name: 'Sevadham Old Age Home', lat: 18.5074, lng: 73.8077, address: 'Kothrud, Pune', demand: '55 Elderly Residents', details: 'Soft Diet Warm Meal Needed', actionText: 'View Need' }
+        ];
+
+        // Active Moving Couriers
+        const courierPathBengaluru = [
+            { lat: 12.9784, lng: 77.6408, label: "Annapurna Grand (Indiranagar)", speed: "0 km/h (Picked up)", eta: "16 mins" },
+            { lat: 12.9772, lng: 77.6330, label: "CMH Road Crossing", speed: "28 km/h", eta: "14 mins" },
+            { lat: 12.9755, lng: 77.6240, label: "Domlur / Halasuru Corridor", speed: "26 km/h", eta: "13 mins" },
+            { lat: 12.9740, lng: 77.6140, label: "Trinity Circle (MG Road)", speed: "24 km/h", eta: "11 mins" },
+            { lat: 12.9730, lng: 77.6070, label: "MG Road Metro Station", speed: "22 km/h", eta: "7 mins" },
+            { lat: 12.9718, lng: 77.6030, label: "Brigade Road Junction", speed: "18 km/h", eta: "3 mins" },
+            { lat: 12.9708, lng: 77.6009, label: "Hope Shelter (St. Marks)", speed: "0 km/h (Arrived)", eta: "Arrived" }
+        ];
+
+        function createPinIcon(type, iconClass, bgColor, borderColor) {
+            let pingAnim = type === 'courier' ? '<span class="absolute w-10 h-10 rounded-full bg-indigo-400 opacity-60 animate-ping"></span>' : '';
+
+            return L.divIcon({
+                className: 'custom-map-pin',
+                html: `
+                    <div class="relative flex items-center justify-center cursor-pointer group" style="width: 36px; height: 36px;">
+                        ${pingAnim}
+                        <div class="relative w-8 h-8 rounded-full ${bgColor} text-white border-2 ${borderColor} shadow-md flex items-center justify-center text-xs font-bold transition-transform group-hover:scale-110">
+                            <i class="${iconClass}"></i>
+                        </div>
+                    </div>
+                `,
+                iconSize: [36, 36],
+                iconAnchor: [18, 18],
+                popupAnchor: [0, -18]
+            });
+        }
+
+        window.initOrResizeRescueMap = function() {
+            const container = document.getElementById('live-rescue-leaflet-map');
+            if (!container) return;
+
+            if (map) {
+                setTimeout(() => map.invalidateSize(), 150);
+                return;
+            }
+
+            if (typeof L === 'undefined') {
+                setTimeout(window.initOrResizeRescueMap, 200);
+                return;
+            }
+
+            // Initialize Leaflet Map centered on INDIA
+            map = L.map('live-rescue-leaflet-map', {
+                center: [21.8, 78.96],
+                zoom: 5,
+                minZoom: 4,
+                maxZoom: 18,
+                zoomControl: true,
+                scrollWheelZoom: true
+            });
+            window.sanjogRescueMap = map;
+
+            // Load Verified Free Esri World Street Map (No 403 Access Block & No API Key Required)
+            window.changeMapStyle('esri');
+
+            // Populate all India nodes
+            renderAllMarkers();
+
+            // Render active corridor polyline for Bengaluru
+            renderBengaluruCorridor();
+
+            // Update bottom cards for All India / initial city
+            updateDynamicEntityCards('all');
+
+            // Update node counters
+            updateNodeCounters();
+        };
+
+        // Switch Free Tile Style
+        window.changeMapStyle = function(styleKey) {
+            if (!map) return;
+            const config = TILE_PROVIDERS[styleKey] || TILE_PROVIDERS.osm;
+
+            if (currentTileLayer) {
+                map.removeLayer(currentTileLayer);
+            }
+
+            currentTileLayer = L.tileLayer(config.url, {
+                attribution: config.attribution,
+                subdomains: config.subdomains || 'abc',
+                maxZoom: config.maxZoom || 19
+            }).addTo(map);
+
+            const selectEl = document.getElementById('map-style-select');
+            if (selectEl && selectEl.value !== styleKey) {
+                selectEl.value = styleKey;
+            }
+        };
+
+        // Render All Markers Across India
+        function renderAllMarkers() {
+            // 1. Donors
+            DONOR_NODES.forEach(donor => {
+                const marker = L.marker([donor.lat, donor.lng], {
+                    icon: createPinIcon('donor', 'fa-solid fa-utensils', 'bg-pista-700', 'border-white')
+                }).addTo(map);
+
+                marker.bindPopup(`
+                    <div class="p-4 text-pista-950 min-w-[220px]">
+                        <div class="flex items-center justify-between pb-1.5 border-b border-ivory-200">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-pista-800 bg-pista-100 px-2 py-0.5 rounded-full flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-pista-600"></span> Donor Kitchen
+                            </span>
+                            <span class="text-[10px] text-ivory-600 font-bold uppercase">${donor.city}</span>
+                        </div>
+                        <h4 class="font-serif font-black text-sm text-pista-950 mt-2">${donor.name}</h4>
+                        <p class="text-xs text-ivory-700 mt-0.5">${donor.address}</p>
+                        <div class="mt-2 p-2 bg-pista-50 rounded-xl border border-pista-200 text-xs">
+                            <div class="font-bold text-pista-900">${donor.meals}</div>
+                            <div class="text-[11px] text-pista-700 mt-0.5">${donor.details}</div>
+                        </div>
+                        <button onclick="showSubView('donor', 'donor-report')" class="w-full mt-2.5 py-1.5 bg-pista-700 hover:bg-pista-800 text-white text-xs font-bold rounded-xl shadow-xs transition-colors">
+                            ${donor.actionText} &rarr;
+                        </button>
+                    </div>
+                `);
+
+                markers[donor.id] = { marker, type: 'donor', city: donor.city, lat: donor.lat, lng: donor.lng, data: donor };
+            });
+
+            // 2. Shelters
+            SHELTER_NODES.forEach(shelter => {
+                const marker = L.marker([shelter.lat, shelter.lng], {
+                    icon: createPinIcon('shelter', 'fa-solid fa-hands-holding-child', 'bg-salmon-600', 'border-white')
+                }).addTo(map);
+
+                marker.bindPopup(`
+                    <div class="p-4 text-pista-950 min-w-[220px]">
+                        <div class="flex items-center justify-between pb-1.5 border-b border-ivory-200">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-salmon-700 bg-salmon-50 px-2 py-0.5 rounded-full flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-salmon-500"></span> Recipient Shelter
+                            </span>
+                            <span class="text-[10px] text-salmon-600 font-bold uppercase">${shelter.city}</span>
+                        </div>
+                        <h4 class="font-serif font-black text-sm text-pista-950 mt-2">${shelter.name}</h4>
+                        <p class="text-xs text-ivory-700 mt-0.5">${shelter.address}</p>
+                        <div class="mt-2 p-2 bg-salmon-50 rounded-xl border border-salmon-200 text-xs">
+                            <div class="font-bold text-salmon-800">${shelter.demand}</div>
+                            <div class="text-[11px] text-salmon-700 mt-0.5">${shelter.details}</div>
+                        </div>
+                        <button onclick="showSubView('ngo', 'ngo-dashboard')" class="w-full mt-2.5 py-1.5 bg-salmon-600 hover:bg-salmon-700 text-white text-xs font-bold rounded-xl shadow-xs transition-colors">
+                            ${shelter.actionText} &rarr;
+                        </button>
+                    </div>
+                `);
+
+                markers[shelter.id] = { marker, type: 'shelter', city: shelter.city, lat: shelter.lat, lng: shelter.lng, data: shelter };
+            });
+
+            // 3. Couriers: Delhi Courier
+            const delhiCourier = L.marker([28.6400, 77.2200], {
+                icon: createPinIcon('courier', 'fa-solid fa-person-biking', 'bg-indigo-600', 'border-white')
+            }).addTo(map);
+            delhiCourier.bindPopup(`
+                <div class="p-4 text-pista-950 min-w-[220px]">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-full">Courier: Delhi Fleet</span>
+                    <h4 class="font-serif font-black text-sm text-pista-950 mt-2">Rajesh Verma (EV-102)</h4>
+                    <p class="text-xs text-ivory-700 mt-0.5">En route to Kashmere Gate Rainbow Home</p>
+                    <div class="mt-2 p-2 bg-indigo-50 rounded-xl text-xs font-semibold text-indigo-900">
+                        75 Meals &bull; Safe Temp: 62°C &bull; ETA 14 mins
+                    </div>
+                </div>
+            `);
+            markers['delhi_courier'] = { marker: delhiCourier, type: 'courier', city: 'delhi', lat: 28.6400, lng: 77.2200 };
+
+            // 4. Mumbai Courier
+            const mumbaiCourier = L.marker([19.0800, 72.8350], {
+                icon: createPinIcon('courier', 'fa-solid fa-person-biking', 'bg-indigo-600', 'border-white')
+            }).addTo(map);
+            mumbaiCourier.bindPopup(`
+                <div class="p-4 text-pista-950 min-w-[220px]">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-full">Dabbawala Rescue Fleet</span>
+                    <h4 class="font-serif font-black text-sm text-pista-950 mt-2">Sachin Kadam (Cycle-BOM)</h4>
+                    <p class="text-xs text-ivory-700 mt-0.5">Bandra West to Andheri Corridor</p>
+                    <div class="mt-2 p-2 bg-indigo-50 rounded-xl text-xs font-semibold text-indigo-900">
+                        60 Dinner Boxes &bull; Verified Food Carrier &bull; ETA 9 mins
+                    </div>
+                </div>
+            `);
+            markers['mumbai_courier'] = { marker: mumbaiCourier, type: 'courier', city: 'mumbai', lat: 19.0800, lng: 72.8350 };
+        }
+
+        // Render Active Courier Corridor (Bengaluru)
+        function renderBengaluruCorridor() {
+            const polylinePoints = courierPathBengaluru.map(p => [p.lat, p.lng]);
+            routePolyline = L.polyline(polylinePoints, {
+                color: '#486E31',
+                weight: 5,
+                opacity: 0.85,
+                dashArray: '8, 8'
+            }).addTo(map);
+
+            // Active Moving Courier Aniket
+            const startPt = courierPathBengaluru[currentPathIndex];
+            const courierMarker = L.marker([startPt.lat, startPt.lng], {
+                icon: createPinIcon('courier', 'fa-solid fa-person-biking', 'bg-indigo-600', 'border-white')
+            }).addTo(map);
+
+            courierMarker.bindPopup(`
+                <div class="p-4 text-pista-950 min-w-[220px]">
+                    <div class="flex items-center justify-between pb-1.5 border-b border-ivory-200">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-full flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-ping"></span> Live Courier (EV)
+                        </span>
+                        <span class="text-[10px] text-emerald-600 font-bold">En Route</span>
+                    </div>
+                    <h4 class="font-serif font-black text-sm text-pista-950 mt-2">Aniket Kumar (EV-402)</h4>
+                    <p class="text-xs text-ivory-700 mt-0.5">MG Road Corridor towards St. Marks</p>
+                    <div class="mt-2 p-2 bg-indigo-50/70 rounded-xl border border-indigo-200 text-xs space-y-1">
+                        <div class="flex justify-between">
+                            <span class="text-ivory-700">Cargo:</span>
+                            <strong class="text-pista-950">60 Warm Thalis</strong>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-ivory-700">Thermal Kit:</span>
+                            <strong class="text-emerald-700">64°C Safe</strong>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-ivory-700">Battery:</span>
+                            <strong class="text-indigo-800">84%</strong>
+                        </div>
+                    </div>
+                    <button onclick="showSubView('volunteer', 'volunteer-delivery')" class="w-full mt-2.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl shadow-xs transition-colors">
+                        View Dual-OTP Handoff &rarr;
+                    </button>
+                </div>
+            `);
+
+            markers['aniket'] = { marker: courierMarker, type: 'courier', city: 'bengaluru', lat: startPt.lat, lng: startPt.lng };
+
+            // Real-Time Simulation Loop for Aniket
+            if (courierInterval) clearInterval(courierInterval);
+            courierInterval = setInterval(() => {
+                currentPathIndex = (currentPathIndex + 1) % courierPathBengaluru.length;
+                const pt = courierPathBengaluru[currentPathIndex];
+
+                courierMarker.setLatLng([pt.lat, pt.lng]);
+                markers['aniket'].lat = pt.lat;
+                markers['aniket'].lng = pt.lng;
+
+                const speedEl = document.getElementById('live-courier-speed');
+                const etaEl = document.getElementById('live-courier-eta');
+                const coordsEl = document.getElementById('live-gps-coords');
+
+                if (speedEl) speedEl.textContent = pt.speed;
+                if (etaEl) etaEl.textContent = pt.eta;
+                if (coordsEl) coordsEl.textContent = `${pt.lat.toFixed(4)}° N, ${pt.lng.toFixed(4)}° E`;
+            }, 3000);
+        }
+
+        // City Quick-Fly
+        window.focusCity = function(cityKey) {
+            currentCity = cityKey;
+            const target = CITY_COORDS[cityKey] || CITY_COORDS.all;
+
+            // Update UI buttons
+            Object.keys(CITY_COORDS).forEach(key => {
+                const btn = document.getElementById(`city-btn-${key}`);
+                if (!btn) return;
+                if (key === cityKey) {
+                    btn.className = 'px-3.5 py-1.5 rounded-xl bg-pista-800 text-white font-bold shrink-0 transition-all shadow-xs flex items-center gap-1.5 text-xs';
+                } else {
+                    btn.className = 'px-3 py-1.5 rounded-xl bg-white hover:bg-pista-50 text-pista-950 border border-ivory-300 font-bold shrink-0 transition-all flex items-center gap-1.5 text-xs';
+                }
+            });
+
+            // Update region labels
+            const labelEl = document.getElementById('active-region-label');
+            if (labelEl) labelEl.textContent = target.label;
+
+            const footerDesc = document.getElementById('footer-region-desc');
+            if (footerDesc) {
+                footerDesc.textContent = cityKey === 'all' 
+                    ? 'National Network Active • Bengaluru • Delhi NCR • Mumbai • Hyderabad • Kolkata • Chennai • Pune'
+                    : `Active Hyperlocal Mesh • ${target.label}`;
+            }
+
+            // Fly map to city coordinates
+            if (map) {
+                map.flyTo(target.center, target.zoom, { duration: 1.4 });
+            }
+
+            // Update bottom cards for this city
+            updateDynamicEntityCards(cityKey);
+
+            // Filter markers for city if not 'all'
+            applyFilters();
+        };
+
+        // Update Bottom Entity Cards
+        function updateDynamicEntityCards(cityKey) {
+            const container = document.getElementById('dynamic-entity-cards');
+            if (!container) return;
+
+            let donorSample = DONOR_NODES.find(d => cityKey === 'all' ? d.id === 'annapurna' : d.city === cityKey) || DONOR_NODES[0];
+            let shelterSample = SHELTER_NODES.find(s => cityKey === 'all' ? s.id === 'hope' : s.city === cityKey) || SHELTER_NODES[0];
+            let courierTitle = cityKey === 'delhi' ? 'Rajesh Verma (EV-102)' : (cityKey === 'mumbai' ? 'Sachin Kadam (Dabbawala)' : 'Aniket Kumar (EV)');
+            let courierTarget = cityKey === 'delhi' ? 'delhi_courier' : (cityKey === 'mumbai' ? 'mumbai_courier' : 'aniket');
+            let courierLoc = cityKey === 'delhi' ? 'Kashmere Gate Corridor' : (cityKey === 'mumbai' ? 'Bandra to Andheri' : 'MG Road Corridor');
+
+            container.innerHTML = `
+                <!-- Donor Card -->
+                <div onclick="flyToMarker('${donorSample.id}')"
+                     class="bg-white p-4.5 rounded-2xl border-2 border-pista-400 hover:border-pista-600 shadow-soft cursor-pointer transition-all hover:-translate-y-0.5 group">
+                    <div class="flex items-center justify-between pb-1">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-pista-700 flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-pista-500"></span> Donor Kitchen
+                        </span>
+                        <span class="text-[10px] font-bold text-pista-600 group-hover:underline">Locate &rarr;</span>
+                    </div>
+                    <h4 class="font-bold text-sm text-pista-950 mt-1">${donorSample.name}</h4>
+                    <p class="text-xs text-ivory-700 mt-0.5">${donorSample.address} &bull; <strong class="text-pista-900">${donorSample.meals}</strong></p>
+                </div>
+
+                <!-- Courier Card -->
+                <div onclick="flyToMarker('${courierTarget}')"
+                     class="bg-white p-4.5 rounded-2xl border-2 border-indigo-400 hover:border-indigo-600 shadow-soft cursor-pointer transition-all hover:-translate-y-0.5 group">
+                    <div class="flex items-center justify-between pb-1">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-700 flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-indigo-500 animate-ping"></span> Live Courier En Route
+                        </span>
+                        <span class="text-[10px] font-bold text-indigo-600 group-hover:underline">Track Live &rarr;</span>
+                    </div>
+                    <h4 class="font-bold text-sm text-pista-950 mt-1">${courierTitle}</h4>
+                    <p class="text-xs text-ivory-700 mt-0.5">${courierLoc} &bull; <strong class="text-salmon-600">Active Delivery</strong></p>
+                </div>
+
+                <!-- Shelter Card -->
+                <div onclick="flyToMarker('${shelterSample.id}')"
+                     class="bg-white p-4.5 rounded-2xl border-2 border-salmon-400 hover:border-salmon-600 shadow-soft cursor-pointer transition-all hover:-translate-y-0.5 group">
+                    <div class="flex items-center justify-between pb-1">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-salmon-700 flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-salmon-500"></span> Recipient Shelter
+                        </span>
+                        <span class="text-[10px] font-bold text-salmon-600 group-hover:underline">Locate &rarr;</span>
+                    </div>
+                    <h4 class="font-bold text-sm text-pista-950 mt-1">${shelterSample.name}</h4>
+                    <p class="text-xs text-ivory-700 mt-0.5">${shelterSample.address} &bull; <strong class="text-pista-900">${shelterSample.demand}</strong></p>
+                </div>
+            `;
+        }
+
+        // Fly to Specific Marker
+        window.flyToMarker = function(id) {
+            if (!map) window.initOrResizeRescueMap();
+            const target = markers[id];
+            if (target && map) {
+                map.flyTo([target.lat, target.lng], 15, { duration: 1.2 });
+                setTimeout(() => {
+                    target.marker.openPopup();
+                }, 1300);
+            }
+        };
+
+        // Recenter to active city or All India
+        window.recenterRescueMap = function() {
+            if (!map) return;
+            const target = CITY_COORDS[currentCity] || CITY_COORDS.all;
+            map.flyTo(target.center, target.zoom, { duration: 1 });
+        };
+
+        // Filter Pins by Type (All / Donor / Shelter / Courier)
+        window.filterMapMarkers = function(type) {
+            activeFilter = type;
+
+            ['all', 'donor', 'shelter', 'courier'].forEach(btnType => {
+                const btn = document.getElementById(`map-filter-${btnType}`);
+                if (!btn) return;
+                if (btnType === type) {
+                    btn.className = 'px-2.5 py-1 rounded-lg bg-pista-800 text-white font-bold text-[11px] shadow-xs transition-all';
+                } else {
+                    btn.className = 'px-2.5 py-1 rounded-lg bg-white hover:bg-pista-50 text-pista-900 border border-ivory-300 font-semibold text-[11px] transition-all flex items-center gap-1.5';
+                }
+            });
+
+            applyFilters();
+        };
+
+        function applyFilters() {
+            Object.values(markers).forEach(item => {
+                const matchesType = (activeFilter === 'all' || item.type === activeFilter);
+                const matchesCity = (currentCity === 'all' || item.city === currentCity);
+
+                if (matchesType && matchesCity) {
+                    if (!map.hasLayer(item.marker)) map.addLayer(item.marker);
+                } else {
+                    if (map.hasLayer(item.marker)) map.removeLayer(item.marker);
+                }
+            });
+
+            if (routePolyline) {
+                const showRoute = (activeFilter === 'all' || activeFilter === 'courier') && (currentCity === 'all' || currentCity === 'bengaluru');
+                if (showRoute) {
+                    if (!map.hasLayer(routePolyline)) map.addLayer(routePolyline);
+                } else {
+                    if (map.hasLayer(routePolyline)) map.removeLayer(routePolyline);
+                }
+            }
+        }
+
+        function updateNodeCounters() {
+            const countAll = document.getElementById('count-all');
+            const countDonor = document.getElementById('count-donor');
+            const countShelter = document.getElementById('count-shelter');
+            const countCourier = document.getElementById('count-courier');
+
+            if (countAll) countAll.textContent = Object.keys(markers).length;
+            if (countDonor) countDonor.textContent = DONOR_NODES.length;
+            if (countShelter) countShelter.textContent = SHELTER_NODES.length;
+            if (countCourier) countCourier.textContent = 3;
+        }
+
+        // Auto-initialize when DOM is ready or container is visible
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                setTimeout(window.initOrResizeRescueMap, 300);
+            });
+        } else {
+            setTimeout(window.initOrResizeRescueMap, 300);
+        }
+    })();
+    </script>
 </div>
+

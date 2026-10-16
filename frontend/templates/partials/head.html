@@ -23,6 +23,10 @@
         tailwind.config = {
             theme: {
                 extend: {
+                    spacing: {
+                        '4.5': '1.125rem',
+                        '5.5': '1.375rem',
+                    },
                     fontFamily: {
                         sans: ['"Plus Jakarta Sans"', 'Inter', '-apple-system', 'sans-serif'],
                         serif: ['"Fraunces"', 'Georgia', 'serif'],
@@ -82,6 +86,10 @@
         }
     </script>
     
+    <!-- Leaflet 1.9.4 (Interactive Geospatial Maps) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
     <!-- HTMX Library -->
     <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt9ApKC1BHgZEapYawvhYlFoajjVqJKXUew+OrQ6VRjIE3fpbwgGU0RjFzpLk" crossorigin="anonymous"></script>
 

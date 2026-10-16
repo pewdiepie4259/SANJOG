@@ -42,25 +42,33 @@
     <div id="subview-admin-dashboard" class="admin-view-pane space-y-6">
         <!-- 4 Metric Cards -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <div class="bg-white p-4.5 rounded-2xl border border-ivory-300 shadow-soft">
-                <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600 block">Total Entities</span>
-                <div class="text-3xl font-serif font-black text-pista-900 mt-1">{{ total_orgs_count|default:"2" }}</div>
-                <span class="text-[11px] text-pista-700 font-semibold mt-1 block">Registered kitchens &amp; NGOs</span>
+            <div class="bg-white p-5 rounded-2xl border border-ivory-300 shadow-soft flex flex-col justify-between min-h-[115px]">
+                <div>
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600 block">Total Entities</span>
+                    <div class="text-2xl sm:text-3xl font-serif font-black text-pista-900 mt-1">{{ total_orgs_count|default:"2" }}</div>
+                </div>
+                <span class="text-[11px] text-pista-700 font-semibold mt-2 block">Registered kitchens &amp; NGOs</span>
             </div>
-            <div class="bg-white p-4.5 rounded-2xl border border-ivory-300 shadow-soft">
-                <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600 block">Pending Reviews</span>
-                <div class="text-3xl font-serif font-black text-salmon-600 mt-1">{{ pending_count|default:"0" }}</div>
-                <span class="text-[11px] text-salmon-600 font-semibold mt-1 block">Requires manual audit</span>
+            <div class="bg-white p-5 rounded-2xl border border-ivory-300 shadow-soft flex flex-col justify-between min-h-[115px]">
+                <div>
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600 block">Pending Reviews</span>
+                    <div class="text-2xl sm:text-3xl font-serif font-black text-salmon-600 mt-1">{{ pending_count|default:"0" }}</div>
+                </div>
+                <span class="text-[11px] text-salmon-600 font-semibold mt-2 block">Requires manual audit</span>
             </div>
-            <div class="bg-white p-4.5 rounded-2xl border border-ivory-300 shadow-soft">
-                <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600 block">Active Couriers</span>
-                <div class="text-3xl font-serif font-black text-pista-900 mt-1">14 EV Bikes</div>
-                <span class="text-[11px] text-ivory-600 mt-1 block">On road in Bengaluru</span>
+            <div class="bg-white p-5 rounded-2xl border border-ivory-300 shadow-soft flex flex-col justify-between min-h-[115px]">
+                <div>
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600 block">Active Couriers</span>
+                    <div class="text-2xl sm:text-3xl font-serif font-black text-pista-900 mt-1">14 EV Bikes</div>
+                </div>
+                <span class="text-[11px] text-ivory-600 mt-2 block">On road in Bengaluru</span>
             </div>
-            <div class="bg-white p-4.5 rounded-2xl border border-ivory-300 shadow-soft">
-                <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600 block">Compliance Rate</span>
-                <div class="text-3xl font-serif font-black text-pista-800 mt-1">100%</div>
-                <span class="text-[11px] text-pista-700 font-semibold mt-1 block">Zero SLA violations</span>
+            <div class="bg-white p-5 rounded-2xl border border-ivory-300 shadow-soft flex flex-col justify-between min-h-[115px]">
+                <div>
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-ivory-600 block">Compliance Rate</span>
+                    <div class="text-2xl sm:text-3xl font-serif font-black text-pista-800 mt-1">100%</div>
+                </div>
+                <span class="text-[11px] text-pista-700 font-semibold mt-2 block">Zero SLA violations</span>
             </div>
         </div>
 
