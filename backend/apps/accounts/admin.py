@@ -13,3 +13,4 @@ class CustomUserAdmin(UserAdmin):
     add_fieldsets = UserAdmin.add_fieldsets + (
         ('SANJOG Role Info', {'fields': ('role', 'phone_number', 'is_email_verified')}),
     )
+

@@ -3,6 +3,18 @@ import sys
 from pathlib import Path
 import environ
 
+# Python 3.14 compatibility patch: 'super' object in Python 3.14 cannot be copied via copy(super())
+try:
+    import django.template.context as _django_context
+    def _safe_base_context_copy(self):
+        duplicate = self.__class__.__new__(self.__class__)
+        duplicate.__dict__.update(self.__dict__)
+        duplicate.dicts = self.dicts[:]
+        return duplicate
+    _django_context.BaseContext.__copy__ = _safe_base_context_copy
+except Exception:
+    pass
+
 # Build paths inside the project: BASE_DIR resolves to 'backend', REPO_DIR resolves to repository root.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 REPO_DIR = BASE_DIR.parent
