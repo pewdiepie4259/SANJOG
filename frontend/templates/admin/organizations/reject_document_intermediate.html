@@ -1,0 +1,52 @@
+{% extends "admin/base_site.html" %}
+{% load i18n l10n admin_urls %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>
+&rsaquo; <a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a>
+&rsaquo; <a href="{% url opts|admin_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
+&rsaquo; {% translate 'Reject Documents' %}
+</div>
+{% endblock %}
+
+{% block content %}
+<div style="max-width: 800px; padding: 15px;">
+    <h2>Reject Selected Compliance Documents</h2>
+    <p style="color: #4b5563; margin-bottom: 20px;">
+        A specific and mandatory rejection reason must be recorded for each rejected document so the organization owner understands what correction is required.
+    </p>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="reject_document_action" />
+        <input type="hidden" name="post" value="yes" />
+        {% for obj in queryset %}
+            <input type="hidden" name="{{ action_checkbox_name }}" value="{{ obj.pk }}" />
+        {% endfor %}
+
+        <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 16px; margin-bottom: 20px;">
+            <h4 style="margin-top: 0; color: #991b1b;">Selected Documents for Rejection:</h4>
+            <ul style="margin-bottom: 0; padding-left: 20px;">
+                {% for obj in queryset %}
+                    <li style="margin-bottom: 6px;">
+                        <strong>{{ obj.original_filename }}</strong> ({{ obj.get_document_type_display }}) &mdash; Organization: <em>{{ obj.organization.name }}</em>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div style="margin-bottom: 24px;">
+            <label for="rejection_reason" style="display: block; font-weight: 600; margin-bottom: 8px; color: #1f2937;">
+                Mandatory Document Rejection Reason:
+            </label>
+            <textarea id="rejection_reason" name="rejection_reason" rows="4" required style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-family: inherit; font-size: 14px;" placeholder="Explain why the document is illegible, expired, or rejected..."></textarea>
+        </div>
+
+        <div>
+            <input type="submit" value="Confirm Rejection" style="background: #dc2626; color: white; padding: 10px 20px; border-radius: 6px; border: none; font-weight: 600; cursor: pointer;" />
+            <a href="{% url opts|admin_urlname:'changelist' %}" style="display: inline-block; margin-left: 12px; color: #4b5563; text-decoration: none; padding: 10px 16px; border: 1px solid #d1d5db; border-radius: 6px;">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

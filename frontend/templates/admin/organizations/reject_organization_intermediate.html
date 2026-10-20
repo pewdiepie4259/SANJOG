@@ -1,0 +1,52 @@
+{% extends "admin/base_site.html" %}
+{% load i18n l10n admin_urls %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>
+&rsaquo; <a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a>
+&rsaquo; <a href="{% url opts|admin_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
+&rsaquo; {% translate 'Reject Organizations' %}
+</div>
+{% endblock %}
+
+{% block content %}
+<div style="max-width: 800px; padding: 15px;">
+    <h2>Reject Selected Organization Profiles</h2>
+    <p style="color: #4b5563; margin-bottom: 20px;">
+        A specific and mandatory rejection reason must be recorded in the audit history for each rejected organization.
+    </p>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="reject_organization_action" />
+        <input type="hidden" name="post" value="yes" />
+        {% for obj in queryset %}
+            <input type="hidden" name="{{ action_checkbox_name }}" value="{{ obj.pk }}" />
+        {% endfor %}
+
+        <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 16px; margin-bottom: 20px;">
+            <h4 style="margin-top: 0; color: #991b1b;">Selected Organizations for Rejection:</h4>
+            <ul style="margin-bottom: 0; padding-left: 20px;">
+                {% for obj in queryset %}
+                    <li style="margin-bottom: 6px;">
+                        <strong>{{ obj.name }}</strong> ({{ obj.get_org_type_display }}) &mdash; Current Status: <em>{{ obj.verification_status }}</em>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div style="margin-bottom: 24px;">
+            <label for="rejection_reason" style="display: block; font-weight: 600; margin-bottom: 8px; color: #1f2937;">
+                Mandatory Rejection Reason / Commentary:
+            </label>
+            <textarea id="rejection_reason" name="rejection_reason" rows="4" required style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-family: inherit; font-size: 14px;" placeholder="Explain why the organization verification is being rejected..."></textarea>
+        </div>
+
+        <div>
+            <input type="submit" value="Confirm Rejection" style="background: #dc2626; color: white; padding: 10px 20px; border-radius: 6px; border: none; font-weight: 600; cursor: pointer;" />
+            <a href="{% url opts|admin_urlname:'changelist' %}" style="display: inline-block; margin-left: 12px; color: #4b5563; text-decoration: none; padding: 10px 16px; border: 1px solid #d1d5db; border-radius: 6px;">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

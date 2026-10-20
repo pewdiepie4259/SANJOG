@@ -4,6 +4,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.http import JsonResponse
 
+# SANJOG Admin Portal Branding Configuration
+admin.site.site_header = "SANJOG Food Rescue OS — Administration"
+admin.site.site_title = "SANJOG Admin"
+admin.site.index_title = "Operational Governance & Verification Portal"
+
+
 def health_check(request):
     """Base system health check endpoint."""
     return JsonResponse({

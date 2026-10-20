@@ -134,10 +134,15 @@ CREATE DATABASE sanjog_db;
 CREATE EXTENSION IF NOT EXISTS postgis;
 ```
 
-#### Step 5: Database Migrations & Superuser
+#### Step 5: Database Migrations & Administrator Access
 ```bash
-python manage.py makemigrations
-python manage.py migrate
+# Set SQLite mode if using local development database
+# Windows (PowerShell): $env:USE_SQLITE="True"
+
+# Recover / reset existing local administrator password interactively:
+python manage.py changepassword admin
+
+# Or create a new administrator account interactively:
 python manage.py createsuperuser
 ```
 
@@ -152,10 +157,14 @@ celery -A config beat --loglevel=info
 # Terminal 1: Django Server
 python manage.py runserver
 ```
-Visit application at: `http://127.0.0.1:8000/`
+- **Public Portal:** `http://127.0.0.1:8000/`
+- **Django Admin Portal:** `http://127.0.0.1:8000/admin/`
+- **Admin & Governance Guide:** See [docs/ADMIN_GUIDE.md](docs/ADMIN_GUIDE.md)
 
 ---
 
 ### 8. TESTING & LICENSE
-- Run PyTest: `pytest`
+- Run Admin Test Suite: `pytest backend/tests/test_admin.py -v`
+- Run Core Test Suites: `pytest backend/tests/test_auth.py backend/tests/test_health.py backend/tests/test_verification.py backend/tests/test_organizations.py backend/tests/test_admin.py`
 - License: MIT License
+
