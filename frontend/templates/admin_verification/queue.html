@@ -3,16 +3,16 @@
 {% block title %}NGO &amp; Donor Verification Queue — Sanjog{% endblock %}
 
 {% block content %}
-<div class="max-w-6xl mx-auto space-y-6">
+<div class ="max-w-6xl mx-auto space-y-6">
 
-    <!-- MVP HIERARCHY NAVIGATION -->
+
     {% include "components/section_nav.html" with section="admin" page="ngo_verification" %}
 
-    <!-- ROLE SWITCHER -->
+
     {% include "components/role_switcher.html" %}
 
-    <!-- Header with Live Metric Badges -->
-    <div class="bg-white p-6 rounded-3xl border border-ivory-300 shadow-soft flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+
+    <div class ="bg-white p-6 rounded-3xl border border-ivory-300 shadow-soft flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
             <span class="px-3 py-1 bg-pista-100 text-pista-900 rounded-full text-xs font-bold inline-flex items-center gap-1.5 mb-2">
                 <i class="fa-solid fa-file-circle-check text-pista-700"></i>
@@ -38,9 +38,9 @@
         </div>
     </div>
 
-    <!-- Filter Bar & Search -->
+   
     <div class="bg-white rounded-3xl p-4 sm:p-5 border border-ivory-300 shadow-soft flex flex-col sm:flex-row items-center justify-between gap-4">
-        <!-- Status Filter Tabs -->
+       
         <div class="flex items-center gap-1.5 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">
             <a href="?status=PENDING{% if search_query %}&q={{ search_query }}{% endif %}" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all {% if current_status == 'PENDING' %}bg-salmon-500 text-white shadow-salmon{% else %}text-ivory-700 hover:bg-salmon-50 hover:text-salmon-700{% endif %}">
                 Pending Review
