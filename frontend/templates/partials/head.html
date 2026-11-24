@@ -32,54 +32,57 @@
                         serif: ['"Fraunces"', 'Georgia', 'serif'],
                     },
                     colors: {
-                        // PISTA GREEN: Fresh, lively pastel pistachio green with grounded depth
+                        // YELLOW-GREEN (#BAFF39): Vibrant, energetic modern accent
                         pista: {
-                            50: '#F3F9EE',
-                            100: '#E4F2DC',
-                            200: '#CBE5BD',
-                            300: '#ADD498',
-                            400: '#8EBE72',
-                            500: '#75A856',
-                            600: '#5F8E43',
-                            700: '#486E31',
-                            800: '#345222',
-                            900: '#213614',
-                            950: '#14230B',
+                            50: '#F8FEEB',
+                            100: '#EFFFCE',
+                            200: '#DFFB96',
+                            300: '#CFF85E',
+                            400: '#C2F735',
+                            500: '#BAFF39', // Exact User Yellow-Green
+                            600: '#9FE019',
+                            700: '#7BB30C',
+                            800: '#578207',
+                            900: '#2F4703',
+                            950: '#172601',
                         },
-                        // IVORY: Warm, rich creamy canvas and surfaces
+                        // WHITE (#FFFFFF) & CRISP GREYS: Clean, high-contrast canvas & surfaces
                         ivory: {
-                            50: '#FDFCF9',
-                            100: '#FAF7F0',
-                            200: '#F4EFE3',
-                            300: '#EAE2D2',
-                            400: '#DDD2BD',
-                            500: '#C6B69A',
-                            600: '#9B8B6E',
-                            700: '#706249',
-                            800: '#4A3F2C',
-                            900: '#241E13',
-                            950: '#151109',
+                            50: '#FFFFFF', // Exact User Pure White
+                            100: '#FFFFFF', // Clean White background
+                            200: '#F5F5F5',
+                            300: '#E5E5E5',
+                            400: '#D4D4D4',
+                            500: '#9E9E9E',
+                            600: '#6E6E6E', // Exact User Dim Grey
+                            700: '#525252',
+                            800: '#383838',
+                            900: '#1F1F1F',
+                            950: '#111111',
                         },
-                        // SALMON PINK: Inviting, warm coral-salmon for vital actions & highlights
+                        // DIM GREY (#6E6E6E): Neutral dim grey highlights, secondary buttons & badges
                         salmon: {
-                            50: '#FFF5F3',
-                            100: '#FFE8E4',
-                            200: '#FFD2CA',
-                            300: '#FFB3A5',
-                            400: '#FF8E7C',
-                            500: '#FA705C',
-                            600: '#E4503B',
-                            700: '#BA3724',
-                            800: '#8C2415',
-                            900: '#5A130A',
-                            950: '#380B05',
-                        }
+                            50: '#F8F8F8',
+                            100: '#EEEEEE',
+                            200: '#DDDDDD',
+                            300: '#C7C7C7',
+                            400: '#8E8E8E',
+                            500: '#6E6E6E', // Exact User Dim Grey
+                            600: '#555555',
+                            700: '#3E3E3E',
+                            800: '#2A2A2A',
+                            900: '#1A1A1A',
+                            950: '#0D0D0D',
+                        },
+                        // Named convenience aliases
+                        yellowgreen: '#BAFF39',
+                        dimgrey: '#6E6E6E',
                     },
                     boxShadow: {
-                        'soft': '0 2px 12px -2px rgba(36, 30, 19, 0.06), 0 4px 20px -4px rgba(117, 168, 86, 0.08)',
-                        'hover': '0 8px 30px -4px rgba(36, 30, 19, 0.1), 0 6px 18px -4px rgba(250, 112, 92, 0.12)',
-                        'pista': '0 4px 20px -2px rgba(117, 168, 86, 0.28)',
-                        'salmon': '0 4px 20px -2px rgba(250, 112, 92, 0.28)',
+                        'soft': '0 2px 12px -2px rgba(110, 110, 110, 0.08), 0 4px 20px -4px rgba(186, 255, 57, 0.15)',
+                        'hover': '0 8px 30px -4px rgba(110, 110, 110, 0.14), 0 6px 18px -4px rgba(186, 255, 57, 0.22)',
+                        'pista': '0 4px 20px -2px rgba(186, 255, 57, 0.40)',
+                        'salmon': '0 4px 20px -2px rgba(110, 110, 110, 0.35)',
                     }
                 }
             }
@@ -99,14 +102,14 @@
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #FAF7F0;
-            color: #241E13;
+            background-color: #FFFFFF;
+            color: #1F1F1F;
             -webkit-font-smoothing: antialiased;
         }
 
         ::selection {
-            background-color: #E4F2DC;
-            color: #213614;
+            background-color: #BAFF39;
+            color: #111111;
         }
 
         /* Custom smooth scrollbar */
@@ -115,14 +118,26 @@
             height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #F4EFE3;
+            background: #F5F5F5;
         }
         ::-webkit-scrollbar-thumb {
-            background: #CBE5BD;
+            background: #6E6E6E;
             border-radius: 9999px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #8EBE72;
+            background: #525252;
+        }
+
+        /* High-contrast legibility for Yellow-Green (#BAFF39) primary action buttons */
+        .bg-pista-500, .bg-pista-600 {
+            color: #111111 !important;
+        }
+        .bg-pista-500 svg, .bg-pista-600 svg, .bg-pista-500 i, .bg-pista-600 i {
+            color: #111111 !important;
+        }
+        .bg-pista-600:hover, .bg-pista-500:hover {
+            background-color: #A3EE1E !important;
+            color: #000000 !important;
         }
     </style>
 
