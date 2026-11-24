@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Sanjog — Unified Community Food Rescue Network{% endblock %}
+{% block title %}Sanjog — Community Food Rescue Network{% endblock %}
 
 {% block content %}
 <div class="space-y-8">
@@ -34,25 +34,25 @@
                         Every day across our city, good restaurants and caterers have wholesome meals that go uneaten, while local shelters and care homes work tirelessly to feed families. Sanjog connects them through verified volunteers who transport warm food while it is fresh.
                     </p>
 
-                    <!-- Interactive Quick Action Buttons (Opens Directly in This Single Link) -->
+                    <!-- Interactive Quick Action Buttons (Direct Links to Dedicated Pages) -->
                     <div class="flex flex-wrap items-center gap-3 pt-2">
-                        <button onclick="showView('donor-report')" 
-                                class="px-5 py-3 bg-pista-700 hover:bg-pista-800 text-ivory-50 text-xs sm:text-sm font-bold rounded-2xl shadow-pista transition-all flex items-center gap-2 group hover:scale-[1.02]">
+                        <a href="/donor/report-surplus/" 
+                           class="px-5 py-3 bg-pista-700 hover:bg-pista-800 text-ivory-50 text-xs sm:text-sm font-bold rounded-2xl shadow-pista transition-all flex items-center gap-2 group hover:scale-[1.02]">
                             <i class="fa-solid fa-plus-circle text-sm group-hover:rotate-90 transition-transform"></i>
                             <span>Donate Surplus Food</span>
-                        </button>
+                        </a>
                         
-                        <button onclick="showView('ngo-request')" 
-                                class="px-5 py-3 bg-salmon-500 hover:bg-salmon-600 text-white text-xs sm:text-sm font-bold rounded-2xl shadow-salmon transition-all flex items-center gap-2 group hover:scale-[1.02]">
+                        <a href="/ngo/request-food/" 
+                           class="px-5 py-3 bg-salmon-500 hover:bg-salmon-600 text-white text-xs sm:text-sm font-bold rounded-2xl shadow-salmon transition-all flex items-center gap-2 group hover:scale-[1.02]">
                             <i class="fa-solid fa-hands-holding-child text-sm group-hover:scale-110 transition-transform"></i>
                             <span>Request Meals for Shelter</span>
-                        </button>
+                        </a>
 
-                        <button onclick="showView('volunteer-rescues')" 
-                                class="px-4 py-3 bg-white hover:bg-pista-50 text-pista-900 text-xs sm:text-sm font-bold rounded-2xl border border-ivory-300 transition-colors flex items-center gap-1.5 shadow-soft">
+                        <a href="/volunteer/available-rescues/" 
+                           class="px-4 py-3 bg-white hover:bg-pista-50 text-pista-900 text-xs sm:text-sm font-bold rounded-2xl border border-ivory-300 transition-colors flex items-center gap-1.5 shadow-soft">
                             <i class="fa-solid fa-person-biking text-pista-700 text-sm"></i>
                             <span>Volunteer Couriers</span>
-                        </button>
+                        </a>
                     </div>
                 </div>
 
@@ -82,7 +82,7 @@
                                 </span>
                             {% else %}
                                 <div class="font-bold text-pista-900 text-sm mt-0.5">Guest Explorer</div>
-                                <span class="text-xs text-ivory-600 block">1-Click role preview</span>
+                                <span class="text-xs text-ivory-600 block">Use Persona dropdown to test</span>
                             {% endif %}
                         </div>
                     </div>
@@ -90,11 +90,11 @@
                     <div class="pt-3 border-t border-ivory-200 flex items-center justify-between text-xs">
                         <span class="text-ivory-700 font-semibold flex items-center gap-1.5">
                             <span class="w-2 h-2 rounded-full bg-pista-500 animate-pulse"></span>
-                            Unified Workspace Link
+                            Live Rescue Grid
                         </span>
-                        <button onclick="scrollToWorkspace()" class="text-pista-800 hover:text-salmon-600 font-bold transition-colors">
-                            Jump to Hub &darr;
-                        </button>
+                        <a href="/map/" class="text-pista-800 hover:text-salmon-600 font-bold transition-colors flex items-center gap-1">
+                            <span>Open Map</span> &rarr;
+                        </a>
                     </div>
                 </div>
 
@@ -148,385 +148,111 @@
     <!-- COMMUNITY PERSPECTIVE SWITCHER (1-CLICK TESTING) -->
     {% include "components/role_switcher.html" %}
 
-    <!-- ========================================================================= -->
-    <!-- MASTER INTEGRATED OPERATIONS WORKSPACE (ALL CONNECTED IN THIS SINGLE LINK) -->
-    <!-- ========================================================================= -->
-    <div id="operations-workspace" class="bg-white rounded-3xl border border-ivory-300 shadow-soft overflow-hidden">
-        
-        <!-- Primary Command Bar Header -->
-        <div class="border-b border-ivory-300 bg-ivory-50 px-4 sm:px-6 pt-4 pb-3">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 gap-2">
-                <div>
-                    <h2 class="font-serif text-lg font-bold text-pista-950 flex items-center gap-2">
-                        <span>Unified Network Operations Workspace</span>
-                    </h2>
-                    <p class="text-xs text-ivory-700">All portals, dispatches, tools, and verification controls integrated into one interface.</p>
-                </div>
-                <div class="flex items-center gap-2">
-                    <span class="text-xs font-bold text-pista-800 bg-pista-100 border border-pista-300 px-3 py-1 rounded-full flex items-center gap-1.5 shadow-xs">
-                        <span class="w-2 h-2 rounded-full bg-pista-600 animate-pulse"></span>
-                        <span id="active-view-indicator">Live Community Mesh</span>
-                    </span>
-                </div>
+    <!-- LIVE REAL-TIME RESCUE OPERATIONS GRID FEED -->
+    <div class="bg-white rounded-3xl border border-ivory-300 p-6 sm:p-8 shadow-soft space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-ivory-200 gap-2">
+            <div>
+                <h2 class="font-serif text-xl font-bold text-pista-950 flex items-center gap-2">
+                    <i class="fa-solid fa-satellite-dish text-pista-700"></i>
+                    <span>Live City Rescue Grid &amp; Community Exchange</span>
+                </h2>
+                <p class="text-xs text-ivory-700 mt-0.5">Real-time surplus food listings, shelter meal requests, and volunteer deliveries across Bengaluru.</p>
             </div>
-
-            <!-- Primary Workspace Tabs Navigation -->
-            <nav class="flex space-x-1.5 sm:space-x-2 overflow-x-auto pb-1" id="master-nav">
-                <!-- 1. Live Exchange -->
-                <button onclick="showView('overview')" id="tab-btn-overview"
-                        class="master-tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all bg-pista-700 text-ivory-50 shadow-xs flex items-center gap-2 whitespace-nowrap">
-                    <i class="fa-solid fa-satellite-dish text-xs"></i>
-                    <span>Live Mesh Feed</span>
-                </button>
-
-                <!-- 2. Donor Hub -->
-                <button onclick="showView('donor-dashboard')" id="tab-btn-donor"
-                        class="master-tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold transition-all bg-white text-pista-900 hover:bg-pista-100 flex items-center gap-2 whitespace-nowrap border border-ivory-300">
-                    <i class="fa-solid fa-bowl-food text-pista-600 text-xs"></i>
-                    <span>Donor Kitchen Hub</span>
-                </button>
-
-                <!-- 3. NGO Hub -->
-                <button onclick="showView('ngo-dashboard')" id="tab-btn-ngo"
-                        class="master-tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold transition-all bg-white text-pista-900 hover:bg-salmon-50 flex items-center gap-2 whitespace-nowrap border border-ivory-300">
-                    <i class="fa-solid fa-hands-holding-child text-salmon-500 text-xs"></i>
-                    <span>NGO &amp; Shelter Hub</span>
-                </button>
-
-                <!-- 4. Volunteer Hub -->
-                <button onclick="showView('volunteer-dashboard')" id="tab-btn-volunteer"
-                        class="master-tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold transition-all bg-white text-pista-900 hover:bg-pista-100 flex items-center gap-2 whitespace-nowrap border border-ivory-300">
-                    <i class="fa-solid fa-person-biking text-pista-700 text-xs"></i>
-                    <span>Volunteer Couriers</span>
-                </button>
-
-                <!-- 5. Admin Hub -->
-                <button onclick="showView('admin-dashboard')" id="tab-btn-admin"
-                        class="master-tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold transition-all bg-white text-pista-900 hover:bg-pista-100 flex items-center gap-2 whitespace-nowrap border border-ivory-300">
-                    <i class="fa-solid fa-shield text-xs"></i>
-                    <span>Admin Command</span>
-                </button>
-
-                <!-- 6. Shared Tools -->
-                <button onclick="showView('tools-map')" id="tab-btn-tools"
-                        class="master-tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold transition-all bg-white text-pista-900 hover:bg-salmon-50 flex items-center gap-2 whitespace-nowrap border border-ivory-300">
-                    <i class="fa-solid fa-cubes text-salmon-500 text-xs"></i>
-                    <span>Shared Utilities</span>
-                </button>
-            </nav>
+            <a href="/map/" class="text-xs font-bold text-salmon-700 hover:text-salmon-800 bg-salmon-50 border border-salmon-200 px-3.5 py-1.5 rounded-xl transition-all flex items-center gap-1.5 self-start sm:self-auto">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <span>Open Full Map View</span>
+            </a>
         </div>
 
-        <!-- Master Views Container (All views injected seamlessly here) -->
-        <div class="p-6 sm:p-8" id="view-content-root">
+        {% include "integrated_views/view_exchange.html" %}
+    </div>
+
+    <!-- SECTION PORTAL GATEWAYS (SEPARATE WEB PAGES) -->
+    <div class="space-y-4">
+        <div class="flex items-center justify-between">
+            <h3 class="font-serif text-lg font-bold text-pista-950 flex items-center gap-2">
+                <i class="fa-solid fa-door-open text-salmon-500"></i>
+                <span>Dedicated Operations Portals</span>
+            </h3>
+            <span class="text-xs text-ivory-600">Click any portal to enter its dedicated workspace</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             
-            <!-- VIEW 1: LIVE COMMUNITY FEED -->
-            {% include "integrated_views/view_exchange.html" %}
+            <!-- 1. Donor Portal Card -->
+            <a href="/donor/dashboard/" 
+               class="bg-white p-6 rounded-3xl border border-ivory-300 hover:border-pista-500 hover:shadow-soft transition-all group flex flex-col justify-between gap-4">
+                <div class="space-y-3">
+                    <div class="w-12 h-12 rounded-2xl bg-pista-100 text-pista-800 flex items-center justify-center text-xl shadow-xs group-hover:scale-105 transition-transform">
+                        <i class="fa-solid fa-bowl-food"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-pista-950 text-base group-hover:text-pista-700 transition-colors">Donor Kitchen Portal</h4>
+                        <p class="text-xs text-ivory-700 mt-1 leading-relaxed">Report extra prepared batches, configure food safety parameters, and manage pickup dispatch.</p>
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-ivory-100 flex items-center justify-between text-xs font-bold text-pista-700">
+                    <span>Enter Donor Hub</span>
+                    <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </a>
 
-            <!-- VIEW 2: DONOR KITCHEN HUB -->
-            {% include "integrated_views/view_donor.html" %}
+            <!-- 2. NGO Portal Card -->
+            <a href="/ngo/dashboard/" 
+               class="bg-white p-6 rounded-3xl border border-ivory-300 hover:border-salmon-500 hover:shadow-salmon transition-all group flex flex-col justify-between gap-4">
+                <div class="space-y-3">
+                    <div class="w-12 h-12 rounded-2xl bg-salmon-100 text-salmon-600 flex items-center justify-center text-xl shadow-xs group-hover:scale-105 transition-transform">
+                        <i class="fa-solid fa-hands-holding-child"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-salmon-950 text-base group-hover:text-salmon-600 transition-colors">NGO &amp; Shelter Hub</h4>
+                        <p class="text-xs text-ivory-700 mt-1 leading-relaxed">Broadcast daily feeding requirements, claim nearby surplus meals, and verify incoming drops.</p>
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-ivory-100 flex items-center justify-between text-xs font-bold text-salmon-600">
+                    <span>Enter Shelter Hub</span>
+                    <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </a>
 
-            <!-- VIEW 3: NGO & SHELTER HUB -->
-            {% include "integrated_views/view_ngo.html" %}
+            <!-- 3. Volunteer Driver Card -->
+            <a href="/volunteer/dashboard/" 
+               class="bg-white p-6 rounded-3xl border border-ivory-300 hover:border-pista-500 hover:shadow-soft transition-all group flex flex-col justify-between gap-4">
+                <div class="space-y-3">
+                    <div class="w-12 h-12 rounded-2xl bg-pista-100 text-pista-800 flex items-center justify-center text-xl shadow-xs group-hover:scale-105 transition-transform">
+                        <i class="fa-solid fa-person-biking"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-pista-950 text-base group-hover:text-pista-700 transition-colors">Volunteer Logistics</h4>
+                        <p class="text-xs text-ivory-700 mt-1 leading-relaxed">Accept neighborhood rescue alerts, transport warm meals, and verify handoffs with dual OTP.</p>
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-ivory-100 flex items-center justify-between text-xs font-bold text-pista-700">
+                    <span>Enter Driver Hub</span>
+                    <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </a>
 
-            <!-- VIEW 4: VOLUNTEER COURIER HUB -->
-            {% include "integrated_views/view_volunteer.html" %}
-
-            <!-- VIEW 5: ADMIN GOVERNANCE HUB -->
-            {% include "integrated_views/view_admin.html" %}
-
-            <!-- VIEW 6: SHARED CROSS-ROLE UTILITIES -->
-            {% include "integrated_views/view_tools.html" %}
+            <!-- 4. Admin Command Card -->
+            <a href="/platform-admin/dashboard/" 
+               class="bg-white p-6 rounded-3xl border border-ivory-300 hover:border-ivory-500 hover:shadow-soft transition-all group flex flex-col justify-between gap-4">
+                <div class="space-y-3">
+                    <div class="w-12 h-12 rounded-2xl bg-ivory-200 text-ivory-900 flex items-center justify-center text-xl shadow-xs group-hover:scale-105 transition-transform">
+                        <i class="fa-solid fa-shield"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-ivory-950 text-base group-hover:text-ivory-800 transition-colors">Platform Admin</h4>
+                        <p class="text-xs text-ivory-700 mt-1 leading-relaxed">Review NGO verification documentation, oversee rescue SLAs, and manage platform participants.</p>
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-ivory-100 flex items-center justify-between text-xs font-bold text-ivory-900">
+                    <span>Enter Admin Hub</span>
+                    <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </a>
 
         </div>
     </div>
 
 </div>
-
-<!-- JAVASCRIPT MASTER INTERACTIVE ENGINE (SEAMLESS SWITCHING IN SINGLE LINK) -->
-<script>
-    // Configuration mapping view IDs to their hub and subview containers
-    const VIEW_MAP = {
-        // Exchange / Overview
-        'overview': { hub: 'hub-exchange', mainTab: 'tab-btn-overview', subview: null, label: 'Live Community Mesh' },
-        'exchange': { hub: 'hub-exchange', mainTab: 'tab-btn-overview', subview: null, label: 'Live Community Mesh' },
-
-        // Donor Hub
-        'donor': { hub: 'hub-donor', mainTab: 'tab-btn-donor', subview: 'subview-donor-dashboard', label: 'Donor: Dashboard' },
-        'donor-dashboard': { hub: 'hub-donor', mainTab: 'tab-btn-donor', subview: 'subview-donor-dashboard', label: 'Donor: Dashboard' },
-        'donor-report': { hub: 'hub-donor', mainTab: 'tab-btn-donor', subview: 'subview-donor-report', label: 'Donor: Report Surplus' },
-        'donor-ai': { hub: 'hub-donor', mainTab: 'tab-btn-donor', subview: 'subview-donor-ai', label: 'Donor: AI Match Engine' },
-        'donor-tracking': { hub: 'hub-donor', mainTab: 'tab-btn-donor', subview: 'subview-donor-tracking', label: 'Donor: Live Tracking & OTP' },
-        'donor-history': { hub: 'hub-donor', mainTab: 'tab-btn-donor', subview: 'subview-donor-history', label: 'Donor: History & 80G' },
-
-        // NGO Hub
-        'ngo': { hub: 'hub-ngo', mainTab: 'tab-btn-ngo', subview: 'subview-ngo-dashboard', label: 'NGO: Dashboard' },
-        'receiver': { hub: 'hub-ngo', mainTab: 'tab-btn-ngo', subview: 'subview-ngo-dashboard', label: 'NGO: Dashboard' },
-        'ngo-dashboard': { hub: 'hub-ngo', mainTab: 'tab-btn-ngo', subview: 'subview-ngo-dashboard', label: 'NGO: Dashboard' },
-        'ngo-nearby': { hub: 'hub-ngo', mainTab: 'tab-btn-ngo', subview: 'subview-ngo-nearby', label: 'NGO: Nearby Surplus Food' },
-        'ngo-request': { hub: 'hub-ngo', mainTab: 'tab-btn-ngo', subview: 'subview-ngo-request', label: 'NGO: Broadcast Meal Need' },
-        'ngo-accepted': { hub: 'hub-ngo', mainTab: 'tab-btn-ngo', subview: 'subview-ngo-accepted', label: 'NGO: Accepted Deliveries' },
-
-        // Volunteer Hub
-        'volunteer': { hub: 'hub-volunteer', mainTab: 'tab-btn-volunteer', subview: 'subview-volunteer-dashboard', label: 'Volunteer: Dashboard' },
-        'volunteer-dashboard': { hub: 'hub-volunteer', mainTab: 'tab-btn-volunteer', subview: 'subview-volunteer-dashboard', label: 'Volunteer: Dashboard' },
-        'volunteer-rescues': { hub: 'hub-volunteer', mainTab: 'tab-btn-volunteer', subview: 'subview-volunteer-rescues', label: 'Volunteer: Available Rescues' },
-        'volunteer-delivery': { hub: 'hub-volunteer', mainTab: 'tab-btn-volunteer', subview: 'subview-volunteer-delivery', label: 'Volunteer: Active Delivery & OTP' },
-
-        // Admin Hub
-        'admin': { hub: 'hub-admin', mainTab: 'tab-btn-admin', subview: 'subview-admin-dashboard', label: 'Admin: Command Center' },
-        'governance': { hub: 'hub-admin', mainTab: 'tab-btn-admin', subview: 'subview-admin-dashboard', label: 'Admin: Command Center' },
-        'admin-dashboard': { hub: 'hub-admin', mainTab: 'tab-btn-admin', subview: 'subview-admin-dashboard', label: 'Admin: Command Center' },
-        'admin-verification': { hub: 'hub-admin', mainTab: 'tab-btn-admin', subview: 'subview-admin-verification', label: 'Admin: NGO Verification Queue' },
-        'admin-users': { hub: 'hub-admin', mainTab: 'tab-btn-admin', subview: 'subview-admin-users', label: 'Admin: User Management' },
-        'admin-telemetry': { hub: 'hub-admin', mainTab: 'tab-btn-admin', subview: 'subview-admin-telemetry', label: 'Admin: City Telemetry' },
-
-        // Shared Tools
-        'tools': { hub: 'hub-tools', mainTab: 'tab-btn-tools', subview: 'subview-tools-map', label: 'Shared: Live Rescue Map' },
-        'tools-map': { hub: 'hub-tools', mainTab: 'tab-btn-tools', subview: 'subview-tools-map', label: 'Shared: Live Rescue Map' },
-        'map': { hub: 'hub-tools', mainTab: 'tab-btn-tools', subview: 'subview-tools-map', label: 'Shared: Live Rescue Map' },
-        'tools-scanner': { hub: 'hub-tools', mainTab: 'tab-btn-tools', subview: 'subview-tools-scanner', label: 'Shared: Digital QR Scanner' },
-        'qr-scanner': { hub: 'hub-tools', mainTab: 'tab-btn-tools', subview: 'subview-tools-scanner', label: 'Shared: Digital QR Scanner' },
-        'tools-passport': { hub: 'hub-tools', mainTab: 'tab-btn-tools', subview: 'subview-tools-passport', label: 'Shared: Food Safety Passport' },
-        'food-passport': { hub: 'hub-tools', mainTab: 'tab-btn-tools', subview: 'subview-tools-passport', label: 'Shared: Food Safety Passport' },
-        'tools-notifications': { hub: 'hub-tools', mainTab: 'tab-btn-tools', subview: 'subview-tools-notifications', label: 'Shared: Notifications' },
-        'notifications': { hub: 'hub-tools', mainTab: 'tab-btn-tools', subview: 'subview-tools-notifications', label: 'Shared: Notifications' },
-        'tools-profile': { hub: 'hub-tools', mainTab: 'tab-btn-tools', subview: 'subview-tools-profile', label: 'Shared: Member Profile' },
-        'profile': { hub: 'hub-tools', mainTab: 'tab-btn-tools', subview: 'subview-tools-profile', label: 'Shared: Member Profile' }
-    };
-
-    /**
-     * Master function: Switches to any view cleanly in this single link
-     */
-    function showView(viewKey, smoothScroll = true) {
-        const config = VIEW_MAP[viewKey] || VIEW_MAP['overview'];
-
-        // 1. Hide all hub containers
-        document.querySelectorAll('.hub-container').forEach(el => el.classList.add('hidden'));
-
-        // 2. Show the active hub container
-        const targetHub = document.getElementById(config.hub);
-        if (targetHub) {
-            targetHub.classList.remove('hidden');
-        }
-
-        // 3. Reset main tab button styles
-        document.querySelectorAll('.master-tab-btn').forEach(btn => {
-            btn.className = 'master-tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold transition-all bg-white text-pista-900 hover:bg-pista-100 flex items-center gap-2 whitespace-nowrap border border-ivory-300';
-        });
-
-        // 4. Highlight active main tab button
-        const activeTabBtn = document.getElementById(config.mainTab);
-        if (activeTabBtn) {
-            activeTabBtn.className = 'master-tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all bg-pista-700 text-ivory-50 shadow-xs flex items-center gap-2 whitespace-nowrap';
-        }
-
-        // 5. If this hub has subviews, activate the target subview
-        if (config.subview) {
-            // Find which hub prefix (donor, ngo, volunteer, admin, tools)
-            const hubPrefix = config.hub.replace('hub-', '');
-            const subviewKey = config.subview.replace('subview-', '');
-            showSubView(hubPrefix, subviewKey);
-        }
-
-        // 6. Update indicator label
-        const indicator = document.getElementById('active-view-indicator');
-        if (indicator) {
-            indicator.textContent = config.label;
-        }
-
-        // 7. Update browser URL without reloading (single link experience)
-        if (window.history && window.history.pushState) {
-            const newUrl = window.location.pathname + '?view=' + viewKey;
-            window.history.pushState({ view: viewKey }, '', newUrl);
-        }
-
-        // 8. Optionally smooth scroll to operations workspace
-        if (smoothScroll) {
-            const workspace = document.getElementById('operations-workspace');
-            if (workspace) {
-                workspace.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        }
-    }
-
-    /**
-     * Subview switcher inside a specific hub
-     */
-    function showSubView(hubPrefix, subviewKey) {
-        // Hide all subview panes for this hub
-        document.querySelectorAll(`.${hubPrefix}-view-pane`).forEach(el => el.classList.add('hidden'));
-
-        // Show the active subview pane
-        const targetPane = document.getElementById(`subview-${subviewKey}`);
-        if (targetPane) {
-            targetPane.classList.remove('hidden');
-        }
-
-        // Reset all subpills in this hub
-        document.querySelectorAll(`.${hubPrefix}-subpill`).forEach(pill => {
-            pill.className = `${hubPrefix}-subpill px-3 py-1.5 rounded-xl text-xs font-semibold transition-all bg-ivory-100 text-pista-900 hover:bg-pista-100 flex items-center gap-1.5 border border-ivory-300`;
-        });
-
-        // Highlight active subpill
-        const activePill = document.getElementById(`btn-${subviewKey}`);
-        if (activePill) {
-            activePill.className = `${hubPrefix}-subpill px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-pista-700 text-ivory-50 shadow-xs flex items-center gap-1.5`;
-        }
-
-        // Update indicator label
-        const config = VIEW_MAP[subviewKey];
-        if (config && document.getElementById('active-view-indicator')) {
-            document.getElementById('active-view-indicator').textContent = config.label;
-        }
-
-        // Update URL query param cleanly without reload
-        if (window.history && window.history.pushState) {
-            const newUrl = window.location.pathname + '?view=' + subviewKey;
-            window.history.pushState({ view: subviewKey }, '', newUrl);
-        }
-
-        // Auto-refresh real-time Leaflet map if opened
-        if (subviewKey === 'tools-map' && window.initOrResizeRescueMap) {
-            setTimeout(window.initOrResizeRescueMap, 150);
-        }
-    }
-
-    function scrollToWorkspace() {
-        const workspace = document.getElementById('operations-workspace');
-        if (workspace) {
-            workspace.scrollIntoView({ behavior: 'smooth' });
-        }
-    }
-
-    // Interactive helper actions across views
-    function handleSurplusSubmit(e) {
-        e.preventDefault();
-        showToast("Food surplus reported! Sanjog AI is calculating optimal pairings...");
-        setTimeout(() => {
-            showView('donor-ai');
-        }, 600);
-    }
-
-    function claimBatch(name, servings) {
-        showToast(`Claimed ${servings} meals from ${name}! Courier assigned.`);
-        setTimeout(() => {
-            showView('ngo-dashboard');
-        }, 600);
-    }
-
-    function handleNeedBroadcast(e) {
-        e.preventDefault();
-        showToast("Shelter hunger need broadcasted to Central Bengaluru Grid!");
-        setTimeout(() => {
-            showView('ngo-nearby');
-        }, 600);
-    }
-
-    function claimRescue(missionId) {
-        showToast(`Mission #${missionId} accepted! Proceeding to active dispatch.`);
-        setTimeout(() => {
-            showView('volunteer-delivery');
-        }, 600);
-    }
-
-    function simulateScan(code) {
-        const resEl = document.getElementById('scanner-result');
-        if (resEl) {
-            resEl.classList.remove('hidden');
-            resEl.innerHTML = `<i class="fa-solid fa-check text-pista-700 mr-1.5"></i> QR Code Recognized: Valid Code ${code} Accepted!`;
-        }
-        showToast(`QR Code ${code} verified successfully!`);
-    }
-
-    function verifyVolDonorOTP() {
-        const val = document.getElementById('vol-input-donor-otp').value.trim();
-        const status = document.getElementById('vol-donor-otp-status');
-        if (val === '7492') {
-            status.innerHTML = '<span class="text-pista-700 font-bold"><i class="fa-solid fa-check mr-1"></i> Kitchen Pickup Confirmed!</span>';
-            showToast("Kitchen pickup confirmed with Chef OTP 7492!");
-            checkVolMissionComplete();
-        } else {
-            status.innerHTML = '<span class="text-salmon-600 font-bold"><i class="fa-solid fa-xmark mr-1"></i> Invalid OTP. Try 7492</span>';
-        }
-    }
-
-    function verifyVolReceiverOTP() {
-        const val = document.getElementById('vol-input-receiver-otp').value.trim();
-        const status = document.getElementById('vol-receiver-otp-status');
-        if (val === '3180') {
-            status.innerHTML = '<span class="text-pista-700 font-bold"><i class="fa-solid fa-check mr-1"></i> Shelter Handover Confirmed!</span>';
-            showToast("Delivery confirmed with Shelter OTP 3180!");
-            checkVolMissionComplete();
-        } else {
-            status.innerHTML = '<span class="text-salmon-600 font-bold"><i class="fa-solid fa-xmark mr-1"></i> Invalid OTP. Try 3180</span>';
-        }
-    }
-
-    function checkVolMissionComplete() {
-        const d = document.getElementById('vol-input-donor-otp').value.trim();
-        const r = document.getElementById('vol-input-receiver-otp').value.trim();
-        if (d === '7492' && r === '3180') {
-            const banner = document.getElementById('vol-mission-complete-banner');
-            if (banner) banner.classList.remove('hidden');
-        }
-    }
-
-    function markAllNotificationsRead() {
-        showToast("All notifications marked as read!");
-    }
-
-    function showToast(msg) {
-        let toast = document.getElementById('sanjog-toast');
-        if (!toast) {
-            toast = document.createElement('div');
-            toast.id = 'sanjog-toast';
-            toast.className = 'fixed bottom-6 right-6 z-50 bg-pista-900 text-ivory-50 px-5 py-3 rounded-2xl shadow-xl border border-pista-700 text-xs font-bold transition-all transform duration-300 opacity-0 translate-y-4';
-            document.body.appendChild(toast);
-        }
-        toast.innerHTML = `<i class="fa-solid fa-circle-check text-salmon-400 mr-2"></i> ${msg}`;
-        toast.classList.remove('opacity-0', 'translate-y-4');
-        setTimeout(() => {
-            toast.classList.add('opacity-0', 'translate-y-4');
-        }, 3500);
-    }
-
-    // Auto-detect initial view on boot
-    document.addEventListener('DOMContentLoaded', () => {
-        const params = new URLSearchParams(window.location.search);
-        const initialView = params.get('view') || params.get('tab') || '{{ active_tab }}' || 'overview';
-        showView(initialView, false);
-
-        // Global delegation: Intercept any link pointing to ?view=... or ?tab=... so it doesn't cause a page reload
-        document.addEventListener('click', (e) => {
-            const link = e.target.closest('a[href*="?view="], a[href*="?tab="]');
-            if (link) {
-                const href = link.getAttribute('href');
-                let targetView = null;
-                const viewMatch = href.match(/[?&]view=([^&#]+)/);
-                const tabMatch = href.match(/[?&]tab=([^&#]+)/);
-                if (viewMatch && viewMatch[1]) {
-                    targetView = viewMatch[1];
-                } else if (tabMatch && tabMatch[1]) {
-                    targetView = tabMatch[1];
-                }
-
-                if (targetView && (window.location.pathname === '/' || window.location.pathname === '')) {
-                    e.preventDefault();
-                    showView(targetView, true);
-                    const mobileNav = document.getElementById('mobile-nav');
-                    if (mobileNav && !mobileNav.classList.contains('hidden')) {
-                        mobileNav.classList.add('hidden');
-                    }
-                }
-            }
-        });
-    });
-
-    // Handle browser back/forward buttons
-    window.addEventListener('popstate', (e) => {
-        const params = new URLSearchParams(window.location.search);
-        const view = params.get('view') || params.get('tab') || 'overview';
-        showView(view, false);
-    });
-</script>
 {% endblock %}

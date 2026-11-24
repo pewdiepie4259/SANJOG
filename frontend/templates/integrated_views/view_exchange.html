@@ -16,16 +16,16 @@
             </p>
         </div>
         <div class="flex items-center gap-2.5 shrink-0">
-            <button onclick="showView('donor-report')" 
-                    class="px-4 py-2.5 bg-pista-600 hover:bg-pista-700 text-white text-xs font-bold rounded-xl transition-all shadow-pista flex items-center gap-1.5">
+            <a href="/donor/report-surplus/" 
+               class="px-4 py-2.5 bg-pista-600 hover:bg-pista-700 text-white text-xs font-bold rounded-xl transition-all shadow-pista flex items-center gap-1.5">
                 <i class="fa-solid fa-plus-circle text-xs"></i>
                 <span>Share Food Today</span>
-            </button>
-            <button onclick="showView('ngo-request')" 
-                    class="px-4 py-2.5 bg-salmon-500 hover:bg-salmon-600 text-white text-xs font-bold rounded-xl transition-all shadow-salmon flex items-center gap-1.5">
+            </a>
+            <a href="/ngo/request-food/" 
+               class="px-4 py-2.5 bg-salmon-500 hover:bg-salmon-600 text-white text-xs font-bold rounded-xl transition-all shadow-salmon flex items-center gap-1.5">
                 <i class="fa-solid fa-bullhorn text-xs"></i>
                 <span>Post Shelter Need</span>
-            </button>
+            </a>
         </div>
     </div>
 
@@ -81,9 +81,9 @@
                                 <i class="fa-solid fa-circle-check text-pista-600 text-xs"></i>
                                 FSSAI Verified
                             </span>
-                            <button onclick="showView('donor-ai')" class="text-pista-800 hover:text-salmon-600 font-bold transition-colors">
+                            <a href="/donor/ai-match/" class="text-pista-800 hover:text-salmon-600 font-bold transition-colors">
                                 View Match &rarr;
-                            </button>
+                            </a>
                         </div>
                     </div>
                 {% endfor %}
@@ -133,9 +133,9 @@
                                 <i class="fa-solid fa-location-dot text-salmon-500 text-xs"></i>
                                 {{ demand.location }}
                             </span>
-                            <button onclick="showView('ngo-nearby')" class="text-salmon-600 hover:underline font-bold">
+                            <a href="/ngo/nearby-food/" class="text-salmon-600 hover:underline font-bold">
                                 Pair Surplus &rarr;
-                            </button>
+                            </a>
                         </div>
                     </div>
                 {% endfor %}
@@ -193,9 +193,9 @@
                                 <i class="fa-solid fa-motorcycle text-pista-600"></i>
                                 {{ dispatch.volunteer_name }}
                             </span>
-                            <button onclick="showView('volunteer-delivery')" class="text-pista-800 hover:text-salmon-600 font-bold">
+                            <a href="/volunteer/active-delivery/" class="text-pista-800 hover:text-salmon-600 font-bold">
                                 Track Run (ETA {{ dispatch.eta }}) &rarr;
-                            </button>
+                            </a>
                         </div>
                     </div>
                 {% endfor %}
